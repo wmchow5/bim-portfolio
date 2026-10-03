@@ -1,7 +1,8 @@
-# Local preview of the portfolio site in docs/ at http://localhost:8765
+# Local preview of the portfolio site in docs/ at http://localhost:8765 (or pass a port)
 $root = Join-Path (Split-Path -Parent $MyInvocation.MyCommand.Path) "..\docs"
 $l = New-Object System.Net.HttpListener
-$l.Prefixes.Add("http://localhost:8765/")
+$port = if ($args.Count -gt 0) { $args[0] } else { 8765 }
+$l.Prefixes.Add("http://localhost:$port/")
 $l.Start()
 $types = @{".html"="text/html; charset=utf-8";".png"="image/png";".css"="text/css";".js"="text/javascript";".pdf"="application/pdf"}
 while ($l.IsListening) {
