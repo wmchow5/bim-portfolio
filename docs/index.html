@@ -1,0 +1,799 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Kenneth Chow, MEP technician / modeler. BCIT residential MEP model KC-RES-05 issued as a submittal package: 50-item code review log, six RFIs and the drawing set.">
+<title>Kenneth Chow Submittal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: a submittal package laid on a desk blotter. Each section is one carbonless form sheet
+   (white original, canary copy, pink copy) with ruled fields, typed fill-ins and drawings clipped on as enclosures. */
+:root{
+  --desk:#c9ced5;          /* steel desk blotter */
+  --desk-ink:#1e232a;      /* text that sits on the desk */
+  --white:#fcfcfa;         /* original sheet */
+  --canary:#f5d84f;        /* canary copy */
+  --pink:#f2b6c5;          /* pink copy */
+  --ink:#15181d;           /* form print + typed text */
+  --ink-soft:#434852;      /* printed labels on white */
+  --ink-on-canary:#4a3f0c; /* labels tinted from the canary */
+  --ink-on-pink:#5b2232;   /* labels tinted from the pink */
+  --rule:#2a2f37;          /* form rules */
+  --stamp:#2338b8;         /* the one stamp ink */
+  --stamp-wash:rgba(35,56,184,.10);
+  --shadow:0 1px 1px rgba(20,24,30,.10),0 10px 26px -10px rgba(20,24,30,.38);
+  --f-form:"Archivo","Arial Narrow",Arial,sans-serif;
+  --f-type:"Courier Prime","Courier New",Courier,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --desk:#17191d; --desk-ink:#d8dbe0;
+  --shadow:0 1px 1px rgba(0,0,0,.5),0 14px 34px -12px rgba(0,0,0,.85);
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --desk:#17191d; --desk-ink:#d8dbe0;
+  --shadow:0 1px 1px rgba(0,0,0,.5),0 14px 34px -12px rgba(0,0,0,.85);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--desk);color:var(--ink);font-family:var(--f-type);font-size:15px;line-height:1.5;
+  padding-inline:clamp(16px,3vw,40px);padding-block:clamp(16px,3vw,40px) 56px;
+  scrollbar-color:var(--rule) var(--desk)}
+::selection{background:var(--canary);color:var(--ink)}
+a{color:inherit;text-underline-offset:3px;text-decoration-thickness:1px}
+:focus-visible{outline:2px solid var(--stamp);outline-offset:3px}
+img{max-width:100%;display:block}
+.package{max-width:1360px;margin:0 auto;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(22px,3vw,40px)}
+
+/* ---------- sheet ---------- */
+.sheet{position:relative;background:var(--white);box-shadow:var(--shadow);padding:clamp(18px,2.6vw,36px);min-width:0}
+.sheet.canary{background:var(--canary)}
+.sheet.pink{background:var(--pink)}
+.sheet .copy{position:absolute;right:clamp(10px,1.4vw,18px);bottom:8px;font:600 11px/1 var(--f-form);font-stretch:85%;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.canary .copy,.canary .lbl{color:var(--ink-on-canary)}
+.pink .copy,.pink .lbl{color:var(--ink-on-pink)}
+
+/* form header: printed title + ruled field cells */
+.formhead{display:grid;grid-template-columns:auto minmax(0,1fr);gap:0;border:2px solid var(--rule)}
+.formtitle{font:800 clamp(22px,2.6vw,34px)/1 var(--f-form);font-stretch:118%;letter-spacing:-.01em;text-transform:uppercase;padding:14px 18px;border-right:2px solid var(--rule);display:flex;align-items:center;margin:0}
+.cells{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+.cell{padding:7px 12px 9px;border-left:1px solid var(--rule);min-width:0}
+.cell:first-child{border-left:0}
+.lbl{display:block;font:600 11px/1.2 var(--f-form);font-stretch:85%;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:3px}
+.val{font-family:var(--f-type);font-size:14.5px;overflow-wrap:anywhere}
+.ruled{border:2px solid var(--rule);border-top:0}
+.row2{display:grid;grid-template-columns:1fr 1fr}
+.row2>.cell{border-top:1px solid var(--rule)}
+.row2>.cell:nth-child(2){border-left:1px solid var(--rule)}
+
+/* ---------- transmittal ---------- */
+.trans-body{display:grid;grid-template-columns:minmax(0,0.9fr) minmax(0,2.1fr);border:2px solid var(--rule);border-top:0}
+.trans-left{border-right:2px solid var(--rule);display:flex;flex-direction:column;min-width:0}
+.block{padding:12px 14px;border-top:1px solid var(--rule)}
+.block:first-child{border-top:0}
+h1.name{font:900 clamp(38px,4.1vw,62px)/.88 var(--f-form);font-stretch:112%;letter-spacing:-.035em;text-transform:uppercase;margin:4px 0 8px;text-wrap:balance}
+.re{font:400 15px/1.45 var(--f-type)}
+.re b{font-weight:700}
+table{border-collapse:collapse;width:100%}
+.items th,.items td{text-align:left;padding:5px 6px;border-bottom:1px solid rgba(42,47,55,.35);vertical-align:top}
+.items th{font:600 11px/1.2 var(--f-form);font-stretch:85%;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--rule)}
+.items td{font-size:13.5px;font-variant-numeric:tabular-nums}
+.items td:first-child{white-space:nowrap;font-weight:700}
+.items a{text-decoration:none;border-bottom:1px dotted currentColor}
+.checks{display:grid;gap:6px;font-size:13.5px}
+.chk{display:flex;gap:9px;align-items:flex-start}
+.box{flex:none;width:15px;height:15px;border:1.5px solid var(--rule);margin-top:2px;position:relative;background:transparent}
+.box.x::before,.box.x::after{content:"";position:absolute;left:50%;top:50%;width:17px;height:2px;background:var(--ink);transform:translate(-50%,-50%) rotate(45deg)}
+.box.x::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.remarks{font-size:13.5px}
+.remarks p{margin:0 0 6px}
+.enclosure{position:relative;padding:28px clamp(10px,2vw,28px) 18px;min-width:0;display:flex;flex-direction:column;gap:10px;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(42,47,55,.06) 27px 28px)}
+.encl-sheet{position:relative;background:#fff;box-shadow:0 1px 1px rgba(20,24,30,.12),0 8px 18px -8px rgba(20,24,30,.35);padding:clamp(10px,1.6vw,18px);transform:rotate(-.6deg)}
+.encl-sheet img{width:100%;height:auto}
+.clip{position:absolute;top:-12px;left:6%;width:30px;height:70px;color:#6f757e}
+.tab{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline;justify-content:space-between;font:500 12px/1.3 var(--f-form);font-stretch:92%;letter-spacing:.02em;color:var(--ink-soft)}.tab b{text-transform:uppercase;letter-spacing:.1em}
+.tab b{color:var(--ink);font-weight:800}
+.encl-foot{display:grid;grid-template-columns:minmax(0,1fr) minmax(250px,.85fr);gap:14px;align-items:start}
+.enclosure .encl-sheet img{width:auto;max-width:100%;max-height:max(340px,calc(100vh - 450px));margin:0 auto}
+
+/* stamp */
+.stampmark{display:inline-block;font:800 15px/1.05 var(--f-form);font-stretch:112%;letter-spacing:.06em;text-transform:uppercase;color:var(--stamp);border:3px double var(--stamp);padding:7px 12px 6px;transform:rotate(-7deg);filter:url(#rubber);opacity:.9;text-align:center}
+.stampmark small{display:block;font:700 11px/1.2 var(--f-type);letter-spacing:.04em;text-transform:none}
+.action{display:grid;gap:10px}
+.stampbtn{appearance:none;cursor:pointer;width:100%;text-align:left;background:transparent;border:2px dashed var(--rule);padding:12px 14px;font:inherit;color:inherit;display:grid;gap:4px;position:relative;min-height:96px;transition:background .25s}
+.stampbtn:hover{background:var(--stamp-wash)}
+.stampbtn .lbl{margin:0}
+.stampbtn .how{font-size:13px}
+.stampbtn .landed{position:absolute;right:12px;top:50%;translate:0 -50%;font-size:17px;opacity:0;scale:1.6;pointer-events:none}
+.stampbtn[aria-pressed="true"] .landed{opacity:.92;scale:1;transition:opacity .18s ease-out,scale .32s cubic-bezier(.16,1,.3,1)}
+.contact{display:grid;gap:6px;font-size:14px}
+.contact .line{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.contact output{font-weight:700;user-select:all}
+.copybtn{appearance:none;cursor:pointer;font:600 11px/1 var(--f-form);font-stretch:88%;letter-spacing:.12em;text-transform:uppercase;background:transparent;color:var(--ink);border:1.5px solid var(--rule);padding:5px 8px 4px}
+.copybtn:hover{background:var(--ink);color:var(--white)}
+.contact[hidden]{display:none!important}
+
+/* ---------- qualifications ---------- */
+.qual-grid{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);border:2px solid var(--rule);border-top:0}
+.qual-grid>div{min-width:0}
+.qual-grid>div+div{border-left:2px solid var(--rule)}
+.field{padding:9px 14px 11px;border-top:1px solid var(--rule)}
+.field:first-child{border-top:0}
+.field p{margin:0;max-width:68ch}
+.field ul{margin:0;padding-left:18px}
+.field li{margin:2px 0}
+.register td{padding:6px 14px;border-top:1px solid rgba(42,47,55,.4);font-variant-numeric:tabular-nums}
+.register td:first-child{font:600 11px/1.3 var(--f-form);font-stretch:88%;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-on-canary)}
+.register td:last-child{text-align:right;font-weight:700}
+.register tr:first-child td{border-top:0}
+.notyet{text-decoration:line-through;text-decoration-thickness:1.5px}
+
+/* ---------- RFI log ---------- */
+.logtools{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center;justify-content:space-between;border:2px solid var(--rule);border-top:0;padding:10px 14px}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filt{appearance:none;cursor:pointer;font:600 11px/1 var(--f-form);font-stretch:90%;letter-spacing:.1em;text-transform:uppercase;padding:7px 10px 6px;background:transparent;color:var(--ink);border:1.5px solid var(--rule)}
+.filt[aria-pressed="true"]{background:var(--ink);color:var(--white)}
+.filt:hover:not([aria-pressed="true"]){background:var(--stamp-wash)}
+.tally{font-size:13px;font-variant-numeric:tabular-nums}
+.logwrap{border:2px solid var(--rule);border-top:0;overflow-x:auto}
+.log{min-width:760px}
+.log th{position:sticky;top:0;background:var(--white);text-align:left;font:600 11px/1.2 var(--f-form);font-stretch:85%;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);padding:8px 10px;border-bottom:2px solid var(--rule)}
+.log td{padding:7px 10px;border-bottom:1px solid rgba(42,47,55,.28);vertical-align:top;font-size:13.5px;font-variant-numeric:tabular-nums}
+.log tr.r{cursor:pointer;transition:opacity .25s}
+.log tr.r:hover td{background:rgba(245,216,79,.28)}
+.log td.id{font-weight:700;white-space:nowrap}
+.log td.id button{all:unset;cursor:pointer;font-weight:700}
+.log td.id button:focus-visible{outline:2px solid var(--stamp);outline-offset:2px}
+.log .st{white-space:nowrap;font:600 11px/1.2 var(--f-form);font-stretch:88%;letter-spacing:.08em;text-transform:uppercase}
+.st.open{color:var(--stamp)}
+.st.kept{color:var(--ink);font-weight:800}
+.log.has-open tr.r:not(.open),.log.has-open tr.d:not(.open){opacity:.38}
+.log tr.d td{background:var(--stamp-wash);padding:10px 12px 12px;border-bottom:2px solid var(--stamp)}
+.log tr.d[hidden]{display:none}
+.log tr.r.open td{background:var(--stamp-wash)}
+.log tr.r.open td.id{color:var(--stamp)}
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:6px 22px;font-size:13.5px}
+.dgrid p{margin:0}
+.dgrid .full{grid-column:1/-1}
+.m-only{display:none}
+.feat{font:700 11px/1 var(--f-form);letter-spacing:.1em;text-transform:uppercase;color:var(--ink);text-decoration:underline;text-underline-offset:3px;margin-left:6px;white-space:nowrap}
+
+/* ---------- RFI forms ---------- */
+.rfis{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(22px,3vw,40px);min-width:0}
+.rfi-body{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);border:2px solid var(--rule);border-top:0}
+.rfi-body>div{min-width:0}
+.rfi-text{border-right:2px solid var(--rule)}
+.cell.subj{display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:baseline}
+.cell.subj .lbl{margin:0}
+.subject{font:800 clamp(20px,2.2vw,28px)/1.08 var(--f-form);font-stretch:108%;letter-spacing:-.01em;margin:0;text-wrap:balance}
+.call{font-style:italic}
+.attach{padding:14px;display:grid;gap:12px;align-content:start}
+.attach .encl-sheet{transform:rotate(.5deg)}
+.attach .encl-sheet img{max-height:430px;object-fit:contain;margin:0 auto}
+.ba{border:2px solid var(--rule);background:rgba(252,252,250,.55);min-width:0}
+.attach>*{min-width:0}
+.ba-switch{display:flex;border-bottom:2px solid var(--rule)}
+.ba-switch label{flex:1;display:flex;gap:8px;align-items:center;padding:8px 12px;cursor:pointer;font:700 11px/1 var(--f-form);font-stretch:95%;letter-spacing:.12em;text-transform:uppercase}
+.ba-switch label+label{border-left:2px solid var(--rule)}
+.ba-switch input{appearance:none;width:15px;height:15px;border:1.5px solid var(--rule);margin:0;position:relative;flex:none;cursor:pointer}
+.ba-switch input:checked::before,.ba-switch input:checked::after{content:"";position:absolute;left:50%;top:50%;width:17px;height:2px;background:var(--ink);transform:translate(-50%,-50%) rotate(45deg)}
+.ba-switch input:checked::after{transform:translate(-50%,-50%) rotate(-45deg)}
+.ba-switch input:focus-visible{outline:2px solid var(--stamp);outline-offset:2px}
+.ba-panel{padding:12px 14px;font-size:14px;min-height:150px}
+.ba-panel[hidden]{display:none}
+.ba-panel p{margin:0 0 8px}
+.ba-panel.after{animation:settle .45s cubic-bezier(.16,1,.3,1)}
+@keyframes settle{from{filter:blur(3px);opacity:.4}to{filter:none;opacity:1}}
+.chain{display:flex;flex-wrap:wrap;gap:4px;align-items:center;margin:4px 0 8px}
+.chain span{border:1.5px solid var(--rule);padding:4px 7px 3px;font:700 12px/1 var(--f-type);background:var(--white)}
+.chain i{font-style:normal;color:var(--ink-soft)}
+.chain .hot{border-width:2.5px;background:var(--ink);color:var(--white)}
+.calc{font:400 13px/1.55 var(--f-type);white-space:pre-wrap;margin:0;overflow-x:auto}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 16px;margin:0;font:400 13px/1.45 var(--f-type)}
+.kv dt{font:600 11px/1.6 var(--f-form);font-stretch:88%;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.kv dd{margin:0;min-width:0}
+.kv dt.nc{text-transform:none;letter-spacing:.02em;font-size:12px}
+.kv b,.calc b{font-weight:700;text-decoration:underline;text-underline-offset:2px}
+.slope{display:grid;gap:8px;margin:6px 0 8px}
+.slope .bar{position:relative;height:36px}
+.slope .bar svg{width:100%;height:100%}
+.slope .cap{display:flex;justify-content:space-between;font-size:12.5px}
+
+/* ---------- drawings ---------- */
+.viewer{border:2px solid var(--rule);border-top:0;display:grid;grid-template-columns:240px minmax(0,1fr)}
+.tabs{display:flex;flex-direction:column;border-right:2px solid var(--rule)}
+.tabs button{appearance:none;cursor:pointer;text-align:left;background:transparent;border:0;border-top:1px solid var(--rule);padding:9px 12px;font:inherit;color:inherit;display:grid;gap:2px}
+.tabs button:first-child{border-top:0}
+.tabs button .lbl{margin:0}
+.tabs button span.t{font-size:13.5px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--white)}
+.tabs button[aria-selected="true"] .lbl{color:var(--canary)}
+.tabs button:hover:not([aria-selected="true"]){background:rgba(245,216,79,.3)}
+.stage{padding:clamp(12px,2vw,24px);display:grid;gap:10px;min-width:0;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(42,47,55,.06) 27px 28px)}
+.stage .encl-sheet{transform:none;cursor:zoom-in}
+.stage .encl-sheet img{max-height:68vh;width:auto;margin:0 auto}
+.stage .cap{font-size:13.5px;max-width:80ch}
+dialog.zoom{border:0;padding:0;max-width:96vw;max-height:94vh;background:#fff;box-shadow:var(--shadow)}
+dialog.zoom::backdrop{background:rgba(15,18,22,.78)}
+dialog.zoom img{max-width:96vw;max-height:88vh;width:auto;height:auto}
+dialog.zoom form{display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-top:2px solid var(--rule);font:600 11px/1 var(--f-form);letter-spacing:.1em;text-transform:uppercase;color:#15181d;gap:12px}
+dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfcfa;border:0;padding:7px 12px;font:inherit}
+
+/* ---------- close ---------- */
+.close-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);border:2px solid var(--rule);border-top:0}
+.close-grid>div{min-width:0;padding:16px}
+.close-grid>div+div{border-left:2px solid var(--rule)}
+.bigstamp{font-size:clamp(20px,2.6vw,30px);padding:12px 18px 10px;transform:rotate(-5deg)}
+.note{font-size:13px;max-width:70ch}
+.desknote{max-width:1360px;margin:0 auto;color:var(--desk-ink);font:500 12px/1.5 var(--f-form);display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 18px;padding-top:6px}
+
+/* ---------- responsive ---------- */
+@media (max-width:980px){
+  .trans-body,.qual-grid,.rfi-body,.close-grid{grid-template-columns:minmax(0,1fr)}
+  .trans-left,.rfi-text{border-right:0;border-bottom:2px solid var(--rule)}
+  .trans-body{display:flex;flex-direction:column}
+  .trans-left{display:contents}
+  .trans-left .block:nth-child(1){order:1;border-top:0}
+  .trans-body .enclosure{order:2;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+  .trans-left .block:nth-child(2){order:3}
+  .trans-left .block:nth-child(3){order:4}
+  .trans-left .block:nth-child(4){order:5}
+  .calc{font-size:12px}
+  .encl-foot{grid-template-columns:minmax(0,1fr)}
+  .enclosure .encl-sheet img{max-height:none;width:100%}
+  .qual-grid>div+div,.close-grid>div+div{border-left:0;border-top:2px solid var(--rule)}
+  .viewer{grid-template-columns:minmax(0,1fr)}
+  .tabs{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:2px solid var(--rule)}
+  .tabs button{border-top:0;border-left:1px solid var(--rule);min-width:150px}
+  .tabs button:first-child{border-left:0}
+  .stage .encl-sheet img{max-height:none;width:100%}
+}
+@media (max-width:640px){
+  body{font-size:14.5px}
+  .formhead{grid-template-columns:minmax(0,1fr)}
+  .formtitle{border-right:0;border-bottom:2px solid var(--rule)}
+  .row2{grid-template-columns:minmax(0,1fr)}
+  .row2>.cell:nth-child(2){border-left:0}
+  .dgrid{grid-template-columns:1fr}
+  .sheet{padding-bottom:36px}
+  .log{min-width:0}
+  .log thead{display:none}
+  .log tbody,.log tr{display:block}
+  .log tr.r{display:grid;grid-template-columns:auto auto minmax(0,1fr);gap:2px 12px;padding:9px 10px;border-bottom:1px solid rgba(42,47,55,.28)}
+  .log tr.r td{padding:0;border:0;background:none}
+  .log td.c-id{grid-column:1}
+  .log td.c-disc{grid-column:2}
+  .log td.c-st{grid-column:3;justify-self:end}
+  .log td.c-issue{grid-column:1/-1}
+  .log td.c-code,.log td.c-res{display:none}
+  .log tr.d td{display:block}
+  .m-only{display:block!important}
+  .kv{grid-template-columns:minmax(0,1fr);gap:0}
+  .kv dd{margin-bottom:6px}
+  .enclosure{padding-top:30px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ---------- print (landscape PDF) ---------- */
+@media print{
+  @page{size:11in 8.5in;margin:.35in}
+  :root{--desk:#fff}
+  body{background:#fff;padding:0;zoom:.82}
+  #drawings{break-before:page}
+  .sheet.rfi-sheet,.sheet#transmittal,.sheet#qualifications,.sheet#review{break-inside:avoid}
+  .package{gap:0;max-width:none}
+  .sheet{box-shadow:none;break-after:page;padding:14px 18px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet:last-child{break-after:auto}
+  .logtools .filters,.stampbtn,.copybtn,.ba-switch,.tabs,.desknote{display:none!important}
+  .contact[hidden]{display:grid!important}
+  .log.has-open tr.r{opacity:1!important}
+  .log td{padding:3px 6px;font-size:10px}
+  .log th{position:static}
+  .log tr.d{display:none!important}
+  .logwrap{overflow:visible}
+  .ba-panel[hidden]{display:block!important}
+  .ba-panel{min-height:0;padding:6px 10px;font-size:11px}
+  .ba-panel.before{border-bottom:1px solid var(--rule)}
+  .ba-panel::before{display:block;font:700 9px/1 var(--f-form);letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+  .ba-panel.before::before{content:"Before"}
+  .ba-panel.after::before{content:"After"}
+  .attach .encl-sheet img{max-height:300px}
+  .encl-sheet,.attach .encl-sheet{transform:none;box-shadow:none;border:1px solid #bbb}
+  .viewer{display:block;border:0}
+  .stage{display:block;background:none;padding:0}
+  .stage .encl-sheet,.stage .cap{display:none}
+  .printset{display:grid!important;grid-template-columns:1fr 1fr;gap:10px}
+  .printset figure{margin:0;break-inside:avoid;border:1px solid #bbb;padding:6px}
+  .printset img{max-height:3.1in;width:auto;margin:0 auto}
+  .printset figcaption{font:600 9px/1.3 var(--f-form);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
+  h1.name{font-size:54px}
+  .trans-body{display:grid;grid-template-columns:.9fr 2.1fr}
+  .trans-left{display:flex;flex-direction:column}
+  .trans-left .block,.trans-body .enclosure{order:0}
+  .trans-body .enclosure{border-top:0;border-bottom:0}
+  .encl-foot{grid-template-columns:minmax(0,1fr) minmax(240px,.85fr)}
+  .enclosure .encl-sheet img{max-height:4.3in!important;width:auto!important}
+  .viewer{grid-template-columns:1fr}
+  .kv{grid-template-columns:max-content minmax(0,1fr);gap:3px 14px}
+  .rfi-body,.qual-grid,.close-grid{grid-template-columns:1.05fr 1fr}
+  .trans-left,.rfi-text{border-right:2px solid var(--rule);border-bottom:0}
+  .qual-grid>div+div,.close-grid>div+div{border-left:2px solid var(--rule);border-top:0}
+  .enclosure .encl-sheet img{max-height:5.1in;width:auto;margin:0 auto}
+}
+.printset{display:none}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <filter id="rubber" x="-5%" y="-5%" width="110%" height="110%">
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7" result="n"/>
+    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -2.2 1.35" result="m"/>
+    <feComposite in="SourceGraphic" in2="m" operator="in"/>
+  </filter>
+  <symbol id="clip" viewBox="0 0 30 70"><path d="M10 64V14a5 5 0 0 1 10 0v44a8 8 0 0 1-16 0V10a11 11 0 0 1 22 0v42" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+</svg>
+
+<main class="package">
+
+<!-- ================= TRANSMITTAL ================= -->
+<section class="sheet" id="transmittal" aria-labelledby="who">
+  <div class="formhead">
+    <p class="formtitle">Transmittal</p>
+    <div class="cells">
+      <div class="cell"><span class="lbl">Transmittal no.</span><span class="val">KC-RES-05-T01</span></div>
+      <div class="cell"><span class="lbl">Date</span><span class="val">October 2026</span></div>
+      <div class="cell"><span class="lbl">Sent via</span><span class="val">Link · PDF attachment</span></div>
+      <div class="cell"><span class="lbl">Sheets</span><span class="val">10 sheets + 8 drawings</span></div>
+    </div>
+  </div>
+  <div class="row2 ruled">
+    <div class="cell"><span class="lbl">To</span><span class="val">Hiring team · MEP / BIM group, Metro Vancouver</span></div>
+    <div class="cell"><span class="lbl">From</span><span class="val">Kenneth Chow · Burnaby, BC · +1 778-791-3768 · wmchow5@gmail.com</span></div>
+  </div>
+  <div class="trans-body">
+    <div class="trans-left">
+      <div class="block">
+        <h1 class="name" id="who">Kenneth Chow</h1>
+        <p class="re"><b>Re:</b> MEP technician / MEP modeler roles, and coordinator roles where they fit. Enclosed is my BCIT residential MEP model and the code review I ran on it, item by item.</p>
+      </div>
+      <div class="block">
+        <span class="lbl">Items enclosed</span>
+        <table class="items">
+          <thead><tr><th>Encl.</th><th>Description</th></tr></thead>
+          <tbody>
+            <tr><td>01</td><td>3D MEP coordination model, KC-RES-05 (this page)</td></tr>
+            <tr><td><a href="#qualifications">02</a></td><td>Applicant qualifications and model register</td></tr>
+            <tr><td><a href="#log">03</a></td><td>RFI log: 50 issues raised, 50 closed, 1 reopened on re-check</td></tr>
+            <tr><td><a href="#rfis">04</a></td><td>Six RFIs in full, with code basis and before / after</td></tr>
+            <tr><td><a href="#drawings">05</a></td><td>Eight drawings exported from the live model</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="block">
+        <span class="lbl">Action requested</span>
+        <div class="checks">
+          <div class="chk"><span class="box x" aria-hidden="true"></span><span>Review the model and the decisions</span></div>
+          <div class="chk"><span class="box x" aria-hidden="true"></span><span>Invite to interview</span></div>
+          <div class="chk"><span class="box" aria-hidden="true"></span><span>Revise and resubmit (tell me what to fix)</span></div>
+        </div>
+      </div>
+    </div>
+    <figure class="enclosure" style="margin:0">
+      <div class="tab"><span><b>Encl. 01</b> · 3D MEP coordination · view C-3D-OVERVIEW</span><span>Exported from Revit 2027, 2 Oct 2026</span></div>
+      <div class="encl-sheet">
+        <svg class="clip" aria-hidden="true"><use href="#clip"/></svg>
+        <img src="assets/model-overview.png" width="1816" height="1434" alt="Isometric 3D view of the KC-RES-05 house with its MEP systems: sanitary and vent piping, domestic hot and cold water, fire sprinkler piping, ductwork for the HRV, refrigerant line sets to four wall-mounted heat pump heads, and the basement plant.">
+      </div>
+      <div class="encl-foot">
+        <figcaption class="remarks">
+          <span class="lbl">Remarks</span>
+          <p>One-storey house on a basement, Burnaby BC. HVAC, plumbing, fire protection and electrical in one Revit model: 391 pipes (about 451 m), 26 circuits, 28 view templates, 8 sheets.</p>
+        </figcaption>
+        <div class="action">
+          <button class="stampbtn" type="button" id="stamp-top" aria-pressed="false" aria-controls="contact-top">
+            <span class="lbl">Reviewer stamp</span>
+            <span class="how">Press to stamp “Reviewed” and show my contact details.</span>
+            <span class="stampmark landed" aria-hidden="true">Reviewed<small>invite to interview</small></span>
+          </button>
+          <div class="contact" id="contact-top" hidden>
+            <div class="line"><span class="lbl" style="margin:0">Email</span><output id="em1">wmchow5@gmail.com</output><button class="copybtn" type="button" data-copy="wmchow5@gmail.com">Copy</button></div>
+            <div class="line"><span class="lbl" style="margin:0">Phone</span><output>+1 778-791-3768</output><button class="copybtn" type="button" data-copy="+17787913768">Copy</button></div>
+          </div>
+        </div>
+      </div>
+    </figure>
+  </div>
+  <span class="copy">White · firm copy</span>
+</section>
+
+<!-- ================= QUALIFICATIONS ================= -->
+<section class="sheet canary" id="qualifications" aria-labelledby="q-title">
+  <div class="formhead">
+    <h2 class="formtitle" id="q-title">Applicant qualifications</h2>
+    <div class="cells">
+      <div class="cell"><span class="lbl">Encl.</span><span class="val">02</span></div>
+      <div class="cell"><span class="lbl">Applicant</span><span class="val">Kenneth Chow</span></div>
+      <div class="cell"><span class="lbl">Based in</span><span class="val">Burnaby, BC</span></div>
+    </div>
+  </div>
+  <div class="qual-grid">
+    <div>
+      <div class="field"><span class="lbl">Training</span><p>Building Information Modeling (BIM) studies, BCIT, 2026. Bachelor of Engineering (Honours), Electronic and Communications, Hong Kong, 2015.</p></div>
+      <div class="field"><span class="lbl">Experience</span><p>Project Coordinator &amp; Electronic Engineer (ELV systems), Shun Hing Engineering Contracting, Hong Kong, Nov 2020 – Sep 2023. Layout drawings, riser diagrams and shop drawings for access control, CCTV and intercom; RFIs, submittals and design markups; wall-cavity checks and power load calculations.</p></div>
+      <div class="field"><span class="lbl">What that means here</span><p>I have run the paperwork this page is built from. On KC-RES-05 I applied the same habit to my own model: raise the issue, cite the code, propose options, record the decision.</p></div>
+      <div class="field"><span class="lbl">Codes worked to on this model</span><p>BC Building Code 2024 Part 9 · BC Plumbing Code · Canadian Electrical Code (as adopted in BC) · NFPA 13D · CSA F280, F326, B52 · CAN/ULC-S553 · Burnaby waterworks bylaw.</p></div>
+      <div class="field"><span class="lbl">Software</span><p>Autodesk Revit (MEP: piping, ducts, circuits, panel schedules, view templates, families) · AutoCAD · Revit API checks through pyRevit. Not yet used: <span class="notyet">Navisworks</span>, <span class="notyet">ACC</span>.</p></div>
+      <div class="field"><span class="lbl">How the review was done</span><p>The geometry and code checks were scripted through the Revit API with an AI assistant (Claude). I set the rules, chose every option and checked each fix in the model. I can walk through any item on this page.</p></div>
+    </div>
+    <div>
+      <div class="field"><span class="lbl">Model register · KC-RES-05</span></div>
+      <table class="register">
+        <tbody>
+          <tr><td>Pipes</td><td>391 · about 451 m</td></tr>
+          <tr><td>Electrical circuits</td><td>26 on panel P1 (200 A)</td></tr>
+          <tr><td>View templates / filters</td><td>28 / 13</td></tr>
+          <tr><td>Sheets</td><td>8</td></tr>
+          <tr><td>Revit warnings</td><td>2 (both from placeholder families)</td></tr>
+          <tr><td>Issues raised / closed</td><td>50 / 50</td></tr>
+          <tr><td>Kept by design (coursework)</td><td>3</td></tr>
+          <tr><td>Reopened on re-check</td><td>1 (SD1, see R-01)</td></tr>
+          <tr><td>Backups before each change</td><td>one per item</td></tr>
+        </tbody>
+      </table>
+      <div class="field"><span class="lbl">Coursework note</span><p>The Daikin equipment, the dishwasher location and the sprinkler flows come from the BCIT brief. Where I changed coursework equipment (heat-pump heads, M-09) the log says so.</p></div>
+    </div>
+  </div>
+  <span class="copy">Canary · applicant copy</span>
+</section>
+
+<!-- ================= RFI LOG ================= -->
+<section class="sheet" id="log" aria-labelledby="log-title">
+  <div class="formhead">
+    <h2 class="formtitle" id="log-title">RFI log</h2>
+    <div class="cells">
+      <div class="cell"><span class="lbl">Encl.</span><span class="val">03</span></div>
+      <div class="cell"><span class="lbl">Project</span><span class="val">KC-RES-05</span></div>
+      <div class="cell"><span class="lbl">Raised by</span><span class="val">K. Chow (self-review)</span></div>
+      <div class="cell"><span class="lbl">Period</span><span class="val">28 Sep – 2 Oct 2026</span></div>
+    </div>
+  </div>
+  <div class="logtools">
+    <div class="filters" role="group" aria-label="Filter the log">
+      <button class="filt" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="filt" type="button" data-f="C" aria-pressed="false">Critical</button>
+      <button class="filt" type="button" data-f="M" aria-pressed="false">Major</button>
+      <button class="filt" type="button" data-f="V" aria-pressed="false">Verify</button>
+      <button class="filt" type="button" data-f="P" aria-pressed="false">Practical</button>
+      <button class="filt" type="button" data-f="open" aria-pressed="false">Open</button>
+    </div>
+    <span class="tally" id="tally" aria-live="polite">51 rows</span>
+  </div>
+  <div class="logwrap">
+    <table class="log" id="logtable">
+      <thead><tr><th>RFI</th><th>Disc.</th><th>Issue</th><th>Code basis</th><th>Resolution</th><th>Status</th></tr></thead>
+      <tbody id="logbody"></tbody>
+    </table>
+  </div>
+  <span class="copy">White · firm copy</span>
+</section>
+
+<!-- ================= RFIs ================= -->
+<div class="rfis" id="rfis"></div>
+
+<!-- ================= DRAWINGS ================= -->
+<section class="sheet" id="drawings" aria-labelledby="dw-title">
+  <div class="formhead">
+    <h2 class="formtitle" id="dw-title">Drawing enclosures</h2>
+    <div class="cells">
+      <div class="cell"><span class="lbl">Encl.</span><span class="val">05 A–H</span></div>
+      <div class="cell"><span class="lbl">Source</span><span class="val">Revit views, exported 2 Oct 2026</span></div>
+      <div class="cell"><span class="lbl">Note</span><span class="val">Title blocks cropped</span></div>
+    </div>
+  </div>
+  <div class="viewer">
+    <div class="tabs" role="tablist" aria-label="Drawings" id="tabs"></div>
+    <div class="stage">
+      <div class="tab"><span id="stage-tab"></span><span>Click the drawing to enlarge</span></div>
+      <div class="encl-sheet" id="stage-sheet" role="button" tabindex="0" aria-label="Enlarge drawing">
+        <img id="stage-img" src="assets/plan-power.png" alt="">
+      </div>
+      <p class="cap" id="stage-cap"></p>
+      <div class="printset" id="printset"></div>
+    </div>
+  </div>
+  <span class="copy">White · firm copy</span>
+</section>
+
+<!-- ================= CLOSE ================= -->
+<section class="sheet canary" id="review" aria-labelledby="rv-title">
+  <div class="formhead">
+    <h2 class="formtitle" id="rv-title">Reviewer action</h2>
+    <div class="cells">
+      <div class="cell"><span class="lbl">Transmittal no.</span><span class="val">KC-RES-05-T01</span></div>
+      <div class="cell"><span class="lbl">Return to</span><span class="val">Kenneth Chow</span></div>
+    </div>
+  </div>
+  <div class="close-grid">
+    <div style="display:grid;gap:14px;align-content:start">
+      <button class="stampbtn" type="button" id="stamp-end" aria-pressed="false" aria-controls="contact-end" style="min-height:120px">
+        <span class="lbl">Stamp and return</span>
+        <span class="how">If this package earns a conversation, stamp it. My details appear below so you can reach me directly.</span>
+        <span class="stampmark landed bigstamp" aria-hidden="true">Reviewed<small>invite to interview</small></span>
+      </button>
+      <div class="contact" id="contact-end" hidden>
+        <div class="line"><span class="lbl" style="margin:0">Email</span><output>wmchow5@gmail.com</output><button class="copybtn" type="button" data-copy="wmchow5@gmail.com">Copy</button></div>
+        <div class="line"><span class="lbl" style="margin:0">Phone</span><output>+1 778-791-3768</output><button class="copybtn" type="button" data-copy="+17787913768">Copy</button></div>
+        <div class="line"><span class="lbl" style="margin:0">Based in</span><output>Burnaby, BC · available for Metro Vancouver</output></div>
+      </div>
+    </div>
+    <div class="note">
+      <span class="lbl">Open items carried forward</span>
+      <p>R-01: smoke alarm SD1 sits about 0.64 m from supply diffuser AT-06; it needs about 0.9 m. Found on my own re-check after the log closed. Fix: move SD1 to about (−3.3, 3.4).</p>
+      <p>Placeholder families (heat pump, valves, shower valve, range hood) stand in for manufacturer families. They cause the 2 remaining Revit warnings.</p>
+      <span class="lbl" style="margin-top:12px">Prepared by</span>
+      <p>Kenneth Chow · BIM &amp; design coordination · BCIT BIM studies 2026. Model review assisted by Claude through the Revit API; every decision is mine and I can explain it.</p>
+    </div>
+  </div>
+  <span class="copy">Canary · return copy</span>
+</section>
+
+</main>
+<p class="desknote"><span>Kenneth Chow · Burnaby, BC · October 2026</span><span>KC-RES-05 · BCIT residential MEP project</span></p>
+
+<dialog class="zoom" id="zoom" aria-label="Enlarged drawing">
+  <img id="zoom-img" src="assets/plan-power.png" alt="">
+  <form method="dialog"><span id="zoom-cap"></span><button type="submit">Close</button></form>
+</dialog>
+
+<script>
+(function(){
+// ---------- data ----------
+const LOG=[
+["C-01","HVAC","No heating: the only outdoor unit was cooling-only","BCBC 9.33 (22 °C)","Heat-pump outdoor unit with FTX heads; toe-kick heater in the bath","placeholder","CU-01 1527078 · HTR-4 1772320","Chose heat pump with backup first; removed the bedroom baseboards once the F280 estimate showed the heat pump covers 3.6 kW."],
+["C-02","FP","Sprinkler SP-07 hidden above the new hall ceiling","NFPA 13D coverage","Sidewall head lowered to 115 mm below the ceiling","closed","SP-07 1602919 · tee 1773550","Kept the designer's sidewall intent instead of switching to a pendent; hydraulic recheck flagged."],
+["C-03","FP","Fire main tees straight off domestic water with no components","NFPA 13D · CSA B64.10","Control valve, backflow, gauge, flow switch, drain & test","placeholder","FP-CV1 1774562 … FP-DT1 1774571","Caught my own ordering error: the flow switch must sit before the drain & test so the test proves the alarm."],
+["C-04","ARCH","Deck guards 914 mm and open over a 2.1 m drop","BCBC 9.8.8","1070 mm guard, balusters 92 mm clear","closed","Guard type 1774794","Closed a 1.3 m gap; later reopened it when the east stair turned up in the Stage 2 model (M-13)."],
+["C-05","ARCH","Exterior stair 610 mm wide, 203 mm run, open risers","BCBC 9.8","12 × 178 / 11 × 255, 934 mm clear, closed risers","closed","Stair 1774935","Kept the stair where it was and moved the outdoor unit, its 8 risers and the disconnect 1.10 m instead."],
+["C-06","ELEC","Bathroom switches inside the shower footprint","CEC · 500 mm from shower","Light switches on the hall side; fan timer 0.91 m from the shower","closed","S4, S5, ST1","A split was more practical than moving everything out of the room."],
+["M-01","PL","About 15 drains at 1 % and 4 at 0 %","BCPC 2.4.8.1","All drains ≤ 3\" at 2 %; condensate also at 2 %","closed","Kitchen, lav, shower, washer branches · IW1–IW4","I asked whether 1 % was legal for condensate. It isn't under BC law, so they went to 2 % with five new corner drops.","feat"],
+["M-02","PL","Shower had no supply; a tempering valve fed nothing","CSA B125.3 · 49 °C","Pressure-balancing shower valve at 1.15 m","placeholder","SV-01 1640402","A tempering valve is a plumber's setting, not the user's control, so it was removed."],
+["M-03","HVAC","No range hood; HRV exhaust pickup over the range","BCBC 9.32 (~50 L/s)","150 cfm ducted hood; pickup moved 1.62 m away","placeholder","RH-01 1778062 · AT-11 1777790","No make-up air needed: the house is all-electric."],
+["M-04","HVAC","No dryer exhaust","BCBC 9.32","100 mm rigid duct, connected to the dryer, to a wall hood","closed","DV-01 1778250 · flex 1779659","I asked for the duct to connect to the dryer itself; the dryer family got a real exhaust connector."],
+["M-05","HVAC","Bathroom exhaust only 40 cfm","BCBC 9.32 (25 L/s)","55 cfm through the HRV boost timer","closed","AT-09 1561511","Rebalanced the HRV instead of adding a fan."],
+["M-06","FA","No smoke alarm outside Bedroom 3","BCBC 9.10.19","SD6 on the vaulted ceiling, 0.82 m from the peak","closed","SD6 1769474","Within 900 mm of the peak, as S553 requires on a slope."],
+["M-07","FA","SD1 0.78 m from the AC-01 discharge","CAN/ULC-S553","Moved to 1.70 m from AC-01","closed","SD1 1749658","See R-01: the move put it near a supply diffuser."],
+["M-08","FA","Smoke alarms reported as not circuited","CEC Section 32","Already on lighting circuits, none on GFCI","closed","SD1–SD6","Checked the model before acting on the report."],
+["M-09","HVAC","No F280 calculation; living-room head undersized","CSA F280","FTX15 × 3 + FTX35 heat-pump heads (coursework deviation)","placeholder","AC-01–AC-04","Ran an F280-style estimate: 3.6 kW heat / 4.6 kW cool. Applied the heat-pump option knowing it departs from the coursework spec.","feat"],
+["M-10","HVAC","R32 charge against the smallest room","CSA B52 / IEC 60335-2-40","2.5 kg charge ≤ 2.80 kg allowed","closed","CU-01 1527078","Traced 55.9 m of liquid line from the model to get the charge.","feat"],
+["M-11","PL","Water heater missing T&P valve, expansion tank, straps","BCPC","T&P valve, ¾\" copper discharge, 2 gal tank; straps noted","closed","TPV-01 1782320 · ET-01 1780313","I noticed the T&P valve itself was never modelled; added a tapping to the family and the valve."],
+["M-12","PL","PVC pipe running through the water heater tank; no floor drain","BCPC traps","Floor drain with P-trap (95 mm seal); stack extended","closed","FD-01 1782449 · trap 1783819","Rejected two trap orientations until the trap sat correctly; wrote the method down as a reusable skill.","feat"],
+["M-13","ARCH","East deck stair missing","BCBC 9.8","5 × 173 / 4 × 280, 1.30 m wide, guards both sides","closed","Stair 1783986","Found it in the Stage 2 reference model."],
+["V-01","ARCH","Basement door 1930 mm high","BCBC Table 9.5.5.1","813 × 1981 door, 187 mm left for the header","closed","Door 1471875",""],
+["V-02","PL","Water service only 0.26 m below grade","Burnaby bylaw 762 mm","Entry lowered to −1.50 m, about 1.0 m cover","closed","WS-01 1602887","Revised once the Stage 2 stair showed the real east grade."],
+["V-03","PL","No cleanout and no sewer connection","BCPC","Cleanout inside on the stack; 4\" sewer at 1 %","closed","CO-01 · BS-01 1784136","An outside cleanout would have been under the deck."],
+["V-04","ARCH","Bedroom egress relies on the sprinkler waiver","BCBC 9.9.10.1","Dependency documented on the windows","documented","W8–W10","Kept the windows; a larger slider is recorded as the alternative."],
+["V-05","PL","Condensate lines 16 mm","Daikin (VP20 / ¾\")","All four lines upsized to ¾\"","closed","IW1–IW4",""],
+["P-01","HVAC","AC-01 cuts into the bedroom ceiling","Daikin ≥ 50 mm top","Lowered 130 mm; line sets kept clear of a vent","closed","AC-01 1524859","Also fixed an overlapping pair of refrigerant lines found on the way."],
+["P-02","HVAC","AC-02 cuts into the ceiling","Daikin ≥ 50 mm top","Lowered 130 mm","closed","AC-02 1525077",""],
+["P-03","HVAC","AC-03 cuts into the ceiling","Daikin ≥ 50 mm top","Lowered 130 mm","closed","AC-03 1525454",""],
+["P-04","HVAC","Outdoor unit embedded in the wall, under the deck","Daikin clearances","Pulled out 100 mm onto a 100 mm pad","closed","CU-01 · PAD-01 1784931",""],
+["P-05","ELEC","Panel P1 runs into the floor joists","CEC 2-308 working space","Moved to the west basement wall, 1 m clear","closed","P1 1785080","All 24 circuits kept their numbers."],
+["P-06","HVAC","HRV intake labelled return air, exhaust as supply","System classification","New Outdoor Air and Exhaust Discharge system types","closed","AT-10 · AT-17",""],
+["P-07","HVAC","Six 5 cfm token exhaust grilles","CSA F326 room rates","Removed; exhaust moved to bath, kitchen, laundry","closed","AT-04, 07, 12–15","I first kept them, asked what the law requires, then removed them: 5 cfm can't be balanced."],
+["P-08","HVAC","Supply air into the laundry","CSA F326","Removed; master bedroom raised to 22 cfm","closed","AT-01",""],
+["P-09","HVAC","HRV exhaust under the deck, near the outdoor unit","HRV manual","HRV rotated and moved; grilles on the west wall 2.47 m apart","closed","HRV-01 1547124","Compared five layouts; suggested rotating the HRV myself and chose the shortest outdoor ducting.","feat"],
+["P-10","HVAC","No HRV condensate drain","BCPC air gap ≥ 25 mm","Condensate pump to the receptor, 26 mm air gap","closed","CP-01 1788255",""],
+["P-11","PL","Washer piped rigidly from its base","BCPC traps and air break","Washer box, 2\" standpipe and trap","closed","WB-01 1788400","Set the vent system type in the Revit UI after API attempts merged it with the drain."],
+["P-12","PL","No main shut-off, check or isolation valves","BCPC (PRV > 550 kPa)","Shut-off, check and isolation valves added","placeholder","MSV-01 · CKV-01 · IV-01",""],
+["P-13","PL","Dishwasher 3.4 m from the sink","BCPC trap and vent","Kept: coursework location; drain checked compliant","kept","DW-01 1406110","Location is not a code issue; the trap, vent and backflow protection are."],
+["P-14","FP","Sprinkler flows 32–43 gpm per head","NFPA 13D minimums","Kept: coursework values, conservative","kept","SP-01–SP-10","More flow than the 13D minimum is conservative, not illegal."],
+["P-15","FP","Fire pipe type was the generic “Standard”","NFPA 13D (copper K)","Own Copper Type K fire-protection type","closed","49 FP pipes",""],
+["P-16","FP","Fire pipes above ceilings may freeze","NFPA 13D","Warm-side installation notes","documented","FP mains","A reroute through interior walls is recorded as the stronger option."],
+["P-17","FP","Light L1 50 mm from sprinkler SP-01","13D obstruction (24\")","Light moved 0.6 m; 0.65 m clear","closed","L1 1406301",""],
+["P-18","ELEC","Lights floating in vaulted rooms","Model accuracy","Pendant types with stem lengths","closed","L6–L10",""],
+["P-19","ELEC","Receptacle R25 60 mm from the wall end","100 mm from jamb or end","Moved with switch S9; 115 mm","closed","R25 1757412",""],
+["P-20","ELEC","Switches hidden in the laundry alcove","Latch-side placement","Moved to the alcove wall; hinge side flagged","closed","S10b · S12",""],
+["P-21","ELEC","100 A service with little margin","CEC 8-200","200 A service; 62 % with a future EV","closed","P1 1785080","93 A on 100 A was legal; I set an 80 % target that includes a future EV charger.","feat"],
+["P-22","ELEC","No AFCI, weather-resistant or battery-backup specs","CEC 26-658 · BCBC 9.10.19","Specs on every circuit and device type","closed","Circuits 1–28",""],
+["P-23","BIM","Confusing level names; elements without a level","BIM standard","Levels renamed; 117 schedule levels set","closed","Levels",""],
+["P-24","BIM","Metric family names in an imperial project","BIM standard","Renamed to imperial","closed","Families",""],
+["P-25","BIM","Window type names didn't match sizes","BIM standard","Renamed to real sizes","closed","W8–W13",""],
+["P-26","BIM","Architecture and MEP in one file, no links","BIM practice","Kept: coursework single file; split plan written","kept","Whole model","For a real project: ARCH, MECH, PLUMB-FP and ELEC linked on shared coordinates."],
+["R-01","FA","SD1 about 0.64 m from supply diffuser AT-06","CAN/ULC-S553 (~0.9 m)","Found on re-check; move to about (−3.3, 3.4)","open","SD1 1749658","Raised by my own second review after the log closed."]
+];
+const STATUS={closed:"Closed",placeholder:"Closed · placeholder family",kept:"Kept by design",documented:"Documented",open:"Open"};
+const RFIS=[
+{id:"C-03",copy:"pink",disc:"Fire protection",ref:"FP-CV1 1774562 · FP-BFP1 1774565 · FP-PG1 1774568 · FP-FS1 1774574 · FP-DT1 1774571",
+ subject:"Fire sprinkler main fed straight off domestic water",
+ q:"The 1¼\" sprinkler main teed off the domestic cold water through a transition fitting. No backflow preventer, control valve, gauge or drain & test.",
+ opts:"1. Add the standard 13D riser components. 2. Treat it as a multipurpose system. Rejected: the sprinkler piping dead-ends, so water never circulates.",
+ resp:"Five in-line placeholders on the fire main in the basement, with the drain & test discharging over the floor drain. Then I swapped two of them (see after).",
+ code:"NFPA 13D riser components and waterflow alarm · BC Plumbing Code backflow, CSA B64.10 (type set by the City).",
+ call:"Asking what the drain pipe was for exposed the real error: test water left at the drain & test before reaching the flow switch.",
+ img:"assets/case-c03.png",w:1113,h:1095,alt:"3D close-up of the basement water heater and the fire service riser with its in-line valves.",
+ before:'<div class="chain"><span>DCW tee</span><i>→</i><span>fire main</span><i>→</i><span>sprinklers</span></div><p>No way to isolate, test, or stop stagnant sprinkler water flowing back into drinking water.</p><p>First build order: CV → BFP → PG → <b>D&amp;T → FS</b>. A flow test would never pass the switch.</p>',
+ after:'<div class="chain"><span>DCW tee</span><i>→</i><span>CV</span><i>→</i><span>BFP</span><i>→</i><span>PG</span><i>→</i><span class="hot">FS</span><i>→</i><span class="hot">D&amp;T</span><i>→</i><span>up</span></div><p>Opening the drain &amp; test now sends water through the flow switch first, so the test proves the alarm.</p>'},
+{id:"M-01",copy:"",disc:"Plumbing",ref:"Kitchen and DW main · KS-01 arm · washer branch · shower · condensate IW1–IW4",
+ subject:"Drainage at 1 % and 0 % slope",
+ q:"About 15 horizontal 1½\" and 2\" drains were at 1 %, four at 0 %, and the four condensate lines at 1 %.",
+ opts:"Re-slope sanitary only and leave condensate at 1 % (common HVAC practice), or follow the code for both.",
+ resp:"Every drain 3\" and under now at 2 %, upstream ends raised so the 4\" building drain and its exit stay put. Condensate at 2 % with five new corner drops to clear crossings.",
+ code:"BC Plumbing Code 2.4.8.1: drains ≤ 3\" at least 1 in 50 (2 %); over 3\" may be 1 in 100. Condensate to a receptor is indirect waste, which is drainage pipe.",
+ call:"I asked: “under BC law, is 1 % fine? If not, follow the law.”",
+ img:"assets/sys-dwv.png",w:1814,h:1444,alt:"3D view of the sanitary drainage and vent system of the house.",
+ before:'<div class="slope"><div class="bar"><svg viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="14" x2="400" y2="18" stroke="currentColor" stroke-width="5"/><line x1="0" y1="30" x2="400" y2="30" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4"/></svg></div><div class="cap"><span>2" branch</span><span><b>1 %</b> · 4 at 0 %</span></div></div><p>Condensate: 16 mm lines at 1 %.</p>',
+ after:'<div class="slope"><div class="bar"><svg viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="6" x2="400" y2="30" stroke="currentColor" stroke-width="7"/><line x1="0" y1="30" x2="400" y2="30" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4"/></svg></div><div class="cap"><span>2" branch</span><span><b>2 %</b> (¼" per ft)</span></div></div><p>Exit invert unchanged at the time; 4" building drain stays at 1 %. Clash check clean.</p>'},
+{id:"M-09 · M-10",copy:"pink",disc:"HVAC",ref:"AC-01 1524859 · AC-02 1525077 · AC-03 1525454 · AC-04 1526631 · CU-01 1527078",
+ subject:"Heat-pump sizing and the R32 charge limit",
+ q:"No CSA F280 calculation. The living room's 2.0 kW head served a 35 m² room with a 5.9 m vault. The heads were cooling-only, so the house had no real heat.",
+ opts:"A. Heat-pump FTX heads on a heat-pump outdoor unit. B. Keep the coursework cooling-only heads and heat with about 2.3 kW of extra baseboard, which pushes the panel past 100 A.",
+ resp:"Option A, recorded as a deviation from the BCIT equipment spec (FTC15NV14 × 3 + FTC20NV14). Then checked the R32 charge against the smallest room.",
+ code:"BCBC 9.33 heating to CSA F280 · CSA B52 / IEC 60335-2-40 charge limit for A2L refrigerant.",
+ call:"“The AC units are a coursework requirement… but I know option A is more efficient. Go ahead anyway.”",
+ img:"assets/case-m10.png",w:1431,h:2016,alt:"3D close-up of the outdoor heat pump on its pad under the deck, with the refrigerant risers rising in the wall.",
+ before:'<p>AC-04 FTC20: <b>2.0 kW</b> against an open-zone cooling load of <b>3.3 kW</b>.</p><p>All four heads FTC: cooling only. Heating came from 500 W baseboards.</p>',
+ after:`<dl class="kv"><dt>F280-style estimate</dt><dd>house 3.6&nbsp;kW heat / 4.6&nbsp;kW cool</dd><dt>Heads</dt><dd>FTX15 × 3 + FTX35</dd><dt>Liquid lines</dt><dd>18.9 + 5.8 + 8.9 + 22.3 = 55.9&nbsp;m</dd><dt>Charge</dt><dd>2.0 + (55.9 − 30) × 0.02 = <b>2.5&nbsp;kg</b></dd><dt class="nc">m<sub>max</sub> (Bedroom 1)</dt><dd>2.5 × 0.307^1.25 × 1.8 × √7.44 = <b>2.80&nbsp;kg</b></dd><dt>Result</dt><dd>2.5 ≤ 2.80, passes with no mitigation</dd></dl>`},
+{id:"M-12",copy:"",disc:"Plumbing",ref:"FD-01 1782449 · trap 1783819 · tee 1782637 · TPV-01 1782320 · WH-01 1602886",
+ subject:"A pipe through the water heater, and no floor drain",
+ q:"A 1\" PVC pipe hung off the water heater's drain-valve connector with its centreline inside the tank wall. Its comment said it was the T&P discharge. The basement had no floor drain for it.",
+ opts:"(a) Extend the building drain stack down and drain a floor drain by gravity. (b) A sump and pump.",
+ resp:"Deleted the pipe; added a real T&P valve with a ¾\" copper discharge; floor drain FD-01 with a P-trap, 3\" drain at 2 % to a new sanitary tee; stack extended from −2.19 to −2.95 m.",
+ code:"BC Plumbing Code: T&P discharge full size and temperature-rated, no valves; every fixture trapped, seal ≥ 38 mm; floor drains need trap seal protection.",
+ call:"I rejected two trap placements, then placed the trap myself the right way up and had the method written into a reusable skill.",
+ img:"assets/case-m12.png",w:2109,h:2109,alt:"3D close-up of the basement floor drain, its P-trap and drain line to the building stack, beside the water heater.",
+ before:'<p>1" <b>PVC</b> on the tank\'s <b>drain valve</b>, clipping the tank. PVC is not rated for 99 °C relief water.</p><p>No floor drain; building drain exit only 0.14 m below the floor.</p>',
+ after:'<div class="chain"><span>WH-01</span><i>→</i><span class="hot">TPV-01</span><i>→</i><span>¾" Cu</span><i>→</i><span>air gap</span><i>→</i><span>FD-01</span><i>→</i><span class="hot">P-trap</span><i>→</i><span>stack</span></div><p>Trap seal about 95 mm; trap seal primer noted on FD-01.</p>'},
+{id:"P-09",copy:"pink",disc:"HVAC",ref:"HRV-01 1547124 · AT-10 1567942 · AT-17 1785468 · REC-HRV 1785491 · CP-01 1788255",
+ subject:"HRV exhaust discharging under the deck",
+ q:"The HRV exhaust grille sat under the deck, 0.53 m from the outdoor heat pump's clearance zone.",
+ opts:"Keep it · slide it east on the south wall · run a long duct to the west wall · rotate the HRV · rotate and move the HRV. Compared in one table.",
+ resp:"Rotated HRV-01 90° and moved it beside the west wall: both grilles on the west wall, 2.47 m apart, out from under the deck. Then added the receptacle and condensate pump it was missing.",
+ code:"HRV manufacturer separation (≥ 1.8 m) and height above grade (≥ 450 mm); keep moist exhaust off deck framing and the heat-pump coil.",
+ call:"The discharge duct looked too long, so I suggested rotating the HRV, then asked about its power socket.",
+ img:"assets/case-p09.png",w:1710,h:1452,alt:"3D close-up of the HRV in the basement with its four duct connections and the two outdoor grilles on the west wall.",
+ before:'<p>Exhaust under the deck, <b>0.53 m</b> from the heat-pump clearance zone. Moist air on deck joists, frost on the coil.</p><p>Outdoor ducting about 4.5 m. No receptacle and no condensate drain at the HRV.</p>',
+ after:'<p>Grilles on the west wall, <b>2.47 m</b> apart; discharge about 3.5 m from the heat pump.</p><p>Outdoor ducting about 3.0 m straight. Dedicated receptacle REC-HRV; condensate pump CP-01 to the receptor with a 26 mm air gap.</p>'},
+{id:"P-21",copy:"",disc:"Electrical",ref:"Panel P1 1785080 · spare slots 30/32",
+ subject:"Service size and a future EV charger",
+ q:"The 100 A service had little room for heating, a heat pump or an EV charger.",
+ opts:"A. Keep 100 A with an EV energy-management system. B. Upgrade to 200 A.",
+ resp:"Ran the CEC 8-200 calculation from the model's loads. 93 A on 100 A complies. I set my own target of ≤ 80 % including a future EV, so P1 went to 200 A with a reserved 40 A two-pole spare.",
+ code:"CEC 8-200 single-dwelling calculation: service rating ≥ calculated load. The 80 % rule (8-104) is for continuous loads, not this calculation.",
+ call:"“93 % of the load would offend any laws?” No. Then: “I would like to make it 80 % including future EV charging.”",
+ img:"",w:0,h:0,alt:"",
+ before:`<pre class="calc">Area   89.6 + 75 % × 89.6 = 156.8 m²
+Basic  5 000 + 1 000            =  6 000 W
+Heat pump + HTR-4               =  4 000 W
+Range (≤ 12 kW)                 =  6 000 W
+Water heater                    =  4 500 W
+25 % of dryer, pump             =  1 750 W
+                                  22 250 W ÷ 240 V = <b>93 A on 100 A</b></pre>`,
+ after:`<pre class="calc">22 250 W + EV 7 680 W = 29 930 W ÷ 240 V = 125 A
+Service now 200 A → <b>62 %</b> (target ≤ 80 %)
+Slots 30/32 reserved: 40 A 2-pole EV spare, no outlet yet</pre>`}
+];
+const DRAW=[
+["A","Power plan, Level 1","assets/plan-power.png","Receptacles, dedicated outlets and circuit tags. Counter receptacles on three 20 A circuits of two; every point within 900 mm."],
+["B","Lighting plan, Level 1","assets/plan-lighting.png","Switching with 3-way / 4-way control for the living room and snapped switch legs."],
+["C","Sanitary drainage and vent","assets/plan-dwv.png","DWV layout after the 2 % re-grade (M-01)."],
+["D","Domestic water","assets/plan-water.png","Hot and cold distribution from the basement plant."],
+["E","HVAC, Level 1","assets/plan-hvac.png","HRV supply and exhaust after rebalancing (P-07, P-08)."],
+["F","Fire sprinklers, Level 1","assets/plan-fp.png","Head layout and 13D distribution."],
+["G","Basement plant","assets/plan-basement.png","HRV, water service, fire riser and panel P1 in the basement."],
+["H","Coordination section 01","assets/section-01.png","All systems through the house in section."]
+];
+
+// ---------- log ----------
+const body=document.getElementById('logbody'), table=document.getElementById('logtable');
+LOG.forEach(r=>{
+  const [id,disc,issue,code,res,st,ref,note,feat]=r;
+  const tr=document.createElement('tr'); tr.className='r'; tr.id=id; tr.dataset.p=id[0]; tr.dataset.st=st;
+  tr.innerHTML=`<td class="id c-id"><button type="button" aria-expanded="false" aria-controls="d-${id}">${id}</button>${feat?'<span class="feat">full RFI</span>':''}</td><td class="c-disc">${disc}</td><td class="c-issue">${issue}</td><td class="c-code">${code}</td><td class="c-res">${res}</td><td class="c-st"><span class="st ${st}">${STATUS[st]}</span></td>`;
+  const d=document.createElement('tr'); d.className='d'; d.id='d-'+id; d.hidden=true; d.dataset.p=id[0]; d.dataset.st=st;
+  d.innerHTML=`<td colspan="6"><div class="dgrid"><p class="m-only full"><span class="lbl">Code basis</span>${code}</p><p class="m-only full"><span class="lbl">Resolution</span>${res}</p><p><span class="lbl">Reference</span>${ref}</p><p><span class="lbl">Status</span>${STATUS[st]}</p>${note?`<p class="full"><span class="lbl">Note</span>${note}</p>`:''}${feat?`<p class="full"><a href="#rfi-${id}">Read RFI ${id} in full</a></p>`:''}</div></td>`;
+  body.append(tr,d);
+});
+function closeAll(except){
+  body.querySelectorAll('tr.open').forEach(t=>{ if(t!==except && t!==except?.nextSibling){ t.classList.remove('open'); }});
+  body.querySelectorAll('tr.d').forEach(t=>{ if(t!==except?.nextSibling) t.hidden=true; });
+  body.querySelectorAll('td.id button').forEach(b=>{ if(!except || b.closest('tr')!==except) b.setAttribute('aria-expanded','false'); });
+}
+function toggle(tr,force){
+  const d=tr.nextElementSibling, open=force!==undefined?force:!tr.classList.contains('open');
+  closeAll(open?tr:null);
+  tr.classList.toggle('open',open); d.classList.toggle('open',open); d.hidden=!open;
+  tr.querySelector('td.id button').setAttribute('aria-expanded',String(open));
+  table.classList.toggle('has-open',open);
+}
+body.addEventListener('click',e=>{ if(e.target.closest('a')) return; const tr=e.target.closest('tr.r'); if(tr) toggle(tr); });
+const filts=[...document.querySelectorAll('.filt')], tally=document.getElementById('tally');
+filts.forEach(b=>b.addEventListener('click',()=>{
+  filts.forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  const f=b.dataset.f; let n=0; toggle(body.querySelector('tr.r'),false);
+  body.querySelectorAll('tr.r').forEach(tr=>{ const show=f==='all'||(f==='open'?tr.dataset.st==='open':tr.dataset.p===f); tr.hidden=!show; if(show)n++; tr.nextElementSibling.hidden=true; });
+  tally.textContent=n+(n===1?' row':' rows');
+}));
+
+// ---------- RFIs ----------
+const host=document.getElementById('rfis');
+RFIS.forEach((c,i)=>{
+  const key=c.id.split(' ')[0];
+  const s=document.createElement('section'); s.className='sheet rfi-sheet '+c.copy; s.id='rfi-'+key; s.setAttribute('aria-labelledby','t-'+key);
+  const att=c.img?`<div class="encl-sheet"><svg class="clip" aria-hidden="true"><use href="#clip"/></svg><img src="${c.img}" width="${c.w}" height="${c.h}" loading="lazy" alt="${c.alt}"></div>`:'';
+  s.innerHTML=`
+  <div class="formhead"><p class="formtitle">Request for information</p>
+    <div class="cells"><div class="cell"><span class="lbl">RFI no.</span><span class="val">${c.id}</span></div><div class="cell"><span class="lbl">Encl.</span><span class="val">04-${i+1}</span></div><div class="cell"><span class="lbl">Discipline</span><span class="val">${c.disc}</span></div><div class="cell"><span class="lbl">Status</span><span class="val">Closed</span></div></div></div>
+  <div class="ruled"><div class="cell subj"><span class="lbl">Subject</span><h3 class="subject" id="t-${key}">${c.subject}</h3></div></div>
+  <div class="rfi-body">
+    <div class="rfi-text">
+      <div class="field"><span class="lbl">Question</span><p>${c.q}</p></div>
+      <div class="field"><span class="lbl">Options considered</span><p>${c.opts}</p></div>
+      <div class="field"><span class="lbl">Response</span><p>${c.resp}</p></div>
+      <div class="field"><span class="lbl">Code basis</span><p>${c.code}</p></div>
+      <div class="field"><span class="lbl">My call</span><p class="call">${c.call}</p></div>
+      <div class="field"><span class="lbl">Reference</span><p style="font-size:13px">${c.ref}</p></div>
+    </div>
+    <div class="attach">
+      <div class="ba">
+        <div class="ba-switch" role="radiogroup" aria-label="Model state for RFI ${c.id}">
+          <label><input type="radio" name="ba-${key}" id="ba-${key}-b" value="before">Before</label>
+          <label><input type="radio" name="ba-${key}" id="ba-${key}-a" value="after" checked>After</label>
+        </div>
+        <div class="ba-panel before" hidden>${c.before}</div>
+        <div class="ba-panel after">${c.after}</div>
+      </div>
+      ${att}
+    </div>
+  </div>
+  <span class="copy">${c.copy==='pink'?'Pink · file copy':'White · firm copy'}</span>`;
+  host.append(s);
+  s.querySelectorAll('.ba-switch input').forEach(inp=>inp.addEventListener('change',()=>{
+    const after=inp.value==='after'; const pb=s.querySelector('.ba-panel.before'), pa=s.querySelector('.ba-panel.after');
+    pb.hidden=after; pa.hidden=!after; const shown=after?pa:pb; shown.style.animation='none'; shown.offsetHeight; shown.style.animation='settle .45s cubic-bezier(.16,1,.3,1)';
+  }));
+});
+
+// ---------- drawings ----------
+const tabs=document.getElementById('tabs'), img=document.getElementById('stage-img'), cap=document.getElementById('stage-cap'), stab=document.getElementById('stage-tab'), ps=document.getElementById('printset');
+function show(i){
+  const d=DRAW[i]; img.src=d[2]; img.alt='Drawing '+d[0]+': '+d[1]; cap.textContent=d[3]; stab.innerHTML='<b>Encl. 05-'+d[0]+'</b> · '+d[1];
+  tabs.querySelectorAll('button').forEach((b,j)=>{ b.setAttribute('aria-selected',String(j===i)); b.tabIndex=j===i?0:-1; });
+}
+DRAW.forEach((d,i)=>{
+  const b=document.createElement('button'); b.type='button'; b.role='tab'; b.id='tab-'+d[0];
+  b.innerHTML=`<span class="lbl">Encl. 05-${d[0]}</span><span class="t">${d[1]}</span>`;
+  b.addEventListener('click',()=>show(i));
+  b.addEventListener('keydown',e=>{ if(e.key==='ArrowDown'||e.key==='ArrowRight'){e.preventDefault();const n=(i+1)%DRAW.length;show(n);tabs.children[n].focus();} if(e.key==='ArrowUp'||e.key==='ArrowLeft'){e.preventDefault();const n=(i-1+DRAW.length)%DRAW.length;show(n);tabs.children[n].focus();} });
+  tabs.append(b);
+  const f=document.createElement('figure'); f.innerHTML=`<img src="${d[2]}" loading="lazy" alt="Drawing ${d[0]}: ${d[1]}"><figcaption>Encl. 05-${d[0]} · ${d[1]}</figcaption>`; ps.append(f);
+});
+show(0);
+const zoom=document.getElementById('zoom'), zimg=document.getElementById('zoom-img'), zcap=document.getElementById('zoom-cap'), sheet=document.getElementById('stage-sheet');
+function openZoom(){ zimg.src=img.src; zimg.alt=img.alt; zcap.textContent=stab.textContent; if(zoom.showModal) zoom.showModal(); }
+sheet.addEventListener('click',openZoom);
+sheet.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();openZoom();} });
+zoom.addEventListener('click',e=>{ if(e.target===zoom) zoom.close(); });
+
+// ---------- stamps and copy ----------
+document.querySelectorAll('.stampbtn').forEach(btn=>btn.addEventListener('click',()=>{
+  const on=btn.getAttribute('aria-pressed')!=='true'; btn.setAttribute('aria-pressed',String(on));
+  document.getElementById(btn.getAttribute('aria-controls')).hidden=!on;
+}));
+document.querySelectorAll('.copybtn').forEach(b=>b.addEventListener('click',()=>{
+  const t=b.dataset.copy, done=()=>{ b.textContent='Copied'; setTimeout(()=>b.textContent='Copy',1600); };
+  const sel=()=>{ const o=b.previousElementSibling; const r=document.createRange(); r.selectNodeContents(o); const s=getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent='Selected'; setTimeout(()=>b.textContent='Copy',1600); };
+  try{ navigator.clipboard.writeText(t).then(done,sel); }catch(e){ sel(); }
+}));
+
+// deep link to a row: #M-12 opens it
+function fromHash(){ const h=decodeURIComponent(location.hash.slice(1)); const tr=h&&document.getElementById(h); if(tr&&tr.classList.contains('r')){ toggle(tr,true); tr.scrollIntoView({block:'center'}); } }
+window.addEventListener('hashchange',fromHash); fromHash();
+})();
+</script>
+
+</body>
+</html>

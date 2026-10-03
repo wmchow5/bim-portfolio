@@ -1,0 +1,23 @@
+# Revit exports kept locally (regenerable, large)
+exports/
+# Impeccable review captures and decision-page scratch
+.impeccable/review/
+.impeccable/mocks/
+.impeccable/questions/
+.impeccable/decision-*.json
+# Local tool settings
+.claude/
+# Revit / CAD binaries and backups (families in revit/families are tracked)
+*.rvt
+*.[0-9][0-9][0-9][0-9].rfa
+*.dwg
+*.pcp
+*.bak
+# OS / editor
+desktop.ini
+Thumbs.db
+.DS_Store
+# Impeccable design-skill files (local only)
+.impeccable/
+PRODUCT.md
+DESIGN.md

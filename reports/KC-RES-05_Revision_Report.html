@@ -1,0 +1,831 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KC-RES-05 Revision Report</title>
+<style>
+@page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+:root{
+  --ink:#1d2430; --muted:#5b6575; --line:#c9d0da; --soft:#f2f5f9; --accent:#1f5f8b;
+  --accent-soft:#e3eef7; --warn:#a35a00; --warn-soft:#fff3df; --ok:#22744a; --ok-soft:#e5f4ec;
+  --kept:#6b3fa0; --kept-soft:#f0e9f8; --red:#a8322b; --red-soft:#fbe9e7;
+}
+*{box-sizing:border-box}
+html,body{background:#fff;color:var(--ink)}
+body{font-family:"Segoe UI",Calibri,Arial,sans-serif;font-size:10.5pt;line-height:1.45;margin:0;padding:0 2mm}
+h1{font-size:19pt;color:var(--accent);margin:0 0 6px;padding-bottom:6px;border-bottom:2.5px solid var(--accent);page-break-before:always;break-before:page}
+h1.first{page-break-before:avoid;break-before:avoid}
+h2{font-size:13.5pt;color:var(--accent);margin:18px 0 6px;page-break-after:avoid;break-after:avoid}
+h3{font-size:11.5pt;margin:14px 0 4px;page-break-after:avoid;break-after:avoid}
+p{margin:5px 0}
+ul,ol{margin:4px 0 6px 0;padding-left:20px}
+li{margin:2px 0}
+table{width:100%;border-collapse:collapse;margin:6px 0 10px;font-size:9.4pt;page-break-inside:auto}
+thead{display:table-header-group}
+tr{page-break-inside:avoid;break-inside:avoid}
+th,td{border:1px solid var(--line);padding:4px 6px;vertical-align:top;text-align:left}
+th{background:var(--accent-soft);font-weight:600}
+td.c{text-align:center}
+.small{font-size:8.8pt}
+.muted{color:var(--muted)}
+.box{border:1px solid var(--line);border-left:4px solid var(--accent);background:var(--soft);padding:7px 10px;margin:8px 0;page-break-inside:avoid;break-inside:avoid}
+.box.warn{border-left-color:var(--warn);background:var(--warn-soft)}
+.box.ok{border-left-color:var(--ok);background:var(--ok-soft)}
+.box.red{border-left-color:var(--red);background:var(--red-soft)}
+.calc{font-family:Consolas,"Courier New",monospace;font-size:9.2pt;background:#fbfcfe;border:1px dashed var(--line);padding:6px 9px;margin:6px 0;white-space:pre-wrap;page-break-inside:avoid;break-inside:avoid}
+.v{display:inline-block;font-size:8pt;font-weight:600;color:var(--warn);background:var(--warn-soft);border:1px solid #e8c48a;border-radius:3px;padding:0 4px;white-space:nowrap}
+.k{display:inline-block;font-size:8pt;font-weight:600;color:var(--kept);background:var(--kept-soft);border:1px solid #cdb6e6;border-radius:3px;padding:0 4px;white-space:nowrap}
+.tag{display:inline-block;font-size:8pt;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:3px;padding:0 4px}
+.cover{height:255mm;display:flex;flex-direction:column;justify-content:space-between;padding:10mm 4mm 4mm}
+.cover .t1{font-size:12pt;letter-spacing:.18em;color:var(--muted);text-transform:uppercase}
+.cover .t2{font-size:30pt;font-weight:700;color:var(--accent);line-height:1.15;margin:8px 0}
+.cover .t3{font-size:14pt;color:var(--ink)}
+.cover table{font-size:10pt;width:auto;min-width:60%}
+.cover td{border:none;border-bottom:1px solid var(--line);padding:5px 14px 5px 0}
+.stats{display:flex;gap:10px;margin:14px 0}
+.stat{flex:1;border:1px solid var(--line);border-radius:6px;padding:10px;text-align:center;background:var(--soft)}
+.stat b{display:block;font-size:20pt;color:var(--accent)}
+.toc ol{columns:2;column-gap:24px}
+.toc li{break-inside:avoid}
+.qa ol{padding-left:24px}
+.qa li{margin:0 0 4px;page-break-inside:avoid;break-inside:avoid}
+.ans li{margin:0 0 6px}
+.cheat{font-size:8.9pt}
+.cheat table{font-size:8.6pt;margin:4px 0 6px}
+.cheat th,.cheat td{padding:2.5px 5px}
+.cols{display:flex;gap:10px}
+.cols>div{flex:1;min-width:0}
+.legend span{margin-right:10px}
+@media screen{ body{max-width:210mm;margin:0 auto;padding:10px 16px} h1{margin-top:28px} }
+@media (max-width:640px){ .cols,.stats{flex-direction:column} .toc ol{columns:1} }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER ===================== -->
+<section class="cover">
+  <div>
+    <div class="t1">BCIT · Residential MEP · Revision notes</div>
+    <div class="t2">KC-RES-05<br>Model Improvement<br>Revision Report</div>
+    <div class="t3">Codes, calculations and decisions from the full review of the Stage 1 Revit model: 50 tracker items plus the earlier electrical design and review</div>
+    <div class="stats">
+      <div class="stat"><b>50 / 50</b>tracker items closed</div>
+      <div class="stat"><b>31</b>earlier electrical-review issues</div>
+      <div class="stat"><b>2</b>known Revit warnings at the end</div>
+    </div>
+  </div>
+  <table>
+    <tr><td class="muted">Model</td><td>HVAC_Residential_Stage1 with Fire and pumping_Kenneth Chow 5.rvt (Revit 2027)</td></tr>
+    <tr><td class="muted">Project</td><td>Single-storey house with basement, Burnaby BC (BCIT term project)</td></tr>
+    <tr><td class="muted">Work period</td><td>25 Sep – 2 Oct 2026</td></tr>
+    <tr><td class="muted">Code basis</td><td>BCBC 2024 Part 9 · BC Plumbing Code · CSA C22.1 (CEC) as adopted in BC · NFPA 13D · CAN/ULC-S553 · CSA F280 / F326 / B52 · Burnaby bylaws</td></tr>
+    <tr><td class="muted">Sources</td><td>Main conversation, three side chats, the Model Improvement Tracker, the Electrical BIM Review log, the user's placement skills</td></tr>
+  </table>
+  <div class="box warn small"><b>How to read the ⚠ marks.</b> <span class="v">⚠ verify</span> means the source conversation itself said the clause number or value was uncertain, from memory, or for the inspector (AHJ) to confirm. Check those against the current adopted code edition before you rely on them in an exam or a real project. Values without the mark were used and checked during the work, but clause numbers should still be confirmed against the edition your course uses.</div>
+</section>
+
+<!-- ===================== TOC ===================== -->
+<h1>Contents and how to use this report</h1>
+<div class="toc">
+<ol>
+  <li>Project overview and the working method</li>
+  <li>Timeline of the work</li>
+  <li><b>Codes and regulations (core study section)</b>
+    <ol type="a"><li>BC Building Code Part 9</li><li>BC Plumbing Code and Burnaby water service</li><li>Canadian Electrical Code</li><li>NFPA 13D residential sprinklers</li><li>HVAC, ventilation and refrigerant (CSA F280, F326, B52)</li><li>Smoke and CO alarms</li></ol></li>
+  <li>Worked calculations</li>
+  <li>Item-by-item log (C, M, V, P items)</li>
+  <li>Work before the tracker (electrical design, reviews, vents)</li>
+  <li>Placement rules and working principles you taught</li>
+  <li>Revit / BIM lessons</li>
+  <li>Still open: findings from the independent second review</li>
+  <li>Self-test questions</li>
+  <li>Answer key</li>
+  <li>One-page cheat sheet</li>
+</ol>
+</div>
+<div class="box">
+<b>Suggested study routine.</b>
+<ol>
+  <li>Read section 3 one code at a time. For each table row, cover the "Requirement" column and try to recall the number.</li>
+  <li>Redo the calculations in section 4 on paper without looking.</li>
+  <li>Answer the self-test in section 10, then mark yourself with the key in section 11.</li>
+  <li>Keep the cheat sheet (section 12) for quick review before an exam or interview.</li>
+</ol>
+</div>
+<p class="legend small"><span><span class="v">⚠ verify</span> confirm clause/value</span><span><span class="k">kept by design</span> coursework value kept</span><span><span class="tag">ID</span> tracker item</span></p>
+
+<!-- ===================== 1 OVERVIEW ===================== -->
+<h1>1. Project overview and the working method</h1>
+<h2>1.1 The building and the model</h2>
+<ul>
+  <li><b>Building:</b> one storey on a basement. Level 1 (FFL) at +0.381 m, basement at −2.057 m, attic plate at +3.048 m. Three bedrooms, one bathroom, an open living/dining/kitchen, a laundry alcove, and a deck on the south and east with stairs to grade.</li>
+  <li><b>Systems in the model:</b>
+    <ul>
+      <li>Daikin multi-split heat pump (outdoor unit CU-01 plus four wall heads)</li>
+      <li>Broan HRV with ducted supply and exhaust</li>
+      <li>domestic water with a booster pump P-01</li>
+      <li>sanitary and vents</li>
+      <li>NFPA 13D sprinklers fed from the domestic service</li>
+      <li>a 120/240 V panel P1 with lighting, receptacles and smoke/CO alarms</li>
+    </ul></li>
+  <li><b>Model health at the end:</b> 50/50 items closed and two known information warnings: "Domestic Tempered Water 1 cannot calculate flow" (no shower-head family) and "network needs an output element" on the range hood (placeholder hood).</li>
+</ul>
+<h2>1.2 The method used for every item</h2>
+<div class="box ok">
+<ol>
+  <li><b>Plan first.</b> A floor plan, section or comparison table, with options and a recommendation, before any model change ("provide the floor plan first").</li>
+  <li><b>Check the law before changing coursework values.</b> If a value came from the BCIT coursework, keep it unless it breaks code. Record better options as recommendations.</li>
+  <li><b>You choose the option.</b></li>
+  <li><b>Back up the .rvt</b> (<code>_backup_YYYY-MM-DD_before-XX.rvt</code>).</li>
+  <li><b>Make the change,</b> then <b>check the connections</b> (no open connectors), <b>run a clash check</b> and <b>check the warnings</b>.</li>
+  <li><b>Save,</b> then <b>update both tracker copies</b> (the Stage 1 copy, then copy it to the original).</li>
+</ol>
+</div>
+<h2>1.3 Tracker structure</h2>
+<table>
+<thead><tr><th>Priority</th><th>Meaning</th><th>Items</th></tr></thead>
+<tr><td>P1 Critical</td><td>Life safety or a clear code fail</td><td>C-01 to C-06 (6)</td></tr>
+<tr><td>P2 Major</td><td>Code or function problem</td><td>M-01 to M-13 (13; M-13 added during the work)</td></tr>
+<tr><td>P3 Verify</td><td>Needs checking against code or site data</td><td>V-01 to V-05 (5)</td></tr>
+<tr><td>P4 Practical</td><td>Clashes, design quality, BIM standards</td><td>P-01 to P-26 (26)</td></tr>
+</table>
+
+<!-- ===================== 2 TIMELINE ===================== -->
+<h1>2. Timeline of the work</h1>
+<table>
+<thead><tr><th style="width:17%">Date</th><th>What happened</th></tr></thead>
+<tr><td>25 Sep</td><td>Revit MCP connector set up (pyRevit Routes, uv, Python 3.13). Side chat: the four roof vents were aligned to 3" through the roof, increaser ≥ 300 mm below the roof, 457 mm (18") above it, insulated at the roof; the dishwasher vent (Vent 4) was reduced to 2" up to the roof.</td></tr>
+<tr><td>25 Sep</td><td>Electrical design to CEC: devices per room, panel schedule, 8-200 load estimate (about 65 A). Your correction "S5a has no wall" became <b>Rule 1</b> in the electrical-device-placement skill. 45 devices placed, 21 circuits created, families built (smoke/CO alarm, LED lights, disconnect).</td></tr>
+<tr><td>25–28 Sep</td><td>Senior-BIM-manager electrical review: 31 issues (4 critical) found and fixed. Switch systems linked through the Revit UI. Mark tags built. The "Satge 1" folder typo was fixed.</td></tr>
+<tr><td>28–29 Sep</td><td>Switching redesign (3-way/4-way for L7 + L8, new naming S7a/b/c). Kitchen receptacle review against CEC 26-704 / 26-712 / 26-724. D5/D6 laundry outlets moved to the alcove side walls.</td></tr>
+<tr><td>29 Sep</td><td>Side chat: full code review of the model, giving the <b>49-item tracker</b>. Work on the tracker began, one item at a time. C-06 led to <b>Rule 2</b> (500 mm from showers/tubs).</td></tr>
+<tr><td>29–30 Sep</td><td>All P1 items (C-01 to C-06) and P2 items M-01 to M-12 closed. Two Revit crashes during family building (category changes), with no data lost.</td></tr>
+<tr><td>1 Oct</td><td>M-12 P-trap reworked several times. Your own placement became the <b>revit-ptrap-placement</b> skill. The east stair was found in the Stage 2 model and became <b>M-13</b> (50 items). V-01 to V-05 and P-01 to P-04 closed.</td></tr>
+<tr><td>2 Oct</td><td>P-05 to P-26 closed. Vent typing had to be done by you in the Revit UI (P-11). Coursework values were kept for DW-01 (P-13) and the sprinkler flows (P-14). P1 upsized to 200 A (P-21). Lighting wires snapped, and edited families saved to <code>Stage 1\Families</code>.</td></tr>
+<tr><td>2 Oct (evening)</td><td>Side chat: an independent second review of the finished model found 29 closed, 12 partial, 7 not verifiable from the model, and a few new or remaining issues. These are listed in section 9 for revision.</td></tr>
+</table>
+
+<!-- ===================== 3 CODES ===================== -->
+<h1>3. Codes and regulations</h1>
+<p>Each table gives the clause as quoted during the work, the requirement with its numbers, where it applied, and what was decided. Items marked <span class="v">⚠ verify</span> were flagged as uncertain in the conversation itself.</p>
+
+<h2>3a. BC Building Code 2024, Part 9</h2>
+<table>
+<thead><tr><th style="width:15%">Clause</th><th style="width:33%">Requirement</th><th style="width:14%">Applied to</th><th>Decision / how it was met</th></tr></thead>
+<tr><td>9.33 (heating)</td><td>The heating system must hold <b>22 °C</b> in living spaces at the outdoor design temperature (Burnaby about <b>−7 °C</b>). It does not require a backup system. Size to <b>CSA F280</b>.</td><td>C-01, M-09</td><td>The cooling-only 4MKM68 failed. It was changed to a heat-pump CU (4MXM68 placeholder) with FTX heads. Bedroom baseboards were removed once the heat pump covered the 3.6 kW load. HTR-4 stays as the bathroom's only heat.</td></tr>
+<tr><td>9.33 (basement) <span class="v">⚠ verify</span></td><td>The second review suggested about 18 °C for unfinished basements and flagged that the basement has no heat source, although it holds the FP main, water service and WH.</td><td>Second review</td><td>Still open (section 9).</td></tr>
+<tr><td>9.8.8 (guards)</td><td>Guard <b>≥ 1070 mm</b> where the drop is <b>&gt; 1.8 m</b>. No opening may pass a <b>100 mm sphere</b>. <b>Not climbable</b>: no footholds between 140 and 900 mm.</td><td>C-04</td><td>New guard type: 1070 mm top rail, 38 mm balusters at 130 mm c/c (92 mm clear), vertical members only.</td></tr>
+<tr><td>9.8 (stairs, private)</td><td>Rise <b>≤ 200 mm</b>, run <b>≥ 255 mm</b>, width <b>≥ 860 mm</b>. Open risers must not pass a 100 mm sphere. Guards where the drop is <b>&gt; 600 mm</b> (900 mm on stairs). Handrail <b>865–965 mm</b>. Handrails on <b>both sides when ≥ 1100 mm wide</b>. A landing at the foot.</td><td>C-05, M-13</td><td>West stair: 12 × 178 / 11 × 255, 934 mm clear, closed risers, 900 mm guards both sides. East stair: 5 × 172.7 / 4 × 280, 1.30 m wide, guards both sides.</td></tr>
+<tr><td>Table 9.5.5.1 (doors)</td><td>Entrance door to a dwelling <b>≥ 810 × 1980 mm</b>.</td><td>V-01</td><td>The basement door (813 × 1930) was changed to a new 813 × 1981 (30" × 78") type. 187 mm left for a 2-2×8 header.</td></tr>
+<tr><td>9.9.10.1 (egress windows)</td><td>Each bedroom needs a window or door openable from inside without tools: <b>≥ 0.35 m²</b> clear, <b>no dimension &lt; 380 mm</b>. <b>Waived if the suite is sprinklered.</b></td><td>V-04</td><td>The sliders open about 380 × 970 = 0.37 m², right at the minimum. The dependency on the sprinklers was documented on W8–W10 (option a). A 1219 × 1067 slider was recorded as the no-dependency alternative.</td></tr>
+<tr><td>9.10.19 (smoke alarms)</td><td>Hardwired, <b>interconnected</b>, with <b>battery backup</b>. An alarm on <b>every storey</b> (9.10.19.3, basement SD5) and between each sleeping area and the rest of the storey.</td><td>M-06, M-08, P-22, review C3</td><td>SD5 added in the basement, SD6 added outside Bedroom 3. All on lighting circuits, none on GFCI. Type renamed "Hardwired interconnected + battery backup".</td></tr>
+<tr><td>9.32 (ventilation)</td><td>A principal ventilation rate for the whole house by bedroom count (3 bedrooms: <b>22 L/s min, 33 L/s max</b> <span class="v">⚠ verify, quoted from memory</span>). Bathroom exhaust usually <b>25 L/s intermittent</b>; kitchen about <b>50 L/s</b>. <b>Dryers must vent to outdoors.</b> 9.32.3 cited for the bathroom exhaust control.</td><td>M-03, M-04, M-05, P-07</td><td>Bath raised to 55 cfm (26 L/s) through the HRV boost timer ST1. A 150 cfm (71 L/s) ducted range hood added. The dryer vented through the east wall. Flag: HRV 57 L/s continuous may exceed the 3-bedroom maximum, so set a lower normal speed.</td></tr>
+<tr><td>9.34.2 (lighting outlets)</td><td>A lighting outlet is required in the hall and similar spaces.</td><td>Review C4</td><td>Hall ceiling, light L15 and switch added; SD4 moved onto the ceiling.</td></tr>
+<tr><td>9.15.4 (foundation exposure)</td><td>The foundation must extend <b>≥ 150 mm above finished grade</b>.</td><td>V-02</td><td>Used to derive the highest possible grade (+0.11 − 0.15 = −0.04 m) when the model had no topography.</td></tr>
+<tr><td>9.5.3 (headroom) <span class="v">⚠ verify</span></td><td>Headroom about 1.95 m was quoted for a finished basement.</td><td>M-01 flag</td><td>Drainage hangs below 1.95 m in places. Check if the basement is ever finished.</td></tr>
+<tr><td>Switch height</td><td>BCBC sets <b>no switch height</b> for a Part 9 house. For accessible and adaptable units, controls are capped at about <b>1200 mm</b>.</td><td>Switch redesign</td><td>All switches at 1200 mm to centre (usual BC practice). Use 1100 mm if adaptable-dwelling rules apply.</td></tr>
+</table>
+
+<h2>3b. BC Plumbing Code and Burnaby water service</h2>
+<table>
+<thead><tr><th style="width:16%">Clause / source</th><th style="width:34%">Requirement</th><th style="width:12%">Applied to</th><th>Decision / how it was met</th></tr></thead>
+<tr><td>BCPC 2.4.8.1 (slope)</td><td>Every drainage pipe <b>≤ 3"</b> (75 mm) and every fixture drain: <b>≥ 1 in 50 (2 %)</b>. Pipes <b>&gt; 3"</b> may be <b>1 in 100 (1 %)</b>. 2 % ≈ ¼" per foot (2.08 %).</td><td>M-01, V-03, M-12</td><td>All sanitary pipes ≤ 3" set to ≥ 2 % by raising upstream ends; the 4" building drain and building sewer stay at 1 %. <b>You asked to follow BC law</b>, so the condensate lines also went to 2 %.</td></tr>
+<tr><td>Indirect waste</td><td>Condensate lines that drain to a receptor are <b>indirect waste pipes</b>, a kind of drainage pipe, so the 2 % rule applies. "1 % is fine" is common HVAC practice but <b>does not meet BCPC</b>. They discharge with an <b>air gap ≥ 25 mm</b> over the receptor.</td><td>M-01, V-05, P-10</td><td>IW1–IW4 at 2 %, ending over CD-01. The CP-01 pump line ends with a 26 mm air gap.</td></tr>
+<tr><td>Vents</td><td>Vents only need to drain back with no low spots (1 % used for flat pieces). Frost closure: <b>IPC 904.2</b> needs ≥ 3" through the roof where the winter design temperature is below −18 °C, with the increaser <b>≥ 300 mm below the roof</b> inside the heated space. The BC article and its trigger temperature were not looked up <span class="v">⚠ verify</span>. The roof termination minimum is about 150 mm; 457 mm (18") was used.</td><td>Vent side chat</td><td>All four VTRs at 3", increaser 385 mm below the roof, 457 mm above it, insulated at the roof. Kept as a cautious detail; probably not strictly required at −7 °C.</td></tr>
+<tr><td>Traps</td><td>Every fixture needs a trap. Water seal <b>≥ 38 mm</b>; many codes cap fixture traps at about <b>100 mm</b>. <b>Floor drains need trap seal protection</b> (a trap primer or an approved trap-seal insert).</td><td>M-12, P-11</td><td>FD-01 trap seal about 95 mm; trap seal protection noted on FD-01. Washer: 2" trap, about 0.64 m of standpipe above the weir.</td></tr>
+<tr><td>Clothes washer</td><td>Needs an open <b>standpipe</b> (air break), a <b>2" trap</b>, a vent and a 2" drain. A rigid connection from the machine base to the drain = <b>no trap, no air break, a cross-connection</b>. The washer box itself is optional. Standpipe and trap heights per BCPC 2.4 <span class="v">⚠ verify</span>.</td><td>P-11</td><td>WB-01 recessed box, 2" standpipe, 2" P-trap, sanitary tee into the vented riser; drain upsized to 2".</td></tr>
+<tr><td>Cleanouts</td><td>A cleanout where the building drain leaves the building and at the base of a stack, accessible for rodding.</td><td>V-03</td><td>CO-01 inside on the stack, 150 mm above the basement floor (outside it would be under the deck, out of reach), with an access panel.</td></tr>
+<tr><td>Building sewer</td><td>A 4" sewer at 1 % to the City connection, usually an inspection chamber at the property line installed by the City.</td><td>V-03</td><td>BS-01, 4" at 1 %, about 2.5 m of cover; invert to confirm with the City.</td></tr>
+<tr><td>Shower valve</td><td>Each shower needs its own <b>pressure-balancing or thermostatic valve (CSA B125.3)</b>, limited to <b>49 °C</b>. A plumber-set <b>tempering valve is not a shower valve.</b> BC limit of 49 °C at most dwelling fixtures <span class="v">⚠ verify</span>.</td><td>M-02</td><td>TMV-01 replaced by SV-01, a pressure-balancing valve at about 1.15 m AFF. Option (a): delete the TMV.</td></tr>
+<tr><td>Water heater T&amp;P</td><td>A T&amp;P valve in the upper part of the tank (150 psi / 99 °C, CSA 4.4 / ANSI Z21.22). The discharge is <b>full size, temperature-rated</b> (copper, <b>not PVC</b>), with <b>no valves or traps</b>, ending <b>150 mm above the floor</b> or over a drain with an air gap (about 300 mm used over FD-01).</td><td>M-11, M-12</td><td>TPV-01 on a new ¾" tapping; ¾" copper discharge. The old 1" PVC pipe on the drain valve (inside the tank wall) was deleted.</td></tr>
+<tr><td>Thermal expansion</td><td>An expansion tank is needed in a closed system (behind a check valve or backflow device).</td><td>M-11</td><td>ET-01, 2 gal, on the cold feed to WH-01.</td></tr>
+<tr><td>Seismic restraint (BC)</td><td>Water heaters must be strapped: two straps, upper and lower third of the tank.</td><td>M-11</td><td>Recorded as a note (strut post beside the heater). Second review: still not modelled.</td></tr>
+<tr><td>Backflow</td><td>A cross-connection from the sprinklers to drinking water needs a <b>backflow preventer (CSA B64.10)</b>; the municipality sets the type (dual check vs DCVA).</td><td>C-03</td><td>FP-BFP1 dual check placeholder. A multipurpose system was rejected because the sprinkler piping dead-ends.</td></tr>
+<tr><td>PRV</td><td>A <b>PRV is required if static pressure &gt; 550 kPa (80 psi)</b>.</td><td>P-12</td><td>Noted, not modelled: a booster pump implies low City pressure, so confirm the pressure.</td></tr>
+<tr><td>Isolation</td><td>Main shut-off; pump isolation and a check valve on the discharge.</td><td>P-12</td><td>MSV-01, CKV-01, IV-01 added.</td></tr>
+<tr><td>Freezing</td><td>Water piping must be protected from freezing.</td><td>V-02, P-16</td><td>Service lowered for cover; FP freeze notes.</td></tr>
+<tr><td>Burnaby Waterworks Regulation Bylaw</td><td>Underground private water pipes <b>≥ 762 mm (30")</b> below grade.</td><td>V-02</td><td>Met with margin.</td></tr>
+<tr><td>Burnaby Engineering Design Criteria</td><td>Water services designed to <b>1.0 m of cover</b> (0.75 m only with City Engineer approval and protection).</td><td>V-02</td><td>Entry lowered to −1.50 m, giving about 1.0 m under the east grade of −0.48 m (taken from the Stage 2 stair).</td></tr>
+<tr><td>Dishwasher drain</td><td>Location beside the sink is <b>not a code requirement</b>. What matters: its own trap, a vent within the trap-arm limit, and backflow protection (high loop, or an air gap if the AHJ asks).</td><td>P-13</td><td><span class="k">kept by design</span> DW-01 stays where the coursework put it. Own 2" trap, vented; high-loop note added.</td></tr>
+<tr><td>Condensate size</td><td>No BCPC condensate size was found. Daikin says extend the 16 mm hose with rigid PVC about 20 mm ID (VP20 / ¾"); ¾" is the usual minimum in practice.</td><td>V-05</td><td>All four lines upsized to ¾".</td></tr>
+</table>
+
+<h2>3c. Canadian Electrical Code (CSA C22.1, as adopted in BC)</h2>
+<p class="small muted">Rule numbers below follow the CEC 2021 numbering used in the conversation. <span class="v">⚠ verify</span> against the edition BC currently adopts.</p>
+<table>
+<thead><tr><th style="width:14%">Rule</th><th style="width:36%">Requirement</th><th style="width:12%">Applied to</th><th>Decision / how it was met</th></tr></thead>
+<tr><td>8-200</td><td>Single-dwelling service calculation. Basic load 5000 W for the first 90 m² plus 1000 W for each extra 90 m² or part (living area plus 75 % of the basement). Add heating/AC, range (6000 W for ≤ 12 kW), and other loads &gt; 1500 W at 25 % (when there is a range). <b>Service rating ≥ calculated load.</b> Worked example in section 4.</td><td>Design, review, P-21</td><td>93 A now; 125 A with a future EV. <b>93 A on a 100 A service complies.</b> P1 upsized to 200 A to meet your own 80 % target including the EV (62 %).</td></tr>
+<tr><td>8-300</td><td>Range demand: a single range ≤ 12 kW is taken at 6 kW (25 A at 240 V).</td><td>Review M6</td><td>Revit showed 50 A on a 40 A range breaker from the 12 kW nameplate, which is normal under the demand rule. You chose to apply code demand factors.</td></tr>
+<tr><td>8-104 (80 %)</td><td>The "80 %" limit is for <b>continuous loads</b> on breakers not rated for 100 % continuous duty. It does <b>not</b> apply to the 8-200 dwelling calculation, which already includes demand factors.</td><td>P-21</td><td>That's why 93 % loading was legal. The 80 % target was your design-margin choice.</td></tr>
+<tr><td>2-308 (working space) <span class="v">⚠ verify headroom with AHJ</span></td><td>Panel working space <b>1 m deep</b>, at least <b>750 mm wide</b>, about <b>2.2 m headroom</b>. Top breaker about <b>1.7 m</b> above the floor <span class="v">⚠ verify</span>. Not in a clothes closet, bathroom or stairway, or above 30 °C. A bedroom is allowed but not recommended.</td><td>Design, P-05, review M5</td><td>P1 moved to the west basement wall: bottom 0.50 m, top 1.77 m (top breaker about 1.67 m), 1 m × 0.75 m clear. Basement has only 2.165 m to the joists, so confirm.</td></tr>
+<tr><td>26-704 (GFCI)</td><td>125 V 15/20 A receptacles <b>within 1.5 m of a sink</b> need Class A GFCI. Measured <b>horizontally</b> from the <b>nearest edge of the sink rim</b>, along the <b>shortest cord path</b> (not through walls or partitions); height doesn't count. Outdoor receptacles within reach of grade also need GFCI.</td><td>Kitchen K1, D4, GF7/8</td><td>D4 at 1.22 m from the sink became GFCI (a GFCI breaker was suggested as easier to reset). D5/D6 behind the alcove wall are outside by cord path.</td></tr>
+<tr><td>26-710 (bathroom)</td><td>Bathroom receptacle within 1 m of the basin, GFCI, and kept clear of the shower/tub (see Rule 2).</td><td>Review m3</td><td>GF1 moved above the vanity, 1.07 m from the shower.</td></tr>
+<tr><td>26-712(a) (spacing)</td><td>Receptacles placed so <b>no point along the wall is more than 1.8 m</b> from one (i.e. about every 3.6 m).</td><td>Review M1</td><td>R18–R25 added; 0 gaps over 1.8 m.</td></tr>
+<tr><td>26-712(d), 26-724 (kitchen counter)</td><td><b>No point on the counter more than 900 mm</b> from a receptacle. Counter receptacles on <b>20 A</b> circuits (5-20R T-slot), <b>max 2 per circuit</b>. None face-up in the counter.</td><td>Review C1, M4, K4</td><td>Counter split into circuits 9, 10 and 28 with 2 each; farthest point 0.81 m. Type "GFCI 20A T-slot (5-20R)".</td></tr>
+<tr><td>26-714 (outdoor)</td><td>At least one outdoor receptacle per dwelling.</td><td>GF7, GF8</td><td>Two provided (front and east).</td></tr>
+<tr><td>26-702 / 26-712 (WR/TR, in-use cover)</td><td>Outdoor receptacles weather-resistant with a <b>while-in-use cover</b>; dwelling receptacles <b>tamper-resistant</b>.</td><td>P-22</td><td>GF7/GF8 type "GFCI - WR/TR, while-in-use cover (exterior)"; TR added to indoor types.</td></tr>
+<tr><td>26-658 (AFCI) <span class="v">⚠ verify</span></td><td>Arc-fault protection on dwelling 125 V receptacle circuits (exceptions to confirm with the AHJ). Where GFCI is also needed, use a <b>dual-function AFCI/GFCI</b> breaker.</td><td>P-22</td><td>Every 125 V receptacle circuit names its AFCI type.</td></tr>
+<tr><td>26-720 (basement)</td><td>A receptacle in the basement / unfinished area.</td><td>Review M8</td><td>GF10 added.</td></tr>
+<tr><td>Section 32 / alarms</td><td>Smoke alarms on a lighting circuit (not GFCI), hardwired, interconnected.</td><td>M-08</td><td>SD1–SD4, SD6 on circuit 1; SD5 on circuit 26.</td></tr>
+<tr><td>Fridge</td><td>Good practice: own circuit, not GFCI (a nuisance trip spoils food).</td><td>D2</td><td>D2 standard receptacle, 2.26 m from the sink.</td></tr>
+<tr><td>Dishwasher outlet <span class="v">⚠ AHJ</span></td><td>An outlet directly behind a dishwasher is accepted by many BC inspectors; others want it in the next cabinet or the unit hard-wired with a disconnect.</td><td>D1</td><td>D1 centred behind the dishwasher at 0.30 m.</td></tr>
+<tr><td>Exterior-wall boxes</td><td>Boxes in an exterior wall need an airtight (vapour-barrier) box to keep the envelope intact.</td><td>D6</td><td>Noted on D6.</td></tr>
+<tr><td>Indoor AC heads</td><td>Multi-split heads are powered from the outdoor unit through the interconnect cable; only the outdoor unit needs a breaker (with a disconnect within sight).</td><td>Review m8</td><td>Heads left uncircuited, with a note. DS1 within sight of CU-01, outside its service space.</td></tr>
+<tr><td>Bylaw: EV-ready <span class="v">⚠ verify with City</span></td><td>Burnaby (and many BC municipalities) require EV-ready parking with an energized Level 2 outlet in new homes.</td><td>P-21</td><td>Not in coursework scope. Slots 30/32 reserved as a 40 A 2-pole spare.</td></tr>
+</table>
+
+<h2>3d. NFPA 13D residential sprinklers</h2>
+<table>
+<thead><tr><th style="width:18%">Topic</th><th style="width:36%">Requirement</th><th style="width:12%">Applied to</th><th>Decision</th></tr></thead>
+<tr><td>Heads</td><td>Only <b>listed residential sprinklers</b> in dwelling units.</td><td>P-14</td><td>Type comments ask to confirm listed residential heads.</td></tr>
+<tr><td>Minimum flow</td><td>The head's listed flow, but at least <b>18 gpm for a single head</b> or <b>13 gpm each for two heads</b> flowing in the design compartment. More flow is conservative, not illegal.</td><td>P-14</td><td><span class="k">kept by design</span> Coursework values kept: pendents 32 gpm, sidewalls 43 gpm, K 5.6 (81 metric).</td></tr>
+<tr><td>Flow formula</td><td><b>Q = K·√P</b> (gpm, psi). Worked example in section 4.</td><td>P-14</td><td>The typical-residential alternative gives about 32 gpm in living/dining against about 75–86 gpm with the coursework values.</td></tr>
+<tr><td>Sidewall position <span class="v">⚠ check listing</span></td><td>Residential sidewall deflector usually <b>100–150 mm below the ceiling</b>.</td><td>C-02</td><td>SP-07 lowered to 115 mm below the new hall ceiling.</td></tr>
+<tr><td>Obstruction</td><td>Keep a fixture away by <b>3 × its dimension, capped at 24" (0.61 m)</b>, unless the deflector is below it. Final check against the head's listing table.</td><td>P-17</td><td>SP-01 was 50 mm from L1. L1 moved 0.6 m north (0.65 m clear).</td></tr>
+<tr><td>Freeze protection</td><td>Wet piping must not freeze (≥ 4 °C). Keep pipes on the <b>warm side of the insulation</b>; pipe insulation alone isn't relied on.</td><td>P-16</td><td>Notes on the type and pipes (option A). Option B (basement main + interior-wall risers) recorded as the recommendation.</td></tr>
+<tr><td>Riser components</td><td>Control valve (<b>locked open or supervised</b>), backflow preventer (per municipality), pressure gauge, <b>drain &amp; test</b>. A local <b>waterflow alarm</b> in recent editions unless occupants are alerted another way <span class="v">⚠ edition and municipality</span>.</td><td>C-03</td><td>CV → BFP → PG → <b>FS → D&amp;T</b> → up. The flow switch must be <b>upstream</b> of the D&amp;T so the test water proves the alarm.</td></tr>
+<tr><td>Multipurpose system</td><td>Allowed off domestic piping without backflow <b>only if water circulates</b> through the sprinkler pipes to plumbing fixtures.</td><td>C-03</td><td>Rejected: the piping dead-ends at the heads.</td></tr>
+<tr><td>Pipe</td><td>Copper tube Types <b>K, L or M</b> permitted (ASTM B88), as is listed CPVC.</td><td>P-15</td><td>Separate type "Copper Type K - Fire Protection (NFPA 13D)"; domestic type renamed.</td></tr>
+<tr><td>Link to egress</td><td>Sprinklers allow the BCBC 9.9.10.1 egress-window waiver, and they are fed from the domestic service, so <b>a frozen service disables both</b>.</td><td>V-02, V-04</td><td>Service cover increased; dependency documented.</td></tr>
+<tr><td>Hydraulics</td><td>Any change to head position or pipe length needs a hydraulic recheck by the sprinkler designer.</td><td>C-02, P-14</td><td>Flagged.</td></tr>
+</table>
+
+<h2>3e. HVAC, ventilation and refrigerant</h2>
+<table>
+<thead><tr><th style="width:17%">Standard / topic</th><th style="width:37%">Requirement</th><th style="width:12%">Applied to</th><th>Decision</th></tr></thead>
+<tr><td>CSA F280, part 1: load calc</td><td>Room-by-room heat loss and heat gain from the <b>building</b> (walls, windows, roof, air leakage, ventilation). <b>Independent of the equipment.</b> Burnaby design −7 °C / 29 °C, indoor 22/24 °C.</td><td>M-09</td><td>Estimate: house 3.6 kW heating / 4.6 kW cooling; open zone 2.3 / 3.3 kW; bedrooms about 0.4 kW each.</td></tr>
+<tr><td>CSA F280, part 2: equipment</td><td>Equipment must cover the loads. For a heat pump, use the <b>capacity at the design temperature</b>, not the nameplate. Supplementary heat counts only if needed. A heater that is a room's only heat is primary for that room. There are limits on heat-pump oversizing.</td><td>M-09</td><td>AC-04 (2.0 kW) failed the 3.3 kW cooling and became FTX35. Bedroom baseboards were not needed for F280. HTR-4 counts. Final F280 by an <b>HRAI-qualified designer</b>.</td></tr>
+<tr><td>Equipment pairing</td><td><b>FTC heads are cooling-only</b>; they can't heat on a heat-pump outdoor unit. FTX heads are heat-pump heads.</td><td>M-09</td><td>Option A applied as a <b>deviation from the coursework</b> (spec: FTC15NV14 ×3 + FTC20NV14).</td></tr>
+<tr><td>Combination ratio</td><td>Indoor heads total 8.0 kW on a 6.8 kW outdoor unit = 118 %. Most multi-splits allow up to about 130 % <span class="v">⚠ Daikin table</span>.</td><td>M-09</td><td>Note on CU-01.</td></tr>
+<tr><td>CSA B52 / IEC 60335-2-40</td><td>A2L refrigerant (R32) charge limit for the smallest room a head serves: <b>m_max = 2.5 × LFL^1.25 × h₀ × √A</b>. On a multi-split the <b>whole charge</b> can leak into one room.</td><td>M-10</td><td>2.5 kg ≤ 2.80 kg for Bedroom 1, so it passes with no mitigation.</td></tr>
+<tr><td>BCBC 9.32 principal rate <span class="v">⚠ verify</span></td><td>Whole-house rate by bedrooms: 1 = 16–24, 2 = 18–27, <b>3 = 22–33</b>, 4 = 26–39, 5 = 30–45 L/s (min–max). Read from the table; not calculated per room.</td><td>P-07</td><td>HRV 57 L/s is above the min and possibly above the max; set a lower normal speed and use 57 L/s as boost.</td></tr>
+<tr><td>CSA F326 room rates</td><td>Master bedroom <b>10 L/s</b>; other bedrooms, living, dining, kitchen, bath, laundry <b>5 L/s each</b>; unfinished basement 10 L/s. Total capacity = the sum.</td><td>P-07, P-08</td><td>Sum ≈ 55 L/s, close to the HRV's 57 L/s. Master bedroom raised to 22 cfm (≥ 21 cfm).</td></tr>
+<tr><td>Per-grille minimum</td><td><b>No legal minimum per grille.</b> Practical: about <b>10–15 cfm</b>, because flow hoods and dampers can't set or read 5 cfm.</td><td>P-07</td><td>Six 5 cfm grilles removed; exhaust moved to wet rooms (bath 55, kitchen 45, laundry 20).</td></tr>
+<tr><td>HRV layout</td><td>Bedrooms supply-only, air returns under doors (about 20 mm undercut ≈ 25 in² per 813 mm door). Wet rooms exhaust-only (no supply to the laundry). Keep the HRV balanced.</td><td>P-07, P-08</td><td>120/120 cfm kept. Bathroom door flagged (55 cfm through an undercut; a transfer grille may be needed).</td></tr>
+<tr><td>HRV pickup near cooktop</td><td>No HRV exhaust pickup near a cooktop (grease); keep <b>≥ 1.2 m</b> from the range.</td><td>M-03</td><td>AT-11 moved 1.62 m from the range; ducted hood added.</td></tr>
+<tr><td>Make-up air</td><td>Needed for large exhaust only where combustion appliances could back-draft.</td><td>M-03</td><td>Not needed: all-electric house.</td></tr>
+<tr><td>HRV terminations</td><td>Intake and exhaust <b>≥ 1.8 m</b> apart (HRV manuals), <b>≥ 450 mm above grade</b>, not where exhaust is trapped (under decks) or onto walkways/steps (ice). Keep exhaust away from the heat-pump coil (frost).</td><td>P-09</td><td>HRV rotated and moved; both grilles on the west wall 2.47 m apart, out from under the deck.</td></tr>
+<tr><td>Dryer exhaust</td><td>Rigid metal duct (100 mm) to outdoors. Transition duct <b>UL 2158A</b>, ≤ 2.4 m, visible. Usual length limit about <b>10.7 m equivalent</b>. Hood with backdraft damper, <b>no screen</b>, ≥ 300 mm above grade/deck. About 0.9 m from doors/windows is manufacturer / US-code guidance, not a BC rule <span class="v">⚠ AHJ</span>.</td><td>M-04</td><td>0.85 m run (about 3.9 m equivalent), hood 0.72 m above the deck, 0.61 m from the deck door (accepted, flagged).</td></tr>
+<tr><td>Condensate</td><td>Indirect waste at 2 %, air gap ≥ 25 mm, ¾" per Daikin. An HRV needs a condensate drain; with no gravity route, use a condensate pump.</td><td>V-05, P-10</td><td>¾" lines; CP-01 pump to CD-01.</td></tr>
+<tr><td>Outdoor unit clearances <span class="v">⚠ Daikin manual</span></td><td>Rear clearance typically 100–300 mm; top/discharge clearance with a deck overhead to confirm.</td><td>P-04</td><td>CU-01 100 mm off the wall on a 100 mm pad, clearance zone 66 mm below the deck.</td></tr>
+<tr><td>Indoor head clearances</td><td>Daikin top clearance <b>≥ 50 mm</b> to the ceiling; side clearance ≥ 50 mm.</td><td>P-01 to P-03</td><td>Heads lowered 130 mm (52–54 mm under the ceiling).</td></tr>
+<tr><td>Thermostat setpoints</td><td>Backup baseboards set about 2 °C below the heat pump so they don't fight it.</td><td>C-01</td><td>Advice (baseboards later removed).</td></tr>
+</table>
+
+<h2>3f. Smoke and CO alarms (CAN/ULC-S553 and BCBC 9.10.19)</h2>
+<table>
+<thead><tr><th style="width:24%">Rule</th><th>Requirement</th><th style="width:22%">Applied to</th></tr></thead>
+<tr><td>Distance from supply air</td><td>About <b>0.9–1.0 m</b> from a supply outlet (S553 / manufacturer); the second review quoted <b>914 mm</b> from supply registers (NFPA 72).</td><td>M-07; second review (SD1 now 0.63 m from AT-06)</td></tr>
+<tr><td>Sloped ceilings</td><td>Mount <b>within 900 mm of the peak</b> on a sloped ceiling. A wall mount far below a vault is not effective.</td><td>M-06 (SD6 0.82 m from the 5.90 m peak)</td></tr>
+<tr><td>Wall mounting</td><td>Allowed with the top of the alarm close to the ceiling (about 150 mm below was used for SD4 before the hall ceiling existed).</td><td>Design</td></tr>
+<tr><td>Coverage</td><td>Every storey including the basement, and between sleeping areas and the rest of the storey; interconnected so all sound together.</td><td>C3, M-06</td></tr>
+<tr><td>Supply</td><td>120 V hardwired, battery backup, not on GFCI. Standards: <b>CAN/ULC-S531</b> (smoke) and <b>CSA 6.19</b> (CO).</td><td>P-22</td></tr>
+<tr><td>Sprinkler flow switch</td><td>Can trigger the interconnected alarms through a relay to "alert occupants".</td><td>C-03</td></tr>
+</table>
+
+<!-- ===================== 4 CALCS ===================== -->
+<h1>4. Worked calculations</h1>
+<p>Redo each of these on paper. They are the numbers an examiner or interviewer is most likely to ask about.</p>
+
+<h2>4.1 CEC 8-200 service calculation (P-21, 2 Oct)</h2>
+<div class="calc">Floor area    = living area + 75 % of basement
+              = 89.6 + 0.75 × 89.6 = 156.8 m²
+Basic load    = 5 000 W (first 90 m²) + 1 000 W (next 90 m² or part) = 6 000 W
+Heating/HP    = 4 000 W   (heat pump + HTR-4)
+Range         = 6 000 W   (single range ≤ 12 kW)
+Water heater  = 4 500 W
+Other > 1.5 kW at 25 % (dryer, pump) = 1 750 W
+-----------------------------------------------------------------
+Total         = 22 250 W  →  22 250 / 240 V = 92.7 A ≈ 93 A
+93 A ≤ 100 A service  →  COMPLIES (headroom about 7 A)
+
+Future Level 2 EV: 32 A × 240 V = 7 680 W at 100 %
+Total with EV = 29 930 W → 124.7 A ≈ 125 A  →  exceeds 100 A
+On 200 A: 125 / 200 = 62 %  (your target ≤ 80 %)  ✔</div>
+<div class="box warn small"><b>Learning point to check yourself.</b> The two hand calculations in this project put the water heater in different groups: the 28 Sep check put it in the "25 % of loads over 1.5 kW" group (about 18.0 kW, 75 A), and the 2 Oct check counted it at 100 % (4500 W). Look up which category CEC 8-200(1)(a) gives a storage water heater, and redo the sum. <span class="v">⚠ verify</span></div>
+<div class="box small"><b>Why 93 % is legal:</b> Rule 8-200 already applies diversity and demand factors, and the result is compared directly with the service rating. The "80 %" rule (Rule 8-104) is about continuous loads on breakers. Revit's "connected" current (143 A, later 175 A) ignores demand factors, so don't compare it with the service size.</div>
+
+<h2>4.2 GFCI 1.5 m distance (kitchen D4)</h2>
+<div class="calc">Nearest sink-rim corner (NW)  = (4.90, 3.47)
+D4 in upper cabinet           = (3.85, 4.10)
+Δx = 1.05 m, Δy = 0.63 m
+d  = √(1.05² + 0.63²) = 1.22 m  &lt; 1.5 m  →  GFCI required (CEC 26-704)
+Height (1.90 m) is ignored: only horizontal distance counts.
+D5/D6 are ~1.0–1.4 m in a straight line, but the cord path goes round the wall → &gt; 1.5 m → no GFCI needed.</div>
+
+<h2>4.3 R32 charge limit (M-10, CSA B52 / IEC 60335-2-40)</h2>
+<div class="calc">Liquid lines: AC-01 18.9 + AC-02 5.8 + AC-03 8.9 + AC-04 22.3 = 55.9 m  (Daikin ≤ 60 m total, ≤ 25 m per room)
+Charge = factory 2.0 kg + (55.9 − 30) × 0.02 kg/m = 2.0 + 0.52 ≈ 2.5 kg   (unit max 2.6 kg)
+
+m_max = 2.5 × LFL^1.25 × h₀ × √A
+      LFL (R32) = 0.307 kg/m³ ;  h₀ (wall-mounted) = 1.8 m ;  A (Bedroom 1) = 7.44 m²
+      0.307^1.25 = 0.2285
+      m_max = 2.5 × 0.2285 × 1.8 × √7.44 = 1.028 × 2.728 = 2.80 kg
+2.5 kg ≤ 2.80 kg → PASS, no mitigation.   Minimum area for 2.5 kg = (2.5 / 1.028)² ≈ 5.9 m²
+Margin is 0.3 kg: re-check if the line sets grow past about 60 m.</div>
+
+<h2>4.4 Sprinkler flow, Q = K·√P (P-14)</h2>
+<div class="calc">Coursework heads, K = 5.6 (US):  32 gpm → P = (32/5.6)² = 32.7 psi ;  43 gpm → P = (43/5.6)² = 59 psi
+Typical residential (alternative, not applied):
+   pendent  K 4.9 → 13 gpm at (13/4.9)²  = 7.0 psi
+   sidewall K 4.2 → 16 gpm at (16/4.2)²  = 14.5 psi
+Two-head design, living/dining: about 32 gpm (residential) vs about 75–86 gpm (coursework).
+13D minimum: ≥ 18 gpm single head, ≥ 13 gpm each for two heads.</div>
+
+<h2>4.5 Ventilation (P-07, P-08)</h2>
+<div class="calc">Conversion: 1 L/s = 2.119 cfm.   57 L/s ≈ 120 cfm ;  25 L/s ≈ 53 cfm ;  10 L/s ≈ 21 cfm
+CSA F326 sum: master 10 + 2 bedrooms × 5 + living 5 + dining 5 + kitchen 5 + bath 5 + laundry 5 + basement 10 = 55 L/s (≈117 cfm)
+Final supply (cfm): Bedroom 3 (master) 22 · Bedroom 1 20 · Bedroom 2 20 · Living 29 + 29  = 120
+Final exhaust (cfm): Bath 55 · Kitchen 45 · Laundry 20 = 120   → HRV balanced 120 / 120
+Door undercut: 20 mm × 813 mm = 16 260 mm² ≈ 25 in², enough for about 18 cfm.</div>
+
+<h2>4.6 Stairs, guards and egress</h2>
+<div class="calc">West stair: total rise 2.13 m / 12 risers = 178 mm ;  11 treads × 255 mm = 2.8 m going
+East stair: rise 0.864 m / 5 = 172.7 mm ;  4 treads × 280 mm = 1.12 m going ; width 1.30 m ≥ 1.1 m → handrails both sides
+Guard balusters: 130 mm centres − 38 mm baluster = 92 mm clear &lt; 100 mm sphere ✔
+Egress slider 813 × 1067: opens about half → about 380 × 970 mm = 0.37 m² (≥ 0.35 m², 380 mm = the minimum)</div>
+
+<h2>4.7 Water service cover (V-02)</h2>
+<div class="calc">No topography in the model.
+First pass: highest grade = top of foundation +0.11 − 0.15 (BCBC 9.15.4) = −0.04 m
+   entry −0.32 m → only about 0.26 m of soil over the pipe  ✖ (bylaw 0.762 m, design 1.0 m)
+   lowered to −1.10 m → about 1.04 m cover
+Revised: Stage 2 east stair lands on grade at about −0.48 m
+   −1.10 m would give only about 0.60 m ✖  →  lowered again to −1.50 m → about 1.0 m cover ✔</div>
+
+<h2>4.8 Small numbers worth remembering</h2>
+<div class="calc">HRV load: Broan fan 163 W ÷ 0.9 PF = 181 VA (180 VA used)
+Lighting circuit limit: 80 % × 15 A × 120 V = 1 440 W
+Range: 12 kW nameplate = 50 A; 8-300 demand 6 kW = 25 A → 40 A breaker is normal
+Panel phase balance after fix: 16.6 / 16.9 kVA (a 240 V receptacle family had put its whole load on one pole)
+Drain slope: 2 % = 1:50 ≈ ¼"/ft (2.08 %) ; 1 % = 1:100 ≈ ⅛"/ft
+P-trap seal: ≥ 38 mm (FD-01 about 95 mm) ; indirect-waste air gap ≥ 25 mm</div>
+
+<!-- ===================== 5 ITEM LOG ===================== -->
+<h1>5. Item-by-item log</h1>
+<p class="small">Format: the problem → the options offered → <b>your choice and why</b> → what changed → the lesson. "Kept" means a coursework value kept by design.</p>
+
+<h2>P1 Critical</h2>
+<table class="small">
+<thead><tr><th style="width:6%">ID</th><th style="width:20%">Problem</th><th style="width:22%">Options → choice</th><th style="width:27%">Model change</th><th>Lesson</th></tr></thead>
+<tr><td>C-01</td><td>No heating: only a cooling-only Daikin 4MKM68.</td><td>A heat-pump CU; B baseboards; <b>C heat pump + baseboard backup</b> (no new ducts).</td><td>CU-01 → 4MXM68 placeholder; HTR-1–4 and T1–T3. Later (M-09) the bedroom baseboards were removed; HTR-4 kept.</td><td>BCBC 9.33 = 22 °C, no backup required. A heat-pump outdoor unit needs heat-pump (FTX) heads.</td></tr>
+<tr><td>C-02</td><td>SP-07 hidden above the new hall ceiling.</td><td><b>A lower the sidewall</b>; B pendent.</td><td>Deflector 115 mm below the ceiling; new tee, drop and elbow in the wall.</td><td>A new ceiling (added in the electrical review) can defeat a sprinkler. Recheck FP after architectural changes.</td></tr>
+<tr><td>C-03</td><td>Fire main teed off DCW with no components.</td><td><b>Add components + flow switch</b>; multipurpose rejected.</td><td>CV, BFP, PG, FS, D&amp;T placeholders. You asked about the D&amp;T drain, which exposed the order mistake: FS moved upstream of D&amp;T.</td><td>Test water must pass the flow switch. A multipurpose system needs circulation.</td></tr>
+<tr><td>C-04</td><td>Deck rails 914 mm, open.</td><td>New guard; <b>close the gap</b> (later reopened as the east stair).</td><td>1070 mm guard, 38 mm balusters at 130 mm.</td><td>1070 mm / 1.8 m drop / 100 mm sphere / non-climbable.</td></tr>
+<tr><td>C-05</td><td>Stair 610 wide, 203 run, open risers.</td><td>A shift south; <b>B keep the stair, move CU-01</b> (then: same wall, slide east); C stair south.</td><td>Stair 12 × 178 / 11 × 255, 934 clear, 900 guards. CU-01, risers and DS1 moved 1.10 m, AT-17 1.36 m.</td><td>Stairs and equipment clearances have to be solved together.</td></tr>
+<tr><td>C-06</td><td>Bath switches inside the shower footprint.</td><td>You said "seems not practical". A hall; B north wall; <b>C split</b>; D change the room.</td><td>S4/S5 on the hall side at the latch; ST1 inside, 0.91 m from the shower.</td><td>Became <b>Rule 2</b> (500 mm). Practical splits are better than forcing everything outside.</td></tr>
+</table>
+
+<h2>P2 Major</h2>
+<table class="small">
+<thead><tr><th style="width:6%">ID</th><th style="width:20%">Problem</th><th style="width:22%">Options → choice</th><th style="width:27%">Model change</th><th>Lesson</th></tr></thead>
+<tr><td>M-01</td><td>Drains at 1 % / 0 %.</td><td>You asked: "under BC law is 1 % fine? If not, follow the law."</td><td>All ≤ 3" at ≥ 2 % (upstream ends raised); condensate at 2 % with corner drops; DCW-2 lowered 40 mm.</td><td>BCPC 2.4.8.1. Indirect waste counts as a drainage pipe. HVAC habit ≠ code.</td></tr>
+<tr><td>M-02</td><td>Shower had no supply; a TMV fed nothing.</td><td>You asked why the TMV couldn't stay. <b>(a) delete TMV</b>; (b) move to the WH; (c) keep.</td><td>SV-01 pressure-balancing valve at 1.15 m, shower arm and cap.</td><td>Tempering valve (plumber-set cap) ≠ shower valve (user control, CSA B125.3, 49 °C).</td></tr>
+<tr><td>M-03</td><td>No range hood; HRV pickup over the range.</td><td>Approved route blocked, so a revised AT-11 location was approved.</td><td>RH-01 150 cfm ducted out the north wall; AT-11 1.62 m away on a shared riser.</td><td>50 L/s kitchen; pickup ≥ 1.2 m; no make-up air when all-electric.</td></tr>
+<tr><td>M-04</td><td>No dryer exhaust.</td><td><b>(a) wall hood</b> 0.61 m from the door; (b) roof. Rework: you said the duct must connect to the dryer.</td><td>100 mm rigid duct to DV-01; dryer family given a collar and connector; visible flex transition; dryer moved 100 mm out.</td><td>Model the real connection. A flex duct with no geometry is invisible in 3D.</td></tr>
+<tr><td>M-05</td><td>Bath exhaust 40 cfm.</td><td><b>A rebalance HRV</b>; B new fan.</td><td>AT-09 55 cfm, AT-16 5 cfm (later 20 in P-07); stub duct added.</td><td>25 L/s intermittent; use the existing ST1 boost.</td></tr>
+<tr><td>M-06</td><td>No alarm outside Bedroom 3.</td><td>—</td><td>SD6 on the sloped ceiling, 0.82 m from the peak.</td><td>Within 900 mm of the peak.</td></tr>
+<tr><td>M-07</td><td>SD1 0.78 m from AC-01.</td><td>—</td><td>Moved 1.70 m from AC-01.</td><td>≥ 0.9–1 m from supply air. Recheck <i>all</i> supply outlets (section 9).</td></tr>
+<tr><td>M-08</td><td>Alarms "not circuited".</td><td>—</td><td>Already on circuit 1 / 26.</td><td>Check the model before acting on a review item.</td></tr>
+<tr><td>M-09</td><td>No F280; AC-04 undersized.</td><td>You asked: ducts? baseboards? F280? Then: "<b>A anyway</b>" (deviation from coursework).</td><td>FTX15 ×3, FTX35 placeholders; bedroom baseboards removed after the C-01 check.</td><td>F280 load calc ≠ equipment selection; heat-pump capacity at −7 °C.</td></tr>
+<tr><td>M-10</td><td>R32 charge vs smallest room.</td><td>—</td><td>Note on CU-01 only.</td><td>m_max formula; the whole charge goes into one room.</td></tr>
+<tr><td>M-11</td><td>WH missing T&amp;P discharge, expansion tank, straps.</td><td><b>(a) strut post note</b>. Rework after you found no T&amp;P valve.</td><td>TPV-01 on a new tapping; ¾" copper discharge; ET-01; strap note.</td><td>Model the valve, not just the pipe. Copper, full size, 150 mm above the floor.</td></tr>
+<tr><td>M-12</td><td>PVC pipe through the WH tank; no floor drain.</td><td><b>(a) gravity</b>, stack extended to −2.95. The trap was reworked until your own placement.</td><td>FD-01, P-trap 1783819, 3" drain at 2 %, sanitary tee; old pipe deleted.</td><td>P-trap orientation (outlet 59 mm above inlet is correct). Floor drains need trap seal protection.</td></tr>
+<tr><td>M-13</td><td>East deck stair missing (found in Stage 2).</td><td>Rebuild to code.</td><td>5 × 172.7 / 4 × 280, 1.30 m, guards both sides; deck guard reopened.</td><td>Check the reference model; the "gap" in C-04 was the stair opening.</td></tr>
+</table>
+
+<h2>P3 Verify</h2>
+<table class="small">
+<thead><tr><th style="width:6%">ID</th><th style="width:20%">Problem</th><th style="width:22%">Options → choice</th><th style="width:27%">Model change</th><th>Lesson</th></tr></thead>
+<tr><td>V-01</td><td>Basement door 1930 mm high.</td><td>—</td><td>New 813 × 1981 type; header room 187 mm.</td><td>Table 9.5.5.1: 810 × 1980. The "30 × 80" type was really 2134 mm (no header room).</td></tr>
+<tr><td>V-02</td><td>Water service too shallow.</td><td>You asked for the reasoning in detail. <b>(a) 1.0 m</b>; revised after the Stage 2 grade.</td><td>Entry −1.10 then −1.50 m; riser shortened.</td><td>The grade assumption drives the result. Freezing would disable the sprinklers too.</td></tr>
+<tr><td>V-03</td><td>No cleanout or sewer POC.</td><td>—</td><td>CO-01 inside; BS-01 4" at 1 %.</td><td>Accessible cleanout at the drain exit.</td></tr>
+<tr><td>V-04</td><td>Egress relies on sprinklers.</td><td><b>(a) document</b>; (b) larger window.</td><td>Notes on W8–W10.</td><td>0.35 m² / 380 mm; the waiver depends on the sprinklers staying in service.</td></tr>
+<tr><td>V-05</td><td>Condensate 16 mm.</td><td><b>(a) ¾"</b>; (b) keep.</td><td>All lines ¾"; hose tails 16 mm; corner drops lengthened.</td><td>Manufacturer rule (VP20) where code is silent.</td></tr>
+</table>
+
+<h2>P4 Practical, coordination and BIM quality</h2>
+<table class="small">
+<thead><tr><th style="width:6%">ID</th><th style="width:20%">Problem</th><th style="width:22%">Options → choice</th><th style="width:27%">Model change</th><th>Lesson</th></tr></thead>
+<tr><td>P-01</td><td>AC-01 into the ceiling.</td><td>Lowering clashed with vent 1661002 → <b>A</b>: lines back at their old height.</td><td>Lowered 130 mm; RG riser at the NW corner. You then asked to fix the pre-existing RL2/RG1 overlap: RG1 raised 122 mm.</td><td>Re-run the clash check after every move; fix overlaps found along the way.</td></tr>
+<tr><td>P-02/03</td><td>AC-02/03 into the ceiling.</td><td>Same approach.</td><td>Lowered 130 mm; RG1 riser + diagonal.</td><td>A family bounding box can report false wall hits.</td></tr>
+<tr><td>P-04</td><td>CU-01 in the wall and under the deck.</td><td><b>A</b> pull out + pad; B pull only.</td><td>100 mm south, 100 mm pad PAD-01, line tails reconnected.</td><td>Confirm clearances against the manual.</td></tr>
+<tr><td>P-05</td><td>Panel into the joists.</td><td><b>A west wall</b>; B lower in place.</td><td>New P1 with the same circuit numbers; schedule recreated.</td><td>Working space must be clear of pipes and ducts.</td></tr>
+<tr><td>P-06</td><td>HRV systems mislabelled.</td><td>—</td><td>Outdoor Air (OA) and Exhaust Discharge (EXD) types; AT-17 replaced with an exhaust grille.</td><td>The system class must match the equipment port.</td></tr>
+<tr><td>P-07</td><td>Six token 5 cfm grilles.</td><td>You first chose B (keep), asked "what is the minimum CFM by law, what is the formula?", then chose <b>A</b>.</td><td>Grilles and 40 duct pieces removed; exhaust rebalanced; door undercut notes.</td><td>No per-grille legal minimum; 5 cfm can't be commissioned.</td></tr>
+<tr><td>P-08</td><td>Laundry had supply air.</td><td>—</td><td>AT-01 removed; master bedroom 22 cfm.</td><td>Wet rooms exhaust only; F326 master 10 L/s.</td></tr>
+<tr><td>P-09</td><td>HRV exhaust under the deck near CU-01.</td><td>You asked "what's the concern?", then suggested rotating the HRV. Compared keep / S / A / R / B → <b>B</b>.</td><td>HRV rotated 90° and moved; grilles on the west wall 2.47 m apart. Then <b>REC-HRV</b> added (you spotted the missing power).</td><td>Moisture under decks, coil frosting, separation. Equipment needs power.</td></tr>
+<tr><td>P-10</td><td>No HRV condensate drain.</td><td><b>A pump</b>; B new floor drain.</td><td>HRV drain connector, CP-01, ½" line to CD-01 with a 26 mm gap.</td><td>Pump when there's no gravity route.</td></tr>
+<tr><td>P-11</td><td>Washer piped from its base; open bend.</td><td>You asked why WB-01 and how water rises. <b>WB-01 box</b>.</td><td>Box, standpipe, 2" trap, tee; 2" drain; vent tree set to Vent by you in the UI.</td><td>Washer pump lifts water to the standpipe; air break.</td></tr>
+<tr><td>P-12</td><td>No shut-off or pump valves.</td><td>—</td><td>MSV-01, CKV-01, IV-01; family connectors set to Global.</td><td>PRV over 550 kPa.</td></tr>
+<tr><td>P-13</td><td>DW 3.4 m from the sink.</td><td>You: keep (coursework) unless illegal.</td><td>Note only. <span class="k">kept</span></td><td>Location isn't a code issue; drainage is.</td></tr>
+<tr><td>P-14</td><td>Sprinkler flows 32–43 gpm.</td><td>You asked what the advantage of changing was. Keep with a note.</td><td>Type comments only. <span class="k">kept</span></td><td>13D sets minimums; higher flow is conservative.</td></tr>
+<tr><td>P-15</td><td>FP pipe type "Standard".</td><td><b>A label</b> + rename domestic.</td><td>Separate FP copper K type.</td><td>Copper K permitted; separate types for scheduling and filters.</td></tr>
+<tr><td>P-16</td><td>FP pipes may freeze.</td><td>You found B more reliable but chose <b>A notes</b>.</td><td>Freeze notes on type and pipes.</td><td>Warm side of the insulation; B recorded for final design.</td></tr>
+<tr><td>P-17</td><td>SP-01 50 mm from L1.</td><td>A move head; <b>B move light</b>.</td><td>L1 moved 0.6 m north (0.65 m).</td><td>3× rule, capped at 0.61 m.</td></tr>
+<tr><td>P-18</td><td>Lights floating in vaults.</td><td><b>A pendants</b>; B ceilings; C sconces.</td><td>Pendant types with stem notes; L10 replaced (upside down).</td><td>Deleting a light deletes its switch system.</td></tr>
+<tr><td>P-19</td><td>R25 60 mm from the wall end.</td><td>You moved S9 with it to the north end.</td><td>Both at y 1.60, 115 mm from the end.</td><td>Rule 1 ≥ 100 mm; probe for pipes in the wall.</td></tr>
+<tr><td>P-20</td><td>S10b/S12 hidden in the alcove.</td><td>Wall 1406056 will get a door → <b>A hinge side</b> (flagged); B reverse the swing.</td><td>New switches; you re-created the switch systems.</td><td>Latch side preferred; face-hosted devices can't change host by API.</td></tr>
+<tr><td>P-21</td><td>100 A service, no margin.</td><td>You: is 93 % illegal? (No.) Then: 80 % incl. EV → <b>B 200 A</b>, circuit only.</td><td>P1 200 A; slots 30/32 spare.</td><td>8-200 vs 8-104.</td></tr>
+<tr><td>P-22</td><td>Missing AFCI / WR / battery specs.</td><td>—</td><td>Spec data on circuits and types.</td><td>AFCI, dual-function, WR/TR, battery backup.</td></tr>
+<tr><td>P-23</td><td>Confusing levels.</td><td><b>A rename</b> + schedule levels.</td><td>Basement / T/O Foundation / Level 1 (FFL) / T/O Plate; 117 schedule levels set.</td><td>Merging levels is a real-project job.</td></tr>
+<tr><td>P-24</td><td>Metric names in an imperial project.</td><td>Rename.</td><td>Names only.</td><td>Keep metric code references (99 °C, CSA).</td></tr>
+<tr><td>P-25</td><td>Window names wrong; "Center Line"/"Center line".</td><td>Rename.</td><td>72" × 48", 32" × 42"; subcategories can't be fixed.</td><td>Don't resize to match names (egress would fail).</td></tr>
+<tr><td>P-26</td><td>One file, no links.</td><td><b>A keep</b> + split-ready note.</td><td>None. <span class="k">kept</span></td><td>Federated ARCH/MECH/PLUMB-FP/ELEC; 79 face-hosted items to re-host.</td></tr>
+</table>
+
+<!-- ===================== 6 PRE-TRACKER ===================== -->
+<h1>6. Work before the tracker</h1>
+<h2>6.1 Electrical design (25 Sep)</h2>
+<ul>
+  <li>Supply 120/240 V single-phase, 3-wire. The panel first held 24 spaces, later 40, and is now 200 A. Mounting heights: receptacles 400 mm, counter receptacles 1100 mm (later 1200 mm), switches 1200 mm.</li>
+  <li>Devices per room: bedrooms with AFCI receptacles every 3.6 m of wall; bathroom GFCI within 1 m of the basin; kitchen counters with 20 A T-slot GFCIs; dedicated outlets for fridge, dishwasher, range (40 A 2P), microwave, washer (20 A), dryer (30 A 2P).</li>
+  <li>The Revit API can't create switch systems, so they were linked by driving Revit's own buttons (with your permission) or by you in the UI.</li>
+  <li>The original panel family was 120 V only; it was changed to 240 V 2-pole so 240 V circuits could connect.</li>
+</ul>
+<h2>6.2 Electrical BIM review (31 issues, 25–28 Sep)</h2>
+<table class="small">
+<thead><tr><th>ID</th><th>Finding</th><th>Standard</th><th>Fix</th></tr></thead>
+<tr><td>C1</td><td>Counter circuit fed 3 receptacles</td><td>CEC 26-724 max 2 per 20 A counter circuit</td><td>Circuits 9, 10, 28 with 2 each</td></tr>
+<tr><td>C2</td><td>Phases 24.5 vs 7.1 kVA</td><td>240 V load must split across both poles</td><td>Family "Load per Pole = Load/2"; 16.0 / 15.5 kVA</td></tr>
+<tr><td>C3</td><td>No basement smoke alarm</td><td>BCBC 9.10.19.3</td><td>SD5</td></tr>
+<tr><td>C4</td><td>No hall light or ceiling</td><td>BCBC 9.34.2</td><td>Hall ceiling, L15, switch</td></tr>
+<tr><td>M1</td><td>Receptacle gaps up to 3.55 m</td><td>CEC 26-712(a) 1.8 m</td><td>R18–R25</td></tr>
+<tr><td>M4</td><td>Counter points &gt; 900 mm</td><td>CEC 26-724(d)</td><td>GF9 added</td></tr>
+<tr><td>M5</td><td>DS1 in the CU clearance</td><td>Manufacturer / CEC 2-308</td><td>Moved, within sight</td></tr>
+<tr><td>M6</td><td>No demand factors</td><td>CEC 8-300 / 8-200</td><td>Range 50 % demand; other &gt; 1.5 kW at 25 %</td></tr>
+<tr><td>M7</td><td>No spare spaces</td><td>≥ 20 % spare (practice)</td><td>40 spaces</td></tr>
+<tr><td>M8</td><td>No basement receptacle</td><td>CEC 26-720</td><td>GF10</td></tr>
+<tr><td>m12</td><td>No bath exhaust control</td><td>BCBC 9.32.3</td><td>Timer switch (now ST1), LV link to HRV</td></tr>
+</table>
+<p class="small">Other review fixes included bedside receptacles moved off headboards, D5/D6 behind the machines, devices moved off duct risers inside walls, Mark tags built from an existing tag family, and the HRV load set to 180 VA with PF 0.9 (circuit recreated to avoid the "family no longer matches the system" dialog).</p>
+
+<h2>6.3 Kitchen receptacle review (29 Sep)</h2>
+<table class="small">
+<thead><tr><th>#</th><th>Finding</th><th>Fix</th></tr></thead>
+<tr><td>K1 (code)</td><td>D4 (microwave) 1.22 m from the sink, not GFCI</td><td>D4 GFCI (GFCI breaker suggested for easy reset)</td></tr>
+<tr><td>K2 (practice)</td><td>GF4/GF9 70–100 mm from the sink edge</td><td>Moved to about 330 mm from the sink</td></tr>
+<tr><td>K3 (practice)</td><td>Counter receptacles 80 mm above the counter</td><td>Raised to 1.20 m (about 180 mm above the counter)</td></tr>
+<tr><td>K4 (data)</td><td>Generic GFCI type on 20 A circuits</td><td>"GFCI 20A T-slot (5-20R)"</td></tr>
+</table>
+<p class="small">GF6 is 1.90 m from the sink, so the CEC doesn't require GFCI there. It was kept GFCI for consistency, because counters get spills along the whole run (the US NEC requires GFCI on all counter receptacles), and because some BC inspectors ask for it. A cheaper alternative is to feed it from the load side of GF2.</p>
+
+<h2>6.4 Switching design</h2>
+<ul>
+  <li><b>Control from 3 places:</b> two <b>3-way</b> switches at the ends plus one <b>4-way</b> in the middle. Three 3-way switches can't do it (unless a smart main/companion system is used). L7 + L8: S7a (3-way), S7b (4-way), S7c (3-way).</li>
+  <li><b>Naming you asked for:</b> switches that control the same light share its number with a letter suffix (S7a/b/c, S10a/b). The timer is ST1. Devices close together share a gang box (2G/3G), which is cheaper and neater.</li>
+  <li>A Revit switch system links one switch per light; the other 3-way and 4-way switches show only through tags and drawn wires.</li>
+</ul>
+
+<h2>6.5 Laundry outlets and space check</h2>
+<ul>
+  <li>D5/D6 ended up on the alcove side walls, in 133–160 mm gaps beside the machines. Use right-angle plug cords; D6 is on an exterior wall, so it needs a vapour-barrier box.</li>
+  <li>The space check first misread the machine orientation. Always confirm with the user which way equipment faces before redesigning a layout.</li>
+</ul>
+
+<!-- ===================== 7 RULES ===================== -->
+<h1>7. Placement rules and working principles you taught</h1>
+<div class="box">
+<h3>Rule 1: wall-mounted devices must be on a real wall (25 Sep)</h3>
+<p>From your correction "Where S5a is going to place? There are no wall." Check every receptacle, switch, GFCI, dedicated outlet, panel, disconnect and wall light:</p>
+<ul>
+  <li>on an actual wall face in the model, on the side of the room it serves, never in open space or a room opening</li>
+  <li>not inside a door opening or jamb, and not in the door swing or behind an open door</li>
+  <li><b>switches on the latch side</b>; flag it if the latch side has no wall</li>
+  <li>not inside an enclosed space with no door</li>
+  <li><b>at least 100 mm</b> of wall from any door jamb or wall end</li>
+</ul>
+<p>Check method: read the walls and doors from the model (not room boxes), and trace the real walls before drawing.</p>
+</div>
+<div class="box">
+<h3>Rule 2: keep switches and receptacles clear of showers and tubs (29 Sep)</h3>
+<ul>
+  <li>Keep <b>at least 500 mm</b> horizontally from the shower or tub edge (current CEC practice). Flag 500 mm–1 m, since some inspectors apply 1 m.</li>
+  <li>Check against the plumbing fixtures, not just the walls.</li>
+  <li>If the latch side falls inside the shower zone, offer practical options: hall side, inside past the swing, or a split (your C-06 choice).</li>
+</ul>
+</div>
+<div class="box">
+<h3>P-trap placement ("Trap P - PVC - DWV")</h3>
+<ul>
+  <li>Inlet socket vertical, opening up. The U-bend below. Outlet horizontal along the drain.</li>
+  <li>For 3", the outlet connector sits about <b>59 mm above</b> the inlet connector. This is correct, not upside down.</li>
+  <li>The default −X connector is the inlet. Rotate +90° about Y through the inlet, then aim the outlet about the vertical axis. <b>Never tilt</b> the trap about a horizontal axis.</li>
+  <li>Revit won't change an existing fitting's family (error "cannot be ignored"); place a new fitting.</li>
+  <li>Building a trap from 90° bends gives a seal of about 180 mm, too deep.</li>
+</ul>
+</div>
+<div class="box ok">
+<h3>Working principles</h3>
+<ul>
+  <li><b>Plan first, every time:</b> a floor plan or comparison before touching the model, and say clearly when nothing has changed yet.</li>
+  <li><b>Coursework values are fixed unless they break the law.</b> Ask whether a value came from the coursework before proposing a change. Examples kept: DW-01 location, sprinkler flows, 100 A (until you chose 200 A), single-file model. The Daikin units were changed only because you asked (M-09).</li>
+  <li><b>Follow the law first, then practice:</b> M-01 (2 % condensate), P-21 (8-200 vs 80 %).</li>
+  <li><b>Make the model match reality:</b> the dryer duct connected to the dryer, the T&amp;P valve modelled, the HRV given a receptacle, the washer draining through a standpipe.</li>
+  <li><b>Back up before every change, check after every change, update both tracker copies.</b></li>
+</ul>
+</div>
+
+<!-- ===================== 8 REVIT ===================== -->
+<h1>8. Revit / BIM lessons</h1>
+<table class="small">
+<thead><tr><th style="width:26%">Lesson</th><th>Detail</th></tr></thead>
+<tr><td>Switch systems</td><td>Revit 2027's API cannot create switch systems, and Revit's own Switch command can't be run from scripts. Create them in the UI (select light → Switch → Select Switch). Deleting a light or switch deletes its switch system.</td></tr>
+<tr><td>Vent system typing</td><td>Re-typing vents connected to the drain through the API pulled the whole drain into the vent system ("Vent 3"). Fix: delete the runaway vent system (the drain rejoins Sanitary 1), then set System Type = Vent in the UI. That worked when you did it.</td></tr>
+<tr><td>Face-hosted families</td><td>Can't be moved to another host by the API. Place new instances on the new face (or use Pick New Host in the UI), then re-create any switch systems.</td></tr>
+<tr><td>Family category changes</td><td>Changing a family's category while building it crashed Revit twice. Copy an existing family of the right category instead.</td></tr>
+<tr><td>Family reload without dialogs</td><td>EditFamily → change → SaveAs a temp .rfa → LoadFamily inside a project transaction with a failure handler (return Continue after deleting warnings; ProceedWithCommit caused a rollback).</td></tr>
+<tr><td>"Family no longer matches the system"</td><td>Changing load, power factor or type on a circuited or connected element can trigger it. Click Cancel (rolls back only that change). Safer order: remove the circuit, change the setting, recreate the circuit.</td></tr>
+<tr><td>Connector classification</td><td>Placeholder valve connectors set to "Other" split systems and caused warnings; setting them to <b>Global</b> let them join any piping system.</td></tr>
+<tr><td>Dialogs block the API</td><td>When commands time out, Revit is usually showing a dialog. Ask the user to click Cancel. Transactions were later set to suppress dialogs.</td></tr>
+<tr><td>Fittings and slopes</td><td>Revit's sanitary tee rejected branches steeper than about 1 %; it was built at 1 % and steepened, with the last short piece noted (a real tee has the ¼"/ft built in).</td></tr>
+<tr><td>Bounding boxes</td><td>Oversized family bounding boxes give false clash hits (AC heads vs partitions). Check the real body distance. A clearance family narrower than the unit can give a false pass.</td></tr>
+<tr><td>Flex duct geometry</td><td>A flex duct too tight to bend produced an empty element (invisible in 3D). Give it room.</td></tr>
+<tr><td>Wires</td><td>Drawn wires are annotation; snap their ends to device connectors so they move with devices. Some light families have off-centre connectors.</td></tr>
+<tr><td>Panel spares</td><td>Panel schedule spares: AddSpare, then set spare load in plain VA (internal units gave a false 487 A).</td></tr>
+<tr><td>Levels</td><td>Use one level per storey with clear names; give face-hosted items a Schedule Level so schedules sort by floor.</td></tr>
+<tr><td>Names</td><td>Names should state the real size and units. Revit's built-in "Center Line"/"Center line" subcategories can't be renamed or merged.</td></tr>
+<tr><td>Single file vs federated</td><td>A real project splits ARCH / MECH / PLUMB-FP / ELEC linked on shared coordinates (ARCH publishes them), with a COORD file for clashes, or uses worksets. Face-hosted MEP items (79 here) must be re-hosted to linked faces.</td></tr>
+<tr><td>Backups and crashes</td><td>Revit crashed three times over the week (twice while building families with a category change, once during a large read-only scan). No work was lost, because of saves and backups before each step.</td></tr>
+<tr><td>Saving families</td><td>Families edited in a project exist only in the .rvt until saved out. The Water Heater, Dryer, HRV and FP placeholder families were saved to Stage 1\Families.</td></tr>
+</table>
+
+<!-- ===================== 9 OPEN ===================== -->
+<h1>9. Still open: findings from the independent second review</h1>
+<p>On the evening of 2 Oct a side chat re-checked the finished model as a "15-year BIM manager". It is useful revision material, because it shows what a fresh reviewer still catches. These items were <b>not</b> worked on; treat them as your to-verify list. The portfolio side chat (3 Oct) re-checked SD1 and found it 0.64 m from AT-06, so item 1 is the most important one to fix next.</p>
+<table class="small">
+<thead><tr><th style="width:5%">#</th><th style="width:36%">Finding</th><th>Requirement / suggestion</th></tr></thead>
+<tr><td>1</td><td><b>SD1 is now about 0.63 m from supply diffuser AT-06</b> (moving it away from AC-01 put it near the HRV supply).</td><td>About 914 mm from supply registers (S553 / NFPA 72). Suggested position about (−3.3, 3.4).</td></tr>
+<tr><td>2</td><td>Flow switch FP-FS1 not wired to an alarm; D&amp;T drain connection questioned.</td><td>NFPA 13D waterflow alarm; connect FS1 to a bell or the smoke-alarm interconnect.</td></tr>
+<tr><td>3</td><td>Sprinkler data still not shown as listed residential heads.</td><td>Kept by design (P-14), but listed residential heads are required.</td></tr>
+<tr><td>4</td><td>Control valve FP-CV1 has no supervision or lock tag.</td><td>Tag "locked open / supervised", or rely on MSV-01.</td></tr>
+<tr><td>5</td><td>Basement has no heat source (FP main, water service, WH, HRV there).</td><td>BCBC 9.33 <span class="v">⚠ verify</span>; NFPA 13D pipes ≥ 4 °C.</td></tr>
+<tr><td>6</td><td>Some 2" drains drawn at 1.93–1.97 %; washer trap arm at 0 %.</td><td>Set 2.08 % (¼"/ft) for margin and slope the trap arm.</td></tr>
+<tr><td>7</td><td>FD-01 trap seal protection only noted.</td><td>Model or specify a trap primer or seal device.</td></tr>
+<tr><td>8</td><td>WH seismic straps not modelled.</td><td>Model or call out on the drawing.</td></tr>
+<tr><td>9</td><td>Indoor 8.0 kW on a 6.8 kW outdoor unit (118 %).</td><td>Daikin combination table, F280, B52 calcs attached.</td></tr>
+<tr><td>10</td><td>No EV-ready outlet.</td><td>Check the municipal bylaw (spare circuit reserved in P-21).</td></tr>
+<tr><td>11</td><td>AC-01/02/03 still cut 42 / 109 / 92 mm into the side partitions (clearance family narrower than the unit).</td><td>Shift about 150 mm and widen the clearance box. (P-01 to P-03 measured the body clear; recheck.)</td></tr>
+<tr><td>12</td><td>CU-01 pad smaller than the unit; DS1 working space overlaps the unit by about 90 mm.</td><td>Enlarge the pad; recheck DS1.</td></tr>
+<tr><td>13</td><td>Dryer hood DV-01 1.1 m from the deck door and 0.25 m from GF8.</td><td>Consider a wall without a deck.</td></tr>
+<tr><td>14</td><td>Pendant stems still end at 10.25 ft (only renamed in P-18).</td><td>Model the stems to the vault.</td></tr>
+<tr><td>15</td><td>61 MEP elements still reported without a level.</td><td>Recheck after P-23 (Schedule Level vs host level).</td></tr>
+<tr><td>16</td><td>Placeholders: CU family name still says "Cooling Only"; one generic inline family is used for domestic valves, T&amp;P and the pump (they schedule as FP); WB-01 uses the receptor family.</td><td>Replace placeholders before issue.</td></tr>
+<tr><td>17</td><td>The 2 warnings (tempered water flow; hood output).</td><td>Set one tempered-water component to Calculated; give the hood cap a flow.</td></tr>
+</table>
+<!-- ===================== 10 QUESTIONS ===================== -->
+<h1>10. Self-test questions</h1>
+<p class="small">Answer on paper, then check section 11. Questions marked ★ use a calculation.</p>
+<div class="qa">
+<h3>Building code</h3>
+<ol>
+<li>What indoor temperature must a BCBC 9.33 heating system hold, and at which outdoor design temperature for Burnaby?</li>
+<li>Does BCBC require a backup heating system when a heat pump covers the design load?</li>
+<li>What guard height is required where the drop exceeds 1.8 m, and what opening test applies?</li>
+<li>Give the private-stair limits for rise, run and width used in this project.</li>
+<li>When must a stair have handrails on both sides?</li>
+<li>What is the minimum entrance door size (BCBC Table 9.5.5.1)?</li>
+<li>State the bedroom egress-window requirement and the condition that waives it.</li>
+<li>★ An 813 mm slider opens about half its width with a 970 mm clear height. Does it meet egress?</li>
+<li>Name three requirements for smoke alarms under BCBC 9.10.19.</li>
+<li>Why did V-02 use "top of foundation minus 150 mm" as the grade?</li>
+<li>Does BCBC set a switch height for a Part 9 house? What height was used and why?</li>
+</ol>
+<h3>Plumbing</h3>
+<ol start="12">
+<li>BCPC 2.4.8.1: what minimum slope for drains ≤ 3", and for drains larger than 3"?</li>
+<li>Why did the condensate lines have to go from 1 % to 2 %?</li>
+<li>What is the minimum trap seal depth, and what extra does a floor drain need?</li>
+<li>Name the three things wrong with a washer piped rigidly from its base to the drain.</li>
+<li>What does a washer outlet box add, and is it required?</li>
+<li>Why is a tempering valve not acceptable as a shower valve? What is required instead?</li>
+<li>List four requirements for a water-heater T&amp;P discharge.</li>
+<li>Why was pipe 1720119 deleted (three reasons)?</li>
+<li>Above what static pressure is a PRV required?</li>
+<li>What two depth rules apply to Burnaby water services?</li>
+<li>Why does the water-service depth matter for fire safety in this house?</li>
+<li>Where must a cleanout be provided, and why was CO-01 put inside?</li>
+<li>Is a dishwasher required to be beside the sink? What does matter legally?</li>
+<li>What air gap is required for indirect waste over a receptor?</li>
+</ol>
+<h3>Electrical</h3>
+<ol start="26">
+<li>★ Redo the CEC 8-200 calculation for this house (floor area, basic load, total, amps).</li>
+<li>Why is 93 A on a 100 A service legal even though it is above 80 %?</li>
+<li>★ With a 32 A EV charger, what is the load and the percentage on 200 A?</li>
+<li>★ D4 is at (3.85, 4.10); the nearest sink corner is (4.90, 3.47). Is GFCI required?</li>
+<li>How is the 1.5 m GFCI distance measured (three points)?</li>
+<li>What is the maximum distance from any counter point to a receptacle, and the circuit rule for counter receptacles?</li>
+<li>What is the wall receptacle spacing rule (26-712(a))?</li>
+<li>Why did Revit show the range at 50 A on a 40 A breaker, and why is that acceptable?</li>
+<li>Give the panel working-space dimensions and the top-breaker height used.</li>
+<li>When must a dual-function AFCI/GFCI breaker be specified?</li>
+<li>What must outdoor receptacles have besides GFCI?</li>
+<li>Why are the indoor AC heads left off the panel?</li>
+<li>Why should smoke alarms not be on a GFCI?</li>
+<li>How do you switch one set of lights from three places?</li>
+</ol>
+<h3>Sprinklers</h3>
+<ol start="40">
+<li>What are the NFPA 13D minimum flows for one head and for two heads?</li>
+<li>★ A K 5.6 head flows 32 gpm. What pressure is needed?</li>
+<li>Why were the coursework flows kept in P-14?</li>
+<li>State the residential obstruction rule used in P-17.</li>
+<li>Give the correct order of the fire riser components and explain why the flow switch is where it is.</li>
+<li>When is a multipurpose (no-backflow) system allowed?</li>
+<li>Which pipe materials does 13D permit, as used here?</li>
+<li>How must 13D piping in attics and exterior walls be protected from freezing?</li>
+</ol>
+<h3>HVAC and refrigerant</h3>
+<ol start="48">
+<li>What are the two parts of CSA F280, and which one depends on the equipment?</li>
+<li>Why couldn't the FTC heads stay with a 4MXM heat-pump outdoor unit?</li>
+<li>★ Write the B52 / IEC 60335-2-40 m_max formula and calculate it for Bedroom 1.</li>
+<li>Why is the full system charge compared with the smallest room on a multi-split?</li>
+<li>Give the CSA F326 room rates for a master bedroom and for other rooms.</li>
+<li>Is there a legal minimum flow per exhaust grille? What is the practical minimum and why?</li>
+<li>What is the usual bathroom intermittent exhaust rate and the kitchen rate?</li>
+<li>How far must an HRV exhaust pickup be from a cooktop, and why?</li>
+<li>Why was make-up air not needed for the 150 cfm range hood?</li>
+<li>Give three reasons not to discharge HRV exhaust under the deck near CU-01.</li>
+<li>What separation and height rules apply to HRV intake and exhaust grilles?</li>
+<li>What transition duct is used for a dryer, and what are its limits?</li>
+<li>What smoke-alarm rules apply near supply diffusers and on sloped ceilings?</li>
+</ol>
+<h3>Revit / workflow</h3>
+<ol start="61">
+<li>Why must switch systems be created in the Revit UI?</li>
+<li>What went wrong when vents were re-typed by API, and how was it fixed?</li>
+<li>How is the "Trap P - PVC - DWV" family placed correctly?</li>
+<li>What is the rule about coursework values?</li>
+</ol>
+</div>
+
+<!-- ===================== 11 ANSWERS ===================== -->
+<h1>11. Answer key</h1>
+<div class="ans small">
+<ol>
+<li>22 °C in living spaces at about −7 °C (Burnaby). Equipment sized to CSA F280.</li>
+<li>No. Backup is the owner's choice; the bedroom baseboards were removed once the heat pump covered 3.6 kW.</li>
+<li>1070 mm; no opening may pass a 100 mm sphere; non-climbable (vertical members only).</li>
+<li>Rise ≤ 200 mm, run ≥ 255 mm, width ≥ 860 mm (closed risers or a 100 mm sphere limit).</li>
+<li>When the stair is 1100 mm wide or more (and guards are needed when the drop exceeds 600 mm).</li>
+<li>810 × 1980 mm (813 × 1981 type used).</li>
+<li>≥ 0.35 m² unobstructed, no dimension under 380 mm, openable from inside without tools; waived when the suite is sprinklered.</li>
+<li>About 380 × 970 = 0.37 m² ≥ 0.35 m² and 380 mm = the minimum, so it just passes; with no margin the waiver depends on the sprinklers.</li>
+<li>Hardwired, interconnected, battery backup; one on every storey; between sleeping areas and the rest of the storey.</li>
+<li>BCBC 9.15.4 needs the foundation ≥ 150 mm above grade, so grade can't be higher than +0.11 − 0.15 = −0.04 m (no topography in the model).</li>
+<li>No. 1200 mm to centre is usual BC practice and within the about 1200 mm accessible cap; use 1100 mm for adaptable units.</li>
+<li>2 % (1:50) for ≤ 3"; 1 % (1:100) allowed for over 3".</li>
+<li>Condensate to a receptor is indirect waste, which is a drainage pipe, so BCPC 2.4.8.1's 2 % applies; 1 % is HVAC practice, not BC code. You asked to follow the law.</li>
+<li>38 mm; trap seal protection (trap primer or seal insert).</li>
+<li>No trap (sewer gas), no air break (backflow / cross-connection), and washers really drain by pump hose.</li>
+<li>It holds the standpipe top and hose valves neatly in the wall; not required (an exposed standpipe works).</li>
+<li>A tempering valve is a plumber-set temperature cap, not a user control. Each shower needs a pressure-balancing or thermostatic valve to CSA B125.3, limited to 49 °C.</li>
+<li>Full size; temperature-rated material (copper, not PVC); no valves or traps; ends 150 mm above the floor or over a drain with an air gap.</li>
+<li>It was 1" PVC (not temperature-rated), connected to the tank's drain-valve connector (not the T&amp;P), and its centreline was inside the tank wall.</li>
+<li>550 kPa (80 psi).</li>
+<li>Bylaw ≥ 762 mm below grade; Engineering Design Criteria 1.0 m cover.</li>
+<li>The sprinklers are fed from the domestic service; a frozen service disables them, and the egress waiver depends on them.</li>
+<li>Where the building drain leaves the building / base of the stack; outside it would be under the deck and unreachable.</li>
+<li>No. It needs its own trap, a vent within the trap-arm limit, and backflow protection (high loop or air gap).</li>
+<li>At least 25 mm.</li>
+<li>156.8 m² (89.6 + 75 % × 89.6). Basic 6000 + heat 4000 + range 6000 + WH 4500 + 25 % others 1750 = 22 250 W ÷ 240 = 93 A.</li>
+<li>8-200 already applies demand factors and only requires service ≥ calculated load. The 80 % rule (8-104) is for continuous loads on breakers.</li>
+<li>22 250 + 7680 = 29 930 W = 125 A; 125 / 200 = 62 %.</li>
+<li>√(1.05² + 0.63²) = 1.22 m &lt; 1.5 m, so yes.</li>
+<li>From the nearest edge of the sink rim; horizontally (height ignored); along the shortest cord path, not through walls.</li>
+<li>900 mm; 20 A circuits, max 2 receptacles per circuit, T-slot.</li>
+<li>No point along the wall more than 1.8 m from a receptacle (about every 3.6 m).</li>
+<li>The 12 kW nameplate gives 50 A; CEC 8-300 demand for a single range ≤ 12 kW is 6 kW (25 A), so a 40 A breaker is normal.</li>
+<li>1 m deep, ≥ 750 mm wide, about 2.2 m headroom; top breaker about 1.7 m (1.67 m used).</li>
+<li>Where both AFCI and GFCI are needed (kitchen counters, bathroom circuits).</li>
+<li>Weather-resistant (and tamper-resistant) with a while-in-use cover.</li>
+<li>Multi-split heads are powered from the outdoor unit through the interconnect cable; only CU-01 has a breaker (and a disconnect within sight).</li>
+<li>A nuisance trip would silence the alarms. They go on a lighting circuit.</li>
+<li>Two 3-way switches at the ends and one 4-way in the middle.</li>
+<li>18 gpm single head; 13 gpm each for two heads (or the listed flow if higher).</li>
+<li>P = (32 / 5.6)² ≈ 32.7 psi.</li>
+<li>They are BCIT coursework values and are higher than the minimum, so conservative and not illegal; changing them would break consistency with the coursework hydraulic calc and pump.</li>
+<li>Clearance 3× the obstruction dimension, capped at 24" (0.61 m), unless the deflector is below the obstruction.</li>
+<li>CV → BFP → PG → FS → D&amp;T → up to the sprinklers. The FS is upstream so test water from the D&amp;T passes it and proves the alarm.</li>
+<li>Only when water circulates through the sprinkler piping to plumbing fixtures (no dead ends).</li>
+<li>Copper tube Types K, L or M (Type K used); listed CPVC is the other option.</li>
+<li>Keep the pipe on the warm side of the insulation (tent insulation over attic pipes, inside face in exterior walls, below the roof insulation in vaults); pipe insulation alone isn't relied on.</li>
+<li>Load calculation (building only) and equipment selection (depends on equipment, using heat-pump capacity at the design temperature).</li>
+<li>FTC heads are cooling-only; FTX heads are needed for heat-pump heating.</li>
+<li>m_max = 2.5 × LFL^1.25 × h₀ × √A = 2.5 × 0.307^1.25 × 1.8 × √7.44 ≈ 2.80 kg; charge 2.5 kg passes.</li>
+<li>All heads share one refrigerant circuit, so a leak can release the whole charge into one room.</li>
+<li>Master 10 L/s (21 cfm); other rooms 5 L/s (unfinished basement 10 L/s).</li>
+<li>No. About 10–15 cfm, because flow hoods and dampers can't reliably read or set 5 cfm.</li>
+<li>Bathroom about 25 L/s intermittent; kitchen about 50 L/s.</li>
+<li>At least 1.2 m; grease clogs the HRV core and it is a fire risk.</li>
+<li>The house is all-electric; there's no combustion appliance to back-draft.</li>
+<li>Moisture condenses or frosts on the deck framing; the heat-pump coil draws in moist air and frosts; exhaust air hangs under the deck.</li>
+<li>About 1.8 m apart (2.47 m used) and at least 450 mm above grade; not onto walkways or steps.</li>
+<li>UL 2158A foil or semi-rigid; max about 2.4 m; must stay visible (not in the wall).</li>
+<li>About 0.9–1 m (914 mm) from supply outlets; within 900 mm of the peak on a sloped ceiling.</li>
+<li>The Revit 2027 API has no method for it and the Switch command can't be run by scripts.</li>
+<li>Connecting Vent-typed pipe to the drain by API merged the whole drain into the vent system. Fixed by deleting the runaway vent system, then you set System Type = Vent in the UI.</li>
+<li>Inlet (−X connector) rotated to face up with +90° about Y, outlet aimed along the drain; the outlet sits about 59 mm above the inlet for 3"; never tilt it.</li>
+<li>Keep coursework values unless they break code; record better options as recommendations; ask before changing a design value.</li>
+</ol>
+</div>
+
+<!-- ===================== 12 CHEAT SHEET ===================== -->
+<h1>12. One-page cheat sheet</h1>
+<div class="cheat">
+<div class="cols">
+<div>
+<table>
+<thead><tr><th colspan="2">Building (BCBC Part 9)</th></tr></thead>
+<tr><td>Heating</td><td>22 °C at −7 °C (Burnaby), F280</td></tr>
+<tr><td>Guard</td><td>1070 mm if drop &gt; 1.8 m; 100 mm sphere</td></tr>
+<tr><td>Stair guard / handrail</td><td>900 mm; rail 865–965 mm</td></tr>
+<tr><td>Stair</td><td>rise ≤ 200, run ≥ 255, width ≥ 860</td></tr>
+<tr><td>Handrails both sides</td><td>width ≥ 1100 mm</td></tr>
+<tr><td>Entrance door</td><td>≥ 810 × 1980 mm</td></tr>
+<tr><td>Egress window</td><td>≥ 0.35 m², ≥ 380 mm; waived if sprinklered</td></tr>
+<tr><td>Foundation above grade</td><td>≥ 150 mm</td></tr>
+<tr><td>Smoke alarms</td><td>every storey, interconnected, battery</td></tr>
+<tr><td>Switch height</td><td>1200 mm (no Part 9 rule)</td></tr>
+</table>
+<table>
+<thead><tr><th colspan="2">Plumbing (BCPC)</th></tr></thead>
+<tr><td>Slope ≤ 3"</td><td>2 % (1:50, ¼"/ft)</td></tr>
+<tr><td>Slope &gt; 3"</td><td>1 % (1:100)</td></tr>
+<tr><td>Condensate</td><td>2 % (indirect waste), ¾"</td></tr>
+<tr><td>Trap seal</td><td>≥ 38 mm; floor drain + primer</td></tr>
+<tr><td>Air gap</td><td>≥ 25 mm</td></tr>
+<tr><td>Washer</td><td>2" standpipe + 2" trap + vent</td></tr>
+<tr><td>Shower valve</td><td>PB/thermostatic, CSA B125.3, 49 °C</td></tr>
+<tr><td>T&amp;P</td><td>150 psi/99 °C; copper, full size, 150 mm AFF</td></tr>
+<tr><td>PRV</td><td>&gt; 550 kPa (80 psi)</td></tr>
+<tr><td>Backflow</td><td>CSA B64.10, type per City</td></tr>
+<tr><td>Water service</td><td>≥ 762 mm (bylaw), 1.0 m design</td></tr>
+<tr><td>VTR (frost)</td><td>3", increaser ≥ 300 mm below roof</td></tr>
+</table>
+</div>
+<div>
+<table>
+<thead><tr><th colspan="2">Electrical (CEC)</th></tr></thead>
+<tr><td>8-200 basic</td><td>5000 W first 90 m² + 1000 W / 90 m²</td></tr>
+<tr><td>Area</td><td>living + 75 % basement</td></tr>
+<tr><td>Range</td><td>6000 W (≤ 12 kW)</td></tr>
+<tr><td>Others &gt; 1.5 kW</td><td>25 % (with range)</td></tr>
+<tr><td>This house</td><td>93 A; 125 A with EV; 200 A → 62 %</td></tr>
+<tr><td>80 % rule</td><td>8-104 continuous loads only</td></tr>
+<tr><td>GFCI</td><td>within 1.5 m of sink, cord path</td></tr>
+<tr><td>Counter</td><td>≤ 900 mm; 20 A T-slot; 2/circuit</td></tr>
+<tr><td>Wall spacing</td><td>≤ 1.8 m to any point</td></tr>
+<tr><td>Working space</td><td>1 m × 750 mm, ~2.2 m high</td></tr>
+<tr><td>Top breaker</td><td>~1.7 m</td></tr>
+<tr><td>Outdoor</td><td>GFCI, WR/TR, in-use cover</td></tr>
+<tr><td>AFCI</td><td>125 V receptacle circuits; dual-function with GFCI</td></tr>
+<tr><td>Shower clearance</td><td>≥ 500 mm (flag &lt; 1 m)</td></tr>
+<tr><td>Device to jamb</td><td>≥ 100 mm (Rule 1)</td></tr>
+</table>
+<table>
+<thead><tr><th colspan="2">Sprinklers (NFPA 13D)</th></tr></thead>
+<tr><td>Min flow</td><td>18 gpm (1 head) / 13 gpm each (2)</td></tr>
+<tr><td>Formula</td><td>Q = K√P</td></tr>
+<tr><td>Obstruction</td><td>3× size, max 0.61 m (24")</td></tr>
+<tr><td>Sidewall</td><td>deflector ~100–150 mm below ceiling</td></tr>
+<tr><td>Riser order</td><td>CV → BFP → PG → FS → D&amp;T</td></tr>
+<tr><td>Pipe</td><td>copper K/L/M or listed CPVC</td></tr>
+<tr><td>Freeze</td><td>warm side of insulation, ≥ 4 °C</td></tr>
+</table>
+</div>
+<div>
+<table>
+<thead><tr><th colspan="2">HVAC / ventilation</th></tr></thead>
+<tr><td>F280 house</td><td>3.6 kW heat / 4.6 kW cool</td></tr>
+<tr><td>Design temps</td><td>−7 °C / 29 °C; in 22/24 °C</td></tr>
+<tr><td>Heads</td><td>FTC = cool only; FTX = heat pump</td></tr>
+<tr><td>B52 m_max</td><td>2.5·LFL^1.25·h₀·√A</td></tr>
+<tr><td>R32 values</td><td>LFL 0.307; h₀ 1.8 m (wall)</td></tr>
+<tr><td>Bedroom 1</td><td>2.80 kg ≥ 2.5 kg ✔</td></tr>
+<tr><td>9.32 (3 bed)</td><td>22–33 L/s ⚠</td></tr>
+<tr><td>F326</td><td>master 10 L/s; others 5 L/s</td></tr>
+<tr><td>Bath / kitchen</td><td>25 / 50 L/s</td></tr>
+<tr><td>Grille practical min</td><td>10–15 cfm</td></tr>
+<tr><td>HRV pickup</td><td>≥ 1.2 m from range</td></tr>
+<tr><td>HRV grilles</td><td>≥ 1.8 m apart, ≥ 450 mm AFG</td></tr>
+<tr><td>Dryer</td><td>100 mm rigid; UL 2158A ≤ 2.4 m</td></tr>
+<tr><td>AC head top</td><td>≥ 50 mm to ceiling</td></tr>
+<tr><td>1 L/s</td><td>= 2.119 cfm</td></tr>
+</table>
+<table>
+<thead><tr><th colspan="2">Alarms</th></tr></thead>
+<tr><td>From supply air</td><td>≥ 0.9–1 m (914 mm)</td></tr>
+<tr><td>Sloped ceiling</td><td>within 900 mm of peak</td></tr>
+<tr><td>Standards</td><td>S553 install; S531 smoke; CSA 6.19 CO</td></tr>
+</table>
+</div>
+</div>
+<p class="small muted" style="margin-top:6px">Clause numbers follow the editions quoted in the project. Values marked ⚠ in the full report were flagged as needing verification.</p>
+</div>
+
+</body>
+</html>
