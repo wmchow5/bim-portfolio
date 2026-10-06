@@ -6,19 +6,20 @@ The portfolio is built as a **submittal package**:
 
 - a transmittal cover with the 3D MEP model
 - my qualifications
-- an RFI log of the 50 issues I raised and closed against BC codes
-- six RFIs in full, each with before and after
+- a design review summary: 51 issues raised against BC code across seven disciplines (39 closed, 6 closed with placeholder families, 3 kept with reasons, 2 documented, 1 open)
+- five case studies, each with the code basis, my decision and a before/after
 - the drawing set
+- Appendix A: the full design review log
 
 **Live site:** <https://wmchow5.github.io/bim-portfolio/> (after GitHub Pages is turned on; see below)
-**PDF:** [`docs/Kenneth-Chow-Submittal.pdf`](docs/Kenneth-Chow-Submittal.pdf), 13 landscape letter pages.
+**PDF:** [`docs/Kenneth-Chow-Submittal.pdf`](docs/Kenneth-Chow-Submittal.pdf) (13 landscape letter pages) and the full log as [`docs/KC-RES-05_Design_Review_Log.pdf`](docs/KC-RES-05_Design_Review_Log.pdf) (3 pages).
 
 ## Repository layout
 
 | Path | What it is |
 |---|---|
-| `docs/` | The portfolio website, served by GitHub Pages: `index.html`, `assets/` (images exported from the Revit model) and the PDF version. |
-| `reports/` | Study and review material. `KC-RES-05_Model_Improvement_Tracker.md` is the 50-item code review log. `Electrical_BIM_Review_2026-09-25.md` is the electrical review. The revision report (HTML and PDF) covers the codes, calculations and self-test questions. |
+| `docs/` | The portfolio website, served by GitHub Pages: `index.html`, `assets/` (images exported from the Revit model), the portfolio PDF and the design review log PDF. |
+| `reports/` | Study and review material. `KC-RES-05_Model_Improvement_Tracker.md` is the working tracker behind the design review log. `Electrical_BIM_Review_2026-09-25.md` is the electrical review. The revision report (HTML and PDF) covers the codes, calculations and self-test questions. |
 | `revit/families/` | Revit families I built or edited for the model: placeholder equipment, mark tags, and water heater and dryer connectors. |
 | `tools/` | `serve.ps1` previews the site locally. `mobile-frame.html` checks the site at phone width. |
 
@@ -30,7 +31,7 @@ The Revit model itself (`.rvt`, about 50 MB) and its backups are not in this rep
 powershell -ExecutionPolicy Bypass -File tools/serve.ps1
 ```
 
-Then open <http://localhost:8765>. Open <http://localhost:8765/mobile-frame.html> to see the page at 390 px wide.
+Then open <http://localhost:8765>. Pass a port to use another one (for example `tools/serve.ps1 8766`). Open <http://localhost:8765/mobile-frame.html> to see the page at 390 px wide.
 
 ## Publish with GitHub Pages
 
@@ -41,7 +42,7 @@ Then open <http://localhost:8765>. Open <http://localhost:8765/mobile-frame.html
 
 ## How the model review was done
 
-I scripted the geometry and code checks through the Revit API (pyRevit) with an AI assistant, Claude. I chose every option, checked each fix in the model, and can walk through any item. Open items stay marked open; R-01 (smoke alarm SD1 too close to a supply diffuser) is still to fix.
+I ran the geometry and code checks through the Revit API (pyRevit), with Claude as a scripting assistant. I set the rules, made each decision and verified every change in the model. R-01 (smoke alarm SD1 too close to a supply diffuser) is open, and nine further model items are under re-check; both are listed on the last page of the portfolio.
 
 ## Rights
 

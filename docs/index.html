@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Kenneth Chow, MEP technician / modeler. BCIT residential MEP model KC-RES-05 issued as a submittal package: 50-item code review log, six RFIs and the drawing set.">
+<meta name="description" content="Kenneth Chow, MEP technician / modeler. BCIT residential MEP model KC-RES-05 issued as a submittal package: design review of 51 issues against BC code, five case studies and the drawing set.">
 <title>Kenneth Chow Submittal</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -203,6 +203,27 @@ table{border-collapse:collapse;width:100%}
 .slope .bar svg{width:100%;height:100%}
 .slope .cap{display:flex;justify-content:space-between;font-size:12.5px}
 
+/* ---------- design review summary ---------- */
+.summary-lead p{margin:0;max-width:92ch;font-size:15.5px;line-height:1.55}
+.sum-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);border:2px solid var(--rule);border-top:0}
+.sum-grid>div{min-width:0}
+.sum-table{padding:12px 14px;border-right:2px solid var(--rule)}
+.tablewrap{overflow-x:auto}
+.matrix{font-variant-numeric:tabular-nums;font-size:13.5px}
+.matrix th,.matrix td{padding:6px 8px;border-bottom:1px solid rgba(42,47,55,.28);text-align:right}
+.matrix th:first-child,.matrix td:first-child{text-align:left}
+.matrix thead th{font:600 11px/1.2 var(--f-form);font-stretch:85%;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom:2px solid var(--rule)}
+.matrix tfoot td{font-weight:700;border-top:2px solid var(--rule);border-bottom:0}
+.matrix td.zero{color:var(--ink-soft)}
+.matrix td.openc{color:var(--stamp);font-weight:700}
+.steps{margin:4px 0 0;padding-left:20px;display:grid;gap:3px}
+.appx>summary{list-style:none;cursor:pointer;border:2px solid var(--rule);border-top:0;padding:10px 14px;font:700 12px/1 var(--f-form);font-stretch:95%;letter-spacing:.12em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.appx>summary::-webkit-details-marker{display:none}
+.appx>summary::before{content:"";width:9px;height:9px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(-45deg);transition:transform .2s}
+.appx[open]>summary::before{transform:rotate(45deg)}
+.appx>summary:hover{background:rgba(245,216,79,.28)}
+.appx[open]>summary span::after{content:" (hide)";font-weight:600;color:var(--ink-soft)}
+
 /* ---------- drawings ---------- */
 .viewer{border:2px solid var(--rule);border-top:0;display:grid;grid-template-columns:240px minmax(0,1fr)}
 .tabs{display:flex;flex-direction:column;border-right:2px solid var(--rule)}
@@ -215,7 +236,7 @@ table{border-collapse:collapse;width:100%}
 .tabs button:hover:not([aria-selected="true"]){background:rgba(245,216,79,.3)}
 .stage{padding:clamp(12px,2vw,24px);display:grid;gap:10px;min-width:0;background:repeating-linear-gradient(0deg,transparent 0 27px,rgba(42,47,55,.06) 27px 28px)}
 .stage .encl-sheet{transform:none;cursor:zoom-in}
-.stage .encl-sheet img{max-height:68vh;width:auto;margin:0 auto}
+.stage .encl-sheet img{max-height:82vh;width:auto;margin:0 auto}
 .stage .cap{font-size:13.5px;max-width:80ch}
 dialog.zoom{border:0;padding:0;max-width:96vw;max-height:94vh;background:#fff;box-shadow:var(--shadow)}
 dialog.zoom::backdrop{background:rgba(15,18,22,.78)}
@@ -229,6 +250,9 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
 .close-grid>div+div{border-left:2px solid var(--rule)}
 .bigstamp{font-size:clamp(20px,2.6vw,30px);padding:12px 18px 10px;transform:rotate(-5deg)}
 .note{font-size:13px;max-width:70ch}
+.recheck{margin:2px 0 8px;padding-left:18px;columns:2;column-gap:22px}
+.recheck li{break-inside:avoid;margin:1px 0}
+@media (max-width:640px){.recheck{columns:1}}
 .desknote{max-width:1360px;margin:0 auto;color:var(--desk-ink);font:500 12px/1.5 var(--f-form);display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 18px;padding-top:6px}
 
 /* ---------- responsive ---------- */
@@ -251,6 +275,8 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
   .tabs button{border-top:0;border-left:1px solid var(--rule);min-width:150px}
   .tabs button:first-child{border-left:0}
   .stage .encl-sheet img{max-height:none;width:100%}
+  .sum-grid{grid-template-columns:minmax(0,1fr)}
+  .sum-table{border-right:0;border-bottom:2px solid var(--rule)}
 }
 @media (max-width:640px){
   body{font-size:14.5px}
@@ -306,9 +332,11 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
   .viewer{display:block;border:0}
   .stage{display:block;background:none;padding:0}
   .stage .encl-sheet,.stage .cap{display:none}
-  .printset{display:grid!important;grid-template-columns:1fr 1fr;gap:10px}
+  .printset{display:grid!important;grid-template-columns:1fr 1fr;gap:12px}
   .printset figure{margin:0;break-inside:avoid;border:1px solid #bbb;padding:6px}
-  .printset img{max-height:3.1in;width:auto;margin:0 auto}
+  .printset img{max-height:5.9in;width:auto;margin:0 auto}
+  .printset figure:nth-child(2n){break-after:page}
+  .printset figure:last-child{break-after:auto}
   .printset figcaption{font:600 9px/1.3 var(--f-form);letter-spacing:.08em;text-transform:uppercase;margin-top:4px}
   h1.name{font-size:54px}
   .trans-body{display:grid;grid-template-columns:.9fr 2.1fr}
@@ -316,13 +344,21 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
   .trans-left .block,.trans-body .enclosure{order:0}
   .trans-body .enclosure{border-top:0;border-bottom:0}
   .encl-foot{grid-template-columns:minmax(0,1fr) minmax(240px,.85fr)}
-  .enclosure .encl-sheet img{max-height:4.3in!important;width:auto!important}
+  .enclosure .encl-sheet img{max-height:3.7in!important;width:auto!important}
   .viewer{grid-template-columns:1fr}
   .kv{grid-template-columns:max-content minmax(0,1fr);gap:3px 14px}
   .rfi-body,.qual-grid,.close-grid{grid-template-columns:1.05fr 1fr}
   .trans-left,.rfi-text{border-right:2px solid var(--rule);border-bottom:0}
   .qual-grid>div+div,.close-grid>div+div{border-left:2px solid var(--rule);border-top:0}
   .enclosure .encl-sheet img{max-height:5.1in;width:auto;margin:0 auto}
+  .sum-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr)}
+  .sum-table{border-right:2px solid var(--rule);border-bottom:0}
+  .appx>summary{display:none}
+  .trans-left .block:nth-child(3){display:none}
+  html:not(.log-only) #log{display:none}
+  html:not(.log-only) #review{break-after:auto}
+  html.log-only .sheet:not(#log),html.log-only .desknote{display:none!important}
+  html.log-only #log{break-after:auto}
 }
 .printset{display:none}
 </style>
@@ -347,7 +383,7 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
       <div class="cell"><span class="lbl">Transmittal no.</span><span class="val">KC-RES-05-T01</span></div>
       <div class="cell"><span class="lbl">Date</span><span class="val">October 2026</span></div>
       <div class="cell"><span class="lbl">Sent via</span><span class="val">Link · PDF attachment</span></div>
-      <div class="cell"><span class="lbl">Sheets</span><span class="val">10 sheets + 8 drawings</span></div>
+      <div class="cell"><span class="lbl">Package</span><span class="val">9 forms + appendix</span></div>
     </div>
   </div>
   <div class="row2 ruled">
@@ -358,7 +394,7 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
     <div class="trans-left">
       <div class="block">
         <h1 class="name" id="who">Kenneth Chow</h1>
-        <p class="re"><b>Re:</b> MEP technician / MEP modeler roles, and coordinator roles where they fit. Enclosed is my BCIT residential MEP model and the code review I ran on it, item by item.</p>
+        <p class="re"><b>Re:</b> MEP technician / MEP modeler roles, and coordinator roles where they fit. Enclosed is my BCIT residential MEP model, the QA review I ran on it against BC code, and the drawings.</p>
       </div>
       <div class="block">
         <span class="lbl">Items enclosed</span>
@@ -367,9 +403,10 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
           <tbody>
             <tr><td>01</td><td>3D MEP coordination model, KC-RES-05 (this page)</td></tr>
             <tr><td><a href="#qualifications">02</a></td><td>Applicant qualifications and model register</td></tr>
-            <tr><td><a href="#log">03</a></td><td>RFI log: 50 issues raised, 50 closed, 1 reopened on re-check</td></tr>
-            <tr><td><a href="#rfis">04</a></td><td>Six RFIs in full, with code basis and before / after</td></tr>
+            <tr><td><a href="#summary">03</a></td><td>Design review summary: 51 issues across seven disciplines</td></tr>
+            <tr><td><a href="#rfis">04</a></td><td>Five case studies with code basis, decision and before / after</td></tr>
             <tr><td><a href="#drawings">05</a></td><td>Eight drawings exported from the live model</td></tr>
+            <tr><td><a href="#log">App. A</a></td><td>Full design review log, 51 items (separate PDF)</td></tr>
           </tbody>
         </table>
       </div>
@@ -391,7 +428,7 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
       <div class="encl-foot">
         <figcaption class="remarks">
           <span class="lbl">Remarks</span>
-          <p>One-storey house on a basement, Burnaby BC. HVAC, plumbing, fire protection and electrical in one Revit model: 391 pipes (about 451 m), 26 circuits, 28 view templates, 8 sheets.</p>
+          <p>One-storey house on a basement, Burnaby BC. HVAC, plumbing, fire protection and electrical in one Revit model: 391 pipes (about 451 m), 26 circuits, 28 view templates, 8 Revit drawing sheets.</p>
         </figcaption>
         <div class="action">
           <button class="stampbtn" type="button" id="stamp-top" aria-pressed="false" aria-controls="contact-top">
@@ -427,7 +464,7 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
       <div class="field"><span class="lbl">What that means here</span><p>I have run the paperwork this page is built from. On KC-RES-05 I applied the same habit to my own model: raise the issue, cite the code, propose options, record the decision.</p></div>
       <div class="field"><span class="lbl">Codes worked to on this model</span><p>BC Building Code 2024 Part 9 · BC Plumbing Code · Canadian Electrical Code (as adopted in BC) · NFPA 13D · CSA F280, F326, B52 · CAN/ULC-S553 · Burnaby waterworks bylaw.</p></div>
       <div class="field"><span class="lbl">Software</span><p>Autodesk Revit (MEP: piping, ducts, circuits, panel schedules, view templates, families) · AutoCAD · Revit API checks through pyRevit.</p></div>
-      <div class="field"><span class="lbl">How the review was done</span><p>The geometry and code checks were scripted through the Revit API with an AI assistant (Claude). I set the rules, chose every option and checked each fix in the model. I can walk through any item on this page.</p></div>
+      <div class="field"><span class="lbl">Method</span><p>I ran the geometry and code checks through the Revit API (pyRevit), with Claude as a scripting assistant. I set the rules, made each decision and verified every change in the model.</p></div>
     </div>
     <div>
       <div class="field"><span class="lbl">Model register · KC-RES-05</span></div>
@@ -436,53 +473,55 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
           <tr><td>Pipes</td><td>391 · about 451 m</td></tr>
           <tr><td>Electrical circuits</td><td>26 on panel P1 (200 A)</td></tr>
           <tr><td>View templates / filters</td><td>28 / 13</td></tr>
-          <tr><td>Sheets</td><td>8</td></tr>
-+
-
-          <tr><td>Issues raised / closed</td><td>50 / 50</td></tr>
-+
-
-          <tr><td>Reopened on re-check</td><td>1 (SD1, see R-01)</td></tr>
+          <tr><td>Revit drawing sheets</td><td>8</td></tr>
+          <tr><td>Issues raised</td><td>51</td></tr>
+          <tr><td>Closed</td><td>39</td></tr>
+          <tr><td>Closed, placeholder family</td><td>6</td></tr>
+          <tr><td>Kept, reason recorded</td><td>3</td></tr>
+          <tr><td>Documented</td><td>2</td></tr>
+          <tr><td>Open</td><td>1 (R-01)</td></tr>
           <tr><td>Backups before each change</td><td>one per item</td></tr>
         </tbody>
       </table>
-      <div class="field"><span class="lbl">Design basis</span><p>Equipment selections, fixture locations and sprinkler design flows follow the BCIT project brief. Where the code review called for a change, such as heat-pump indoor units to meet the BCBC heating requirement (M-09), the change and its reasoning are recorded in the RFI log.</p></div>
+      <div class="field"><span class="lbl">Design basis</span><p>Equipment selections, fixture locations and sprinkler design flows follow the BCIT project brief. Where the code review called for a change, such as heat-pump indoor units to meet the BCBC heating requirement (M-09), the change and its reasoning are recorded in the design review log.</p></div>
     </div>
   </div>
   <span class="copy">Canary · applicant copy</span>
 </section>
 
-<!-- ================= RFI LOG ================= -->
-<section class="sheet" id="log" aria-labelledby="log-title">
+<!-- ================= DESIGN REVIEW SUMMARY ================= -->
+<section class="sheet" id="summary" aria-labelledby="sum-title">
   <div class="formhead">
-    <h2 class="formtitle" id="log-title">RFI log</h2>
+    <h2 class="formtitle" id="sum-title">Design review summary</h2>
     <div class="cells">
       <div class="cell"><span class="lbl">Encl.</span><span class="val">03</span></div>
       <div class="cell"><span class="lbl">Project</span><span class="val">KC-RES-05</span></div>
-      <div class="cell"><span class="lbl">Raised by</span><span class="val">K. Chow (self-review)</span></div>
+      <div class="cell"><span class="lbl">Reviewed by</span><span class="val">K. Chow</span></div>
       <div class="cell"><span class="lbl">Period</span><span class="val">28 Sep – 2 Oct 2026</span></div>
     </div>
   </div>
-  <div class="logtools">
-    <div class="filters" role="group" aria-label="Filter the log">
-      <button class="filt" type="button" data-f="all" aria-pressed="true">All</button>
-      <button class="filt" type="button" data-f="C" aria-pressed="false">Critical</button>
-      <button class="filt" type="button" data-f="M" aria-pressed="false">Major</button>
-      <button class="filt" type="button" data-f="V" aria-pressed="false">Verify</button>
-      <button class="filt" type="button" data-f="P" aria-pressed="false">Practical</button>
-      <button class="filt" type="button" data-f="open" aria-pressed="false">Open</button>
+  <div class="ruled"><div class="cell summary-lead"><span class="lbl">Summary</span><p>I reviewed my BCIT residential MEP model against BC code before issue. 51 issues across seven disciplines: 39 closed, 6 closed with placeholder families pending manufacturer content, 3 kept by design with reasons, 2 documented, 1 open. Every change was backed up, clash-checked and logged.</p></div></div>
+  <div class="sum-grid">
+    <div class="sum-table">
+      <span class="lbl">Issues by discipline and status</span>
+      <div class="tablewrap"><table class="matrix" id="matrix"></table></div>
     </div>
-    <span class="tally" id="tally" aria-live="polite">51 rows</span>
-  </div>
-  <div class="logwrap">
-    <table class="log" id="logtable">
-      <thead><tr><th>RFI</th><th>Disc.</th><th>Issue</th><th>Code basis</th><th>Resolution</th><th>Status</th></tr></thead>
-      <tbody id="logbody"></tbody>
-    </table>
+    <div class="sum-side">
+      <div class="field"><span class="lbl">QA process, per issue</span>
+        <ol class="steps">
+          <li>Plan the change with options and the code basis</li>
+          <li>Back up the model</li>
+          <li>Make the change</li>
+          <li>Check connections, clashes and warnings</li>
+          <li>Save and record the decision in the log</li>
+        </ol>
+      </div>
+      <div class="field"><span class="lbl">Minor fixes</span><p>System classifications, level names, imperial family names and window type names corrected in one pass (P-06, P-23, P-24, P-25).</p></div>
+      <div class="field"><span class="lbl">Full log</span><p>All 51 items, with code basis and status, are in <a href="#log">Appendix A</a>.</p></div>
+    </div>
   </div>
   <span class="copy">White · firm copy</span>
 </section>
-
 <!-- ================= RFIs ================= -->
 <div class="rfis" id="rfis"></div>
 
@@ -533,14 +572,59 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
       </div>
     </div>
     <div class="note">
-      <span class="lbl">Open items carried forward</span>
-      <p>R-01: smoke alarm SD1 sits about 0.64 m from supply diffuser AT-06; it needs about 0.9 m. Found on my own re-check after the log closed. Fix: move SD1 to about (−3.3, 3.4).</p>
-      <p>Placeholder families (heat pump, valves, shower valve, range hood) stand in for manufacturer families. They cause the 2 remaining Revit warnings.</p>
-      <span class="lbl" style="margin-top:12px">Prepared by</span>
-      <p>Kenneth Chow · BIM &amp; design coordination · BCIT BIM studies 2026. Model review assisted by Claude through the Revit API; every decision is mine and I can explain it.</p>
+      <span class="lbl">Open item</span>
+      <p>R-01: smoke alarm SD1 sits about 0.64 m from supply diffuser AT-06; it needs about 0.9 m. Fix: move SD1 to about (−3.3, 3.4).</p>
+      <span class="lbl" style="margin-top:10px">Under re-check in the model</span>
+      <ul class="recheck">
+        <li>AC heads against the side partitions</li>
+        <li>Drain &amp; test valve FP-DT1 to its drain pipe</li>
+        <li>Pendant stems against the vault</li>
+        <li>2" drains drawn at 1.93–1.97 %</li>
+        <li>MEP elements without a level</li>
+        <li>Basement heating</li>
+        <li>Dryer vent termination at the deck</li>
+        <li>Outdoor unit clearance under the deck</li>
+        <li>Trap primer on floor drain FD-01</li>
+      </ul>
+      <p>Placeholder families (heat pump, valves, shower valve, range hood) stand in for manufacturer families until product selection.</p>
+      <span class="lbl" style="margin-top:10px">Prepared by</span>
+      <p>Kenneth Chow · BIM &amp; design coordination · BCIT BIM studies 2026.</p>
     </div>
   </div>
   <span class="copy">Canary · return copy</span>
+</section>
+
+<!-- ================= APPENDIX A: DESIGN REVIEW LOG ================= -->
+<section class="sheet" id="log" aria-labelledby="log-title">
+  <div class="formhead">
+    <h2 class="formtitle" id="log-title">Appendix A · Design review log</h2>
+    <div class="cells">
+      <div class="cell"><span class="lbl">Items</span><span class="val">51</span></div>
+      <div class="cell"><span class="lbl">Project</span><span class="val">KC-RES-05</span></div>
+      <div class="cell"><span class="lbl">Reviewed by</span><span class="val">K. Chow</span></div>
+      <div class="cell"><span class="lbl">Period</span><span class="val">28 Sep – 2 Oct 2026</span></div>
+    </div>
+  </div>
+  <details class="appx" id="appx"><summary><span>Show all 51 items</span></summary>
+  <div class="logtools">
+    <div class="filters" role="group" aria-label="Filter the log">
+      <button class="filt" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="filt" type="button" data-f="C" aria-pressed="false">Critical</button>
+      <button class="filt" type="button" data-f="M" aria-pressed="false">Major</button>
+      <button class="filt" type="button" data-f="V" aria-pressed="false">Verify</button>
+      <button class="filt" type="button" data-f="P" aria-pressed="false">Practical</button>
+      <button class="filt" type="button" data-f="open" aria-pressed="false">Open</button>
+    </div>
+    <span class="tally" id="tally" aria-live="polite">51 rows</span>
+  </div>
+  <div class="logwrap">
+    <table class="log" id="logtable">
+      <thead><tr><th>Item</th><th>Disc.</th><th>Issue</th><th>Code basis</th><th>Resolution</th><th>Status</th></tr></thead>
+      <tbody id="logbody"></tbody>
+    </table>
+  </div>
+  </details>
+  <span class="copy">White · firm copy</span>
 </section>
 
 </main>
@@ -555,24 +639,24 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
 (function(){
 // ---------- data ----------
 const LOG=[
-["C-01","HVAC","No heating: the only outdoor unit was cooling-only","BCBC 9.33 (22 °C)","Heat-pump outdoor unit with FTX heads; toe-kick heater in the bath","placeholder","CU-01 1527078 · HTR-4 1772320","Chose heat pump with backup first; removed the bedroom baseboards once the F280 estimate showed the heat pump covers 3.6 kW."],
+["C-01","HVAC","No heating: the only outdoor unit was cooling-only","BCBC 9.33.3.1 (22 °C)","Heat-pump outdoor unit with FTX heads; toe-kick heater in the bath","placeholder","CU-01 1527078 · HTR-4 1772320","Chose heat pump with backup first; removed the bedroom baseboards once the F280 estimate showed the heat pump covers 3.6 kW."],
 ["C-02","FP","Sprinkler SP-07 hidden above the new hall ceiling","NFPA 13D coverage","Sidewall head lowered to 115 mm below the ceiling","closed","SP-07 1602919 · tee 1773550","Kept the designer's sidewall intent instead of switching to a pendent; hydraulic recheck flagged."],
-["C-03","FP","Fire main tees straight off domestic water with no components","NFPA 13D · CSA B64.10","Control valve, backflow, gauge, flow switch, drain & test","placeholder","FP-CV1 1774562 … FP-DT1 1774571","Caught my own ordering error: the flow switch must sit before the drain & test so the test proves the alarm."],
-["C-04","ARCH","Deck guards 914 mm and open over a 2.1 m drop","BCBC 9.8.8","1070 mm guard, balusters 92 mm clear","closed","Guard type 1774794","Closed a 1.3 m gap; later reopened it when the east stair turned up in the Stage 2 model (M-13)."],
+["C-03","FP","Fire main tees straight off domestic water with no components","NFPA 13D · CSA B64.10","Control valve, backflow, gauge, flow switch, drain & test","placeholder","FP-CV1 1774562 … FP-DT1 1774571","Placed the flow switch before the drain & test so a flow test proves the alarm.","feat"],
+["C-04","ARCH","Deck guards 914 mm and open over a 2.1 m drop","BCBC 9.8.8.3","1070 mm guard, balusters 92 mm clear","closed","Guard type 1774794","Closed a 1.3 m gap; later reopened it when the east stair turned up in the Stage 2 model (M-13)."],
 ["C-05","ARCH","Exterior stair 610 mm wide, 203 mm run, open risers","BCBC 9.8","12 × 178 / 11 × 255, 934 mm clear, closed risers","closed","Stair 1774935","Kept the stair where it was and moved the outdoor unit, its 8 risers and the disconnect 1.10 m instead."],
-["C-06","ELEC","Bathroom switches inside the shower footprint","CEC · 500 mm from shower","Light switches on the hall side; fan timer 0.91 m from the shower","closed","S4, S5, ST1","A split was more practical than moving everything out of the room."],
-["M-01","PL","About 15 drains at 1 % and 4 at 0 %","BCPC 2.4.8.1","All drains ≤ 3\" at 2 %; condensate also at 2 %","closed","Kitchen, lav, shower, washer branches · IW1–IW4","I asked whether 1 % was legal for condensate. It isn't under BC law, so they went to 2 % with five new corner drops.","feat"],
+["C-06","ELEC","Bathroom switches inside the shower footprint","Switch clear of shower reach, 500 mm design (confirm rule in adopted CEC)","Light switches on the hall side; fan timer 0.91 m from the shower","closed","S4, S5, ST1","A split was more practical than moving everything out of the room."],
+["M-01","PL","About 15 drains at 1 % and 4 at 0 %","BCPC 2.4.8.1","All drains ≤ 3\" at 2 %; condensate also at 2 %","closed","Kitchen, lav, shower, washer branches · IW1–IW4","Condensate to a receptor is indirect waste, so BCPC 2.4.8.1 applies: re-sloped to 2 % with five new corner drops."],
 ["M-02","PL","Shower had no supply; a tempering valve fed nothing","CSA B125.3 · 49 °C","Pressure-balancing shower valve at 1.15 m","placeholder","SV-01 1640402","A tempering valve is a plumber's setting, not the user's control, so it was removed."],
 ["M-03","HVAC","No range hood; HRV exhaust pickup over the range","BCBC 9.32 (~50 L/s)","150 cfm ducted hood; pickup moved 1.62 m away","placeholder","RH-01 1778062 · AT-11 1777790","No make-up air needed: the house is all-electric."],
-["M-04","HVAC","No dryer exhaust","BCBC 9.32","100 mm rigid duct, connected to the dryer, to a wall hood","closed","DV-01 1778250 · flex 1779659","I asked for the duct to connect to the dryer itself; the dryer family got a real exhaust connector."],
+["M-04","HVAC","No dryer exhaust","BCBC 9.32","100 mm rigid duct, connected to the dryer, to a wall hood","closed","DV-01 1778250 · flex 1779659","Gave the dryer family a real exhaust connector so the duct connects to the appliance, as it would on site."],
 ["M-05","HVAC","Bathroom exhaust only 40 cfm","BCBC 9.32 (25 L/s)","55 cfm through the HRV boost timer","closed","AT-09 1561511","Rebalanced the HRV instead of adding a fan."],
 ["M-06","FA","No smoke alarm outside Bedroom 3","BCBC 9.10.19","SD6 on the vaulted ceiling, 0.82 m from the peak","closed","SD6 1769474","Within 900 mm of the peak, as S553 requires on a slope."],
 ["M-07","FA","SD1 0.78 m from the AC-01 discharge","CAN/ULC-S553","Moved to 1.70 m from AC-01","closed","SD1 1749658","See R-01: the move put it near a supply diffuser."],
 ["M-08","FA","Smoke alarms reported as not circuited","CEC Section 32","Already on lighting circuits, none on GFCI","closed","SD1–SD6","Checked the model before acting on the report."],
 ["M-09","HVAC","No F280 calculation; living-room head undersized","CSA F280","FTX15 × 3 + FTX35 heat-pump heads (coursework deviation)","placeholder","AC-01–AC-04","Ran an F280-style estimate: 3.6 kW heat / 4.6 kW cool. Applied the heat-pump option knowing it departs from the coursework spec.","feat"],
 ["M-10","HVAC","R32 charge against the smallest room","CSA B52 / IEC 60335-2-40","2.5 kg charge ≤ 2.80 kg allowed","closed","CU-01 1527078","Traced 55.9 m of liquid line from the model to get the charge.","feat"],
-["M-11","PL","Water heater missing T&P valve, expansion tank, straps","BCPC","T&P valve, ¾\" copper discharge, 2 gal tank; straps noted","closed","TPV-01 1782320 · ET-01 1780313","I noticed the T&P valve itself was never modelled; added a tapping to the family and the valve."],
-["M-12","PL","PVC pipe running through the water heater tank; no floor drain","BCPC traps","Floor drain with P-trap (95 mm seal); stack extended","closed","FD-01 1782449 · trap 1783819","Rejected two trap orientations until the trap sat correctly; wrote the method down as a reusable skill.","feat"],
+["M-11","PL","Water heater missing T&P valve, expansion tank, straps","BCPC","T&P valve, ¾\" copper discharge, 2 gal tank; straps noted","closed","TPV-01 1782320 · ET-01 1780313","The T&P valve itself had never been modelled; added a tapping to the water heater family and the valve."],
+["M-12","PL","PVC pipe running through the water heater tank; no floor drain","BCPC traps","Floor drain with P-trap (95 mm seal); stack extended","closed","FD-01 1782449 · trap 1783819","Removed a PVC relief pipe through the tank wall; full-size copper T&P discharge to a new trapped floor drain that drains by gravity.","feat"],
 ["M-13","ARCH","East deck stair missing","BCBC 9.8","5 × 173 / 4 × 280, 1.30 m wide, guards both sides","closed","Stair 1783986","Found it in the Stage 2 reference model."],
 ["V-01","ARCH","Basement door 1930 mm high","BCBC Table 9.5.5.1","813 × 1981 door, 187 mm left for the header","closed","Door 1471875",""],
 ["V-02","PL","Water service only 0.26 m below grade","Burnaby bylaw 762 mm","Entry lowered to −1.50 m, about 1.0 m cover","closed","WS-01 1602887","Revised once the Stage 2 stair showed the real east grade."],
@@ -585,21 +669,21 @@ const LOG=[
 ["P-04","HVAC","Outdoor unit embedded in the wall, under the deck","Daikin clearances","Pulled out 100 mm onto a 100 mm pad","closed","CU-01 · PAD-01 1784931",""],
 ["P-05","ELEC","Panel P1 runs into the floor joists","CEC 2-308 working space","Moved to the west basement wall, 1 m clear","closed","P1 1785080","All 24 circuits kept their numbers."],
 ["P-06","HVAC","HRV intake labelled return air, exhaust as supply","System classification","New Outdoor Air and Exhaust Discharge system types","closed","AT-10 · AT-17",""],
-["P-07","HVAC","Six 5 cfm token exhaust grilles","CSA F326 room rates","Removed; exhaust moved to bath, kitchen, laundry","closed","AT-04, 07, 12–15","I first kept them, asked what the law requires, then removed them: 5 cfm can't be balanced."],
+["P-07","HVAC","Six 5 cfm token exhaust grilles","CSA F326 room rates","Removed; exhaust moved to bath, kitchen, laundry","closed","AT-04, 07, 12–15","Removed them: 5 cfm is below what a damper can set or a flow hood can read, and the code sets no per-grille minimum."],
 ["P-08","HVAC","Supply air into the laundry","CSA F326","Removed; master bedroom raised to 22 cfm","closed","AT-01",""],
-["P-09","HVAC","HRV exhaust under the deck, near the outdoor unit","HRV manual","HRV rotated and moved; grilles on the west wall 2.47 m apart","closed","HRV-01 1547124","Compared five layouts; suggested rotating the HRV myself and chose the shortest outdoor ducting.","feat"],
+["P-09","HVAC","HRV exhaust under the deck, near the outdoor unit","HRV manual","HRV rotated and moved; grilles on the west wall 2.47 m apart","closed","HRV-01 1547124","Compared five layouts; rotating the HRV gave the shortest outdoor ducting.","feat"],
 ["P-10","HVAC","No HRV condensate drain","BCPC air gap ≥ 25 mm","Condensate pump to the receptor, 26 mm air gap","closed","CP-01 1788255",""],
 ["P-11","PL","Washer piped rigidly from its base","BCPC traps and air break","Washer box, 2\" standpipe and trap","closed","WB-01 1788400","Set the vent system type in the Revit UI after API attempts merged it with the drain."],
 ["P-12","PL","No main shut-off, check or isolation valves","BCPC (PRV > 550 kPa)","Shut-off, check and isolation valves added","placeholder","MSV-01 · CKV-01 · IV-01",""],
 ["P-13","PL","Dishwasher 3.4 m from the sink","BCPC trap and vent","Kept: coursework location; drain checked compliant","kept","DW-01 1406110","Location is not a code issue; the trap, vent and backflow protection are."],
-["P-14","FP","Sprinkler flows 32–43 gpm per head","NFPA 13D minimums","Kept: coursework values, conservative","kept","SP-01–SP-10","More flow than the 13D minimum is conservative, not illegal."],
+["P-14","FP","Sprinkler flows 32–43 gpm per head","NFPA 13D (listed head data)","Kept: coursework placeholder flows","kept","SP-01–SP-10","Final K-factor, flow and pressure to come from listed residential head data and an NFPA 13D hydraulic calculation."],
 ["P-15","FP","Fire pipe type was the generic “Standard”","NFPA 13D (copper K)","Own Copper Type K fire-protection type","closed","49 FP pipes",""],
 ["P-16","FP","Fire pipes above ceilings may freeze","NFPA 13D","Warm-side installation notes","documented","FP mains","A reroute through interior walls is recorded as the stronger option."],
 ["P-17","FP","Light L1 50 mm from sprinkler SP-01","13D obstruction (24\")","Light moved 0.6 m; 0.65 m clear","closed","L1 1406301",""],
 ["P-18","ELEC","Lights floating in vaulted rooms","Model accuracy","Pendant types with stem lengths","closed","L6–L10",""],
 ["P-19","ELEC","Receptacle R25 60 mm from the wall end","100 mm from jamb or end","Moved with switch S9; 115 mm","closed","R25 1757412",""],
 ["P-20","ELEC","Switches hidden in the laundry alcove","Latch-side placement","Moved to the alcove wall; hinge side flagged","closed","S10b · S12",""],
-["P-21","ELEC","100 A service with little margin","CEC 8-200","200 A service; 62 % with a future EV","closed","P1 1785080","93 A on 100 A was legal; I set an 80 % target that includes a future EV charger.","feat"],
+["P-21","ELEC","100 A service with little margin","CEC 8-200","200 A service; 62 % with a future EV","closed","P1 1785080","93 A on 100 A complies; I set an 80 % design target that includes a future EV charger.","feat"],
 ["P-22","ELEC","No AFCI, weather-resistant or battery-backup specs","CEC 26-658 · BCBC 9.10.19","Specs on every circuit and device type","closed","Circuits 1–28",""],
 ["P-23","BIM","Confusing level names; elements without a level","BIM standard","Levels renamed; 117 schedule levels set","closed","Levels",""],
 ["P-24","BIM","Metric family names in an imperial project","BIM standard","Renamed to imperial","closed","Families",""],
@@ -613,59 +697,39 @@ const RFIS=[
  subject:"Fire sprinkler main fed straight off domestic water",
  q:"The 1¼\" sprinkler main teed off the domestic cold water through a transition fitting. No backflow preventer, control valve, gauge or drain & test.",
  opts:"1. Add the standard 13D riser components. 2. Treat it as a multipurpose system. Rejected: the sprinkler piping dead-ends, so water never circulates.",
- resp:"Five in-line placeholders on the fire main in the basement, with the drain & test discharging over the floor drain. Then I swapped two of them (see after).",
+ resp:"Five in-line placeholders on the fire main in the basement, with the drain & test discharging over the floor drain, in the order shown under After.",
  code:"NFPA 13D riser components and waterflow alarm · BC Plumbing Code backflow, CSA B64.10 (type set by the City).",
- call:"Asking what the drain pipe was for exposed the real error: test water left at the drain & test before reaching the flow switch.",
+ call:"I placed the flow switch upstream of the drain & test valve. A flow test has to move water past the switch, or it can't prove the alarm works. Tracing where the test water goes showed the first order was wrong, so I swapped the two.",
  img:"assets/case-c03.png",w:1113,h:1095,alt:"3D close-up of the basement water heater and the fire service riser with its in-line valves.",
  before:'<div class="chain"><span>DCW tee</span><i>→</i><span>fire main</span><i>→</i><span>sprinklers</span></div><p>No way to isolate, test, or stop stagnant sprinkler water flowing back into drinking water.</p><p>First build order: CV → BFP → PG → <b>D&amp;T → FS</b>. A flow test would never pass the switch.</p>',
  after:'<div class="chain"><span>DCW tee</span><i>→</i><span>CV</span><i>→</i><span>BFP</span><i>→</i><span>PG</span><i>→</i><span class="hot">FS</span><i>→</i><span class="hot">D&amp;T</span><i>→</i><span>up</span></div><p>Opening the drain &amp; test now sends water through the flow switch first, so the test proves the alarm.</p>'},
-{id:"M-01",copy:"",disc:"Plumbing",ref:"Kitchen and DW main · KS-01 arm · washer branch · shower · condensate IW1–IW4",
- subject:"Drainage at 1 % and 0 % slope",
- q:"About 15 horizontal 1½\" and 2\" drains were at 1 %, four at 0 %, and the four condensate lines at 1 %.",
- opts:"Re-slope sanitary only and leave condensate at 1 % (common HVAC practice), or follow the code for both.",
- resp:"Every drain 3\" and under now at 2 %, upstream ends raised so the 4\" building drain and its exit stay put. Condensate at 2 % with five new corner drops to clear crossings.",
- code:"BC Plumbing Code 2.4.8.1: drains ≤ 3\" at least 1 in 50 (2 %); over 3\" may be 1 in 100. Condensate to a receptor is indirect waste, which is drainage pipe.",
- call:"I asked: “under BC law, is 1 % fine? If not, follow the law.”",
- img:"assets/sys-dwv.png",w:1814,h:1444,alt:"3D view of the sanitary drainage and vent system of the house.",
- before:'<div class="slope"><div class="bar"><svg viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="14" x2="400" y2="18" stroke="currentColor" stroke-width="5"/><line x1="0" y1="30" x2="400" y2="30" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4"/></svg></div><div class="cap"><span>2" branch</span><span><b>1 %</b> · 4 at 0 %</span></div></div><p>Condensate: 16 mm lines at 1 %.</p>',
- after:'<div class="slope"><div class="bar"><svg viewBox="0 0 400 36" preserveAspectRatio="none" aria-hidden="true"><line x1="0" y1="6" x2="400" y2="30" stroke="currentColor" stroke-width="7"/><line x1="0" y1="30" x2="400" y2="30" stroke="currentColor" stroke-width="1" stroke-dasharray="4 4"/></svg></div><div class="cap"><span>2" branch</span><span><b>2 %</b> (¼" per ft)</span></div></div><p>Exit invert unchanged at the time; 4" building drain stays at 1 %. Clash check clean.</p>'},
-{id:"M-09 · M-10",copy:"pink",disc:"HVAC",ref:"AC-01 1524859 · AC-02 1525077 · AC-03 1525454 · AC-04 1526631 · CU-01 1527078",
- subject:"Heat-pump sizing and the R32 charge limit",
- q:"No CSA F280 calculation. The living room's 2.0 kW head served a 35 m² room with a 5.9 m vault. The heads were cooling-only, so the house had no real heat.",
- opts:"A. Heat-pump FTX heads on a heat-pump outdoor unit. B. Keep the coursework cooling-only heads and heat with about 2.3 kW of extra baseboard, which pushes the panel past 100 A.",
- resp:"Option A, recorded as a deviation from the BCIT equipment spec (FTC15NV14 × 3 + FTC20NV14). Then checked the R32 charge against the smallest room.",
- code:"BCBC 9.33 heating to CSA F280 · CSA B52 / IEC 60335-2-40 charge limit for A2L refrigerant.",
- call:"“The AC units are a coursework requirement… but I know option A is more efficient. Go ahead anyway.”",
- img:"assets/case-m10.png",w:1431,h:2016,alt:"3D close-up of the outdoor heat pump on its pad under the deck, with the refrigerant risers rising in the wall.",
- before:'<p>AC-04 FTC20: <b>2.0 kW</b> against an open-zone cooling load of <b>3.3 kW</b>.</p><p>All four heads FTC: cooling only. Heating came from 500 W baseboards.</p>',
- after:`<dl class="kv"><dt>F280-style estimate</dt><dd>house 3.6&nbsp;kW heat / 4.6&nbsp;kW cool</dd><dt>Heads</dt><dd>FTX15 × 3 + FTX35</dd><dt>Liquid lines</dt><dd>18.9 + 5.8 + 8.9 + 22.3 = 55.9&nbsp;m</dd><dt>Charge</dt><dd>2.0 + (55.9 − 30) × 0.02 = <b>2.5&nbsp;kg</b></dd><dt class="nc">m<sub>max</sub> (Bedroom 1)</dt><dd>2.5 × 0.307^1.25 × 1.8 × √7.44 = <b>2.80&nbsp;kg</b></dd><dt>Result</dt><dd>2.5 ≤ 2.80, passes with no mitigation</dd></dl>`},
-{id:"M-12",copy:"",disc:"Plumbing",ref:"FD-01 1782449 · trap 1783819 · tee 1782637 · TPV-01 1782320 · WH-01 1602886",
- subject:"A pipe through the water heater, and no floor drain",
- q:"A 1\" PVC pipe hung off the water heater's drain-valve connector with its centreline inside the tank wall. Its comment said it was the T&P discharge. The basement had no floor drain for it.",
- opts:"(a) Extend the building drain stack down and drain a floor drain by gravity. (b) A sump and pump.",
- resp:"Deleted the pipe; added a real T&P valve with a ¾\" copper discharge; floor drain FD-01 with a P-trap, 3\" drain at 2 % to a new sanitary tee; stack extended from −2.19 to −2.95 m.",
- code:"BC Plumbing Code: T&P discharge full size and temperature-rated, no valves; every fixture trapped, seal ≥ 38 mm; floor drains need trap seal protection.",
- call:"I rejected two trap placements, then placed the trap myself the right way up and had the method written into a reusable skill.",
- img:"assets/case-m12.png",w:2109,h:2109,alt:"3D close-up of the basement floor drain, its P-trap and drain line to the building stack, beside the water heater.",
- before:'<p>1" <b>PVC</b> on the tank\'s <b>drain valve</b>, clipping the tank. PVC is not rated for 99 °C relief water.</p><p>No floor drain; building drain exit only 0.14 m below the floor.</p>',
- after:'<div class="chain"><span>WH-01</span><i>→</i><span class="hot">TPV-01</span><i>→</i><span>¾" Cu</span><i>→</i><span>air gap</span><i>→</i><span>FD-01</span><i>→</i><span class="hot">P-trap</span><i>→</i><span>stack</span></div><p>Trap seal about 95 mm; trap seal primer noted on FD-01.</p>'},
-{id:"P-09",copy:"pink",disc:"HVAC",ref:"HRV-01 1547124 · AT-10 1567942 · AT-17 1785468 · REC-HRV 1785491 · CP-01 1788255",
+{id:"P-09",copy:"",disc:"HVAC",ref:"HRV-01 1547124 · AT-10 1567942 · AT-17 1785468 · REC-HRV 1785491 · CP-01 1788255",
  subject:"HRV exhaust discharging under the deck",
  q:"The HRV exhaust grille sat under the deck, 0.53 m from the outdoor heat pump's clearance zone.",
  opts:"Keep it · slide it east on the south wall · run a long duct to the west wall · rotate the HRV · rotate and move the HRV. Compared in one table.",
  resp:"Rotated HRV-01 90° and moved it beside the west wall: both grilles on the west wall, 2.47 m apart, out from under the deck. Then added the receptacle and condensate pump it was missing.",
  code:"HRV manufacturer separation (≥ 1.8 m) and height above grade (≥ 450 mm); keep moist exhaust off deck framing and the heat-pump coil.",
- call:"The discharge duct looked too long, so I suggested rotating the HRV, then asked about its power socket.",
+ call:"I rotated the HRV 90° so both outdoor ports face the west wall. That took the exhaust out from under the deck, set the grilles 2.47 m apart and cut outdoor duct from about 4.5 m to 3.0 m. I compared five layouts first.",
  img:"assets/case-p09.png",w:1710,h:1452,alt:"3D close-up of the HRV in the basement with its four duct connections and the two outdoor grilles on the west wall.",
  before:'<p>Exhaust under the deck, <b>0.53 m</b> from the heat-pump clearance zone. Moist air on deck joists, frost on the coil.</p><p>Outdoor ducting about 4.5 m. No receptacle and no condensate drain at the HRV.</p>',
  after:'<p>Grilles on the west wall, <b>2.47 m</b> apart; discharge about 3.5 m from the heat pump.</p><p>Outdoor ducting about 3.0 m straight. Dedicated receptacle REC-HRV; condensate pump CP-01 to the receptor with a 26 mm air gap.</p>'},
+{id:"M-09 · M-10",copy:"pink",disc:"HVAC",ref:"AC-01 1524859 · AC-02 1525077 · AC-03 1525454 · AC-04 1526631 · CU-01 1527078",
+ subject:"Heat-pump sizing and the R32 charge limit",
+ q:"No CSA F280 calculation. The living room's 2.0 kW head served a 35 m² room with a 5.9 m vault. The heads were cooling-only, so the house had no real heat.",
+ opts:"A. Heat-pump FTX heads on a heat-pump outdoor unit. B. Keep the coursework cooling-only heads and heat with about 2.3 kW of extra baseboard, which pushes the panel past 100 A.",
+ resp:"Option A, recorded as a deviation from the BCIT equipment spec (FTC15NV14 × 3 + FTC20NV14). Then checked the R32 charge against the smallest room.",
+ code:"BCBC 9.33.3.1 heating (22 °C) sized to CSA F280 · CSA B52 / IEC 60335-2-40 charge limit for A2L refrigerant.",
+ call:"I chose heat-pump heads over adding 2.3 kW of baseboard, knowing it departs from the coursework equipment. One system heats and cools, the panel stays within its rating, and heating uses about a third of the electricity. I then checked the R32 charge against the smallest room, because a multi-split can leak its whole charge into one bedroom.",
+ img:"assets/case-m10.png",w:1431,h:2016,alt:"3D close-up of the outdoor heat pump on its pad under the deck, with the refrigerant risers rising in the wall.",
+ before:'<p>AC-04 FTC20: <b>2.0 kW</b> against an open-zone cooling load of <b>3.3 kW</b>.</p><p>All four heads FTC, cooling only. Heat came from the backup baseboards added in C-01.</p>',
+ after:`<dl class="kv"><dt>F280-style estimate</dt><dd>house 3.6&nbsp;kW heat / 4.6&nbsp;kW cool</dd><dt>Heads</dt><dd>FTX15 × 3 + FTX35</dd><dt>Liquid lines</dt><dd>18.9 + 5.8 + 8.9 + 22.3 = 55.9&nbsp;m</dd><dt>Charge</dt><dd>2.0 + (55.9 − 30) × 0.02 = <b>2.5&nbsp;kg</b></dd><dt class="nc">m<sub>max</sub> (Bedroom 1)</dt><dd>2.5 × 0.307^1.25 × 1.8 × √7.44 = <b>2.80&nbsp;kg</b></dd><dt>Result</dt><dd>2.5 ≤ 2.80, passes with no mitigation</dd></dl>`},
 {id:"P-21",copy:"",disc:"Electrical",ref:"Panel P1 1785080 · spare slots 30/32",
  subject:"Service size and a future EV charger",
  q:"The 100 A service had little room for heating, a heat pump or an EV charger.",
  opts:"A. Keep 100 A with an EV energy-management system. B. Upgrade to 200 A.",
  resp:"Ran the CEC 8-200 calculation from the model's loads. 93 A on 100 A complies. I set my own target of ≤ 80 % including a future EV, so P1 went to 200 A with a reserved 40 A two-pole spare.",
  code:"CEC 8-200 single-dwelling calculation: service rating ≥ calculated load. The 80 % rule (8-104) is for continuous loads, not this calculation.",
- call:"“93 % of the load would offend any laws?” No. Then: “I would like to make it 80 % including future EV charging.”",
+ call:"93 A on 100 A already complies with CEC 8-200. I upsized to 200 A because I set an 80 % design target that includes a future Level 2 EV charger: 125 A, or 62 % of 200 A.",
  img:"",w:0,h:0,alt:"",
  before:`<pre class="calc">Area   89.6 + 75 % × 89.6 = 156.8 m²
 Basic  5 000 + 1 000            =  6 000 W
@@ -676,7 +740,17 @@ Water heater                    =  4 500 W
                                   22 250 W ÷ 240 V = <b>93 A on 100 A</b></pre>`,
  after:`<pre class="calc">22 250 W + EV 7 680 W = 29 930 W ÷ 240 V = 125 A
 Service now 200 A → <b>62 %</b> (target ≤ 80 %)
-Slots 30/32 reserved: 40 A 2-pole EV spare, no outlet yet</pre>`}
+Slots 30/32 reserved: 40 A 2-pole EV spare, no outlet yet</pre>`},
+{id:"M-12",copy:"pink",disc:"Plumbing",ref:"FD-01 1782449 · trap 1783819 · tee 1782637 · TPV-01 1782320 · WH-01 1602886",
+ subject:"A pipe through the water heater, and no floor drain",
+ q:"A 1\" PVC pipe hung off the water heater's drain-valve connector with its centreline inside the tank wall. Its comment said it was the T&P discharge. The basement had no floor drain for it.",
+ opts:"(a) Extend the building drain stack down and drain a floor drain by gravity. (b) A sump and pump.",
+ resp:"Deleted the pipe; added a real T&P valve with a ¾\" copper discharge; floor drain FD-01 with a P-trap, 3\" drain at 2 % to a new sanitary tee; stack extended from −2.19 to −2.95 m.",
+ code:"BC Plumbing Code: T&P discharge full size and temperature-rated, no valves; every fixture trapped, seal ≥ 38 mm; floor drains need trap seal protection.",
+ call:"I removed a PVC relief pipe that ran through the tank wall and gave the T&P valve a full-size copper discharge to a new trapped floor drain. I extended the building drain stack so the drain works by gravity, without a sump pump.",
+ img:"assets/case-m12.png",w:2109,h:2109,alt:"3D close-up of the basement floor drain, its P-trap and drain line to the building stack, beside the water heater.",
+ before:'<p>1" <b>PVC</b> on the tank\'s <b>drain valve</b>, clipping the tank. PVC is not rated for 99 °C relief water.</p><p>No floor drain; building drain exit only 0.14 m below the floor.</p>',
+ after:'<div class="chain"><span>WH-01</span><i>→</i><span class="hot">TPV-01</span><i>→</i><span>¾" Cu</span><i>→</i><span>air gap</span><i>→</i><span>FD-01</span><i>→</i><span class="hot">P-trap</span><i>→</i><span>stack</span></div><p>Trap seal about 95 mm; trap seal primer noted on FD-01.</p>'}
 ];
 const DRAW=[
 ["A","Power plan, Level 1","assets/plan-power.png","Receptacles, dedicated outlets and circuit tags. Counter receptacles on three 20 A circuits of two; every point within 900 mm."],
@@ -694,9 +768,9 @@ const body=document.getElementById('logbody'), table=document.getElementById('lo
 LOG.forEach(r=>{
   const [id,disc,issue,code,res,st,ref,note,feat]=r;
   const tr=document.createElement('tr'); tr.className='r'; tr.id=id; tr.dataset.p=id[0]; tr.dataset.st=st;
-  tr.innerHTML=`<td class="id c-id"><button type="button" aria-expanded="false" aria-controls="d-${id}">${id}</button>${feat?'<span class="feat">full RFI</span>':''}</td><td class="c-disc">${disc}</td><td class="c-issue">${issue}</td><td class="c-code">${code}</td><td class="c-res">${res}</td><td class="c-st"><span class="st ${st}">${STATUS[st]}</span></td>`;
+  tr.innerHTML=`<td class="id c-id"><button type="button" aria-expanded="false" aria-controls="d-${id}">${id}</button>${feat?'<span class="feat">case study</span>':''}</td><td class="c-disc">${disc}</td><td class="c-issue">${issue}</td><td class="c-code">${code}</td><td class="c-res">${res}</td><td class="c-st"><span class="st ${st}">${STATUS[st]}</span></td>`;
   const d=document.createElement('tr'); d.className='d'; d.id='d-'+id; d.hidden=true; d.dataset.p=id[0]; d.dataset.st=st;
-  d.innerHTML=`<td colspan="6"><div class="dgrid"><p class="m-only full"><span class="lbl">Code basis</span>${code}</p><p class="m-only full"><span class="lbl">Resolution</span>${res}</p><p><span class="lbl">Reference</span>${ref}</p><p><span class="lbl">Status</span>${STATUS[st]}</p>${note?`<p class="full"><span class="lbl">Note</span>${note}</p>`:''}${feat?`<p class="full"><a href="#rfi-${id}">Read RFI ${id} in full</a></p>`:''}</div></td>`;
+  d.innerHTML=`<td colspan="6"><div class="dgrid"><p class="m-only full"><span class="lbl">Code basis</span>${code}</p><p class="m-only full"><span class="lbl">Resolution</span>${res}</p><p><span class="lbl">Reference</span>${ref}</p><p><span class="lbl">Status</span>${STATUS[st]}</p>${note?`<p class="full"><span class="lbl">Note</span>${note}</p>`:''}${feat?`<p class="full"><a href="#rfi-${id}">Read case study ${id}</a></p>`:''}</div></td>`;
   body.append(tr,d);
 });
 function closeAll(except){
@@ -719,6 +793,21 @@ filts.forEach(b=>b.addEventListener('click',()=>{
   body.querySelectorAll('tr.r').forEach(tr=>{ const show=f==='all'||(f==='open'?tr.dataset.st==='open':tr.dataset.p===f); tr.hidden=!show; if(show)n++; tr.nextElementSibling.hidden=true; });
   tally.textContent=n+(n===1?' row':' rows');
 }));
+// ---------- summary matrix ----------
+(function(){
+  const DISC=[["HVAC","HVAC"],["PL","Plumbing"],["ELEC","Electrical"],["FP","Fire protection"],["ARCH","Architectural"],["FA","Fire alarm"],["BIM","BIM standards"]];
+  const ST=[["closed","Closed"],["placeholder","Placeholder family"],["kept","Kept"],["documented","Documented"],["open","Open"]];
+  const m=document.getElementById('matrix'); if(!m) return;
+  const cnt=(d,s)=>LOG.filter(r=>(!d||r[1]===d)&&(!s||r[5]===s)).length;
+  const cell=(n,s)=>`<td class="${n===0?'zero':(s==='open'?'openc':'')}">${n===0?'–':n}</td>`;
+  let h='<thead><tr><th>Discipline</th>'+ST.map(s=>`<th>${s[1]}</th>`).join('')+'<th>Total</th></tr></thead><tbody>';
+  DISC.forEach(d=>{ h+=`<tr><td>${d[1]}</td>`+ST.map(s=>cell(cnt(d[0],s[0]),s[0])).join('')+`<td>${cnt(d[0])}</td></tr>`; });
+  h+='</tbody><tfoot><tr><td>Total</td>'+ST.map(s=>`<td>${cnt(null,s[0])}</td>`).join('')+`<td>${LOG.length}</td></tr></tfoot>`;
+  m.innerHTML=h;
+})();
+const appx=document.getElementById('appx');
+document.querySelectorAll('a[href="#log"]').forEach(a=>a.addEventListener('click',()=>{ if(appx) appx.open=true; }));
+if(location.hash==='#print-log'){ document.documentElement.classList.add('log-only'); if(appx) appx.open=true; }
 
 // ---------- RFIs ----------
 const host=document.getElementById('rfis');
@@ -727,21 +816,21 @@ RFIS.forEach((c,i)=>{
   const s=document.createElement('section'); s.className='sheet rfi-sheet '+c.copy; s.id='rfi-'+key; s.setAttribute('aria-labelledby','t-'+key);
   const att=c.img?`<div class="encl-sheet"><svg class="clip" aria-hidden="true"><use href="#clip"/></svg><img src="${c.img}" width="${c.w}" height="${c.h}" loading="lazy" alt="${c.alt}"></div>`:'';
   s.innerHTML=`
-  <div class="formhead"><p class="formtitle">Request for information</p>
-    <div class="cells"><div class="cell"><span class="lbl">RFI no.</span><span class="val">${c.id}</span></div><div class="cell"><span class="lbl">Encl.</span><span class="val">04-${i+1}</span></div><div class="cell"><span class="lbl">Discipline</span><span class="val">${c.disc}</span></div><div class="cell"><span class="lbl">Status</span><span class="val">Closed</span></div></div></div>
+  <div class="formhead"><p class="formtitle">Design review record</p>
+    <div class="cells"><div class="cell"><span class="lbl">Item no.</span><span class="val">${c.id}</span></div><div class="cell"><span class="lbl">Encl.</span><span class="val">04-${i+1}</span></div><div class="cell"><span class="lbl">Discipline</span><span class="val">${c.disc}</span></div><div class="cell"><span class="lbl">Status</span><span class="val">Closed</span></div></div></div>
   <div class="ruled"><div class="cell subj"><span class="lbl">Subject</span><h3 class="subject" id="t-${key}">${c.subject}</h3></div></div>
   <div class="rfi-body">
     <div class="rfi-text">
-      <div class="field"><span class="lbl">Question</span><p>${c.q}</p></div>
+      <div class="field"><span class="lbl">Issue</span><p>${c.q}</p></div>
       <div class="field"><span class="lbl">Options considered</span><p>${c.opts}</p></div>
-      <div class="field"><span class="lbl">Response</span><p>${c.resp}</p></div>
+      <div class="field"><span class="lbl">Resolution</span><p>${c.resp}</p></div>
       <div class="field"><span class="lbl">Code basis</span><p>${c.code}</p></div>
-      <div class="field"><span class="lbl">My call</span><p class="call">${c.call}</p></div>
+      <div class="field"><span class="lbl">Decision and reasoning</span><p>${c.call}</p></div>
       <div class="field"><span class="lbl">Reference</span><p style="font-size:13px">${c.ref}</p></div>
     </div>
     <div class="attach">
       <div class="ba">
-        <div class="ba-switch" role="radiogroup" aria-label="Model state for RFI ${c.id}">
+        <div class="ba-switch" role="radiogroup" aria-label="Model state for item ${c.id}">
           <label><input type="radio" name="ba-${key}" id="ba-${key}-b" value="before">Before</label>
           <label><input type="radio" name="ba-${key}" id="ba-${key}-a" value="after" checked>After</label>
         </div>
@@ -792,7 +881,7 @@ document.querySelectorAll('.copybtn').forEach(b=>b.addEventListener('click',()=>
 }));
 
 // deep link to a row: #M-12 opens it
-function fromHash(){ const h=decodeURIComponent(location.hash.slice(1)); const tr=h&&document.getElementById(h); if(tr&&tr.classList.contains('r')){ toggle(tr,true); tr.scrollIntoView({block:'center'}); } }
+function fromHash(){ const h=decodeURIComponent(location.hash.slice(1)); const tr=h&&document.getElementById(h); if(tr&&tr.classList.contains('r')){ if(appx) appx.open=true; toggle(tr,true); tr.scrollIntoView({block:'center'}); } }
 window.addEventListener('hashchange',fromHash); fromHash();
 })();
 </script>
