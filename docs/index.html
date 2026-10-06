@@ -475,11 +475,11 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
           <tr><td>View templates / filters</td><td>28 / 13</td></tr>
           <tr><td>Revit drawing sheets</td><td>8</td></tr>
           <tr><td>Issues raised</td><td>51</td></tr>
-          <tr><td>Closed</td><td>39</td></tr>
+          <tr><td>Closed</td><td>40</td></tr>
           <tr><td>Closed, placeholder family</td><td>6</td></tr>
           <tr><td>Kept, reason recorded</td><td>3</td></tr>
           <tr><td>Documented</td><td>2</td></tr>
-          <tr><td>Open</td><td>1 (R-01)</td></tr>
+          <tr><td>Open</td><td>0</td></tr>
           <tr><td>Backups before each change</td><td>one per item</td></tr>
         </tbody>
       </table>
@@ -497,10 +497,10 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
       <div class="cell"><span class="lbl">Encl.</span><span class="val">03</span></div>
       <div class="cell"><span class="lbl">Project</span><span class="val">KC-RES-05</span></div>
       <div class="cell"><span class="lbl">Reviewed by</span><span class="val">K. Chow</span></div>
-      <div class="cell"><span class="lbl">Period</span><span class="val">28 Sep – 2 Oct 2026</span></div>
+      <div class="cell"><span class="lbl">Period</span><span class="val">28 Sep – 6 Oct 2026</span></div>
     </div>
   </div>
-  <div class="ruled"><div class="cell summary-lead"><span class="lbl">Summary</span><p>I reviewed my BCIT residential MEP model against BC code before issue. 51 issues across seven disciplines: 39 closed, 6 closed with placeholder families pending manufacturer content, 3 kept by design with reasons, 2 documented, 1 open. Every change was backed up, clash-checked and logged.</p></div></div>
+  <div class="ruled"><div class="cell summary-lead"><span class="lbl">Summary</span><p>I reviewed my BCIT residential MEP model against BC code before issue. 51 issues across seven disciplines: 40 closed, 6 closed with placeholder families pending manufacturer content, 3 kept by design with reasons, 2 documented, none open. Every change was backed up, clash-checked and logged.</p></div></div>
   <div class="sum-grid">
     <div class="sum-table">
       <span class="lbl">Issues by discipline and status</span>
@@ -572,20 +572,10 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
       </div>
     </div>
     <div class="note">
-      <span class="lbl">Open item</span>
-      <p>R-01: smoke alarm SD1 sits about 0.64 m from supply diffuser AT-06; it needs about 0.9 m. Fix: move SD1 to about (−3.3, 3.4).</p>
-      <span class="lbl" style="margin-top:10px">Under re-check in the model</span>
-      <ul class="recheck">
-        <li>AC heads against the side partitions</li>
-        <li>Drain &amp; test valve FP-DT1 to its drain pipe</li>
-        <li>Pendant stems against the vault</li>
-        <li>2" drains drawn at 1.93–1.97 %</li>
-        <li>MEP elements without a level</li>
-        <li>Basement heating</li>
-        <li>Dryer vent termination at the deck</li>
-        <li>Outdoor unit clearance under the deck</li>
-        <li>Trap primer on floor drain FD-01</li>
-      </ul>
+      <span class="lbl">Open items</span>
+      <p>None. R-01, raised by my own second review (smoke alarm SD1 0.64 m from supply diffuser AT-06), is closed: SD1 now sits at least 1.8 m from all supply air. The first spot I proposed failed against the AC-01 head, so I searched the room for a better one.</p>
+      <span class="lbl" style="margin-top:10px">Second-pass model re-check</span>
+      <p>Nine further items checked in the model and closed: AC heads against partitions, the drain &amp; test branch, pendant stems, 2&quot; drain slopes, unleveled parts, basement heat, the dryer vent (moved to the roof), outdoor-unit clearance under the deck and a trap primer for FD-01.</p>
       <p>Placeholder families (heat pump, valves, shower valve, range hood) stand in for manufacturer families until product selection.</p>
       <span class="lbl" style="margin-top:10px">Prepared by</span>
       <p>Kenneth Chow · BIM &amp; design coordination · BCIT BIM studies 2026.</p>
@@ -602,7 +592,7 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
       <div class="cell"><span class="lbl">Items</span><span class="val">51</span></div>
       <div class="cell"><span class="lbl">Project</span><span class="val">KC-RES-05</span></div>
       <div class="cell"><span class="lbl">Reviewed by</span><span class="val">K. Chow</span></div>
-      <div class="cell"><span class="lbl">Period</span><span class="val">28 Sep – 2 Oct 2026</span></div>
+      <div class="cell"><span class="lbl">Period</span><span class="val">28 Sep – 6 Oct 2026</span></div>
     </div>
   </div>
   <details class="appx" id="appx"><summary><span>Show all 51 items</span></summary>
@@ -641,14 +631,14 @@ dialog.zoom button{appearance:none;cursor:pointer;background:#15181d;color:#fcfc
 const LOG=[
 ["C-01","HVAC","No heating: the only outdoor unit was cooling-only","BCBC 9.33.3.1 (22 °C)","Heat-pump outdoor unit with FTX heads; toe-kick heater in the bath","placeholder","CU-01 1527078 · HTR-4 1772320","Chose heat pump with backup first; removed the bedroom baseboards once the F280 estimate showed the heat pump covers 3.6 kW."],
 ["C-02","FP","Sprinkler SP-07 hidden above the new hall ceiling","NFPA 13D coverage","Sidewall head lowered to 115 mm below the ceiling","closed","SP-07 1602919 · tee 1773550","Kept the designer's sidewall intent instead of switching to a pendent; hydraulic recheck flagged."],
-["C-03","FP","Fire main tees straight off domestic water with no components","NFPA 13D · CSA B64.10","Control valve, backflow, gauge, flow switch, drain & test","placeholder","FP-CV1 1774562 … FP-DT1 1774571","Placed the flow switch before the drain & test so a flow test proves the alarm.","feat"],
+["C-03","FP","Fire main tees straight off domestic water with no components","NFPA 13D · CSA B64.10","Control valve, backflow, gauge, flow switch, drain & test","placeholder","FP-CV1 1774562 … FP-DT1 1795087","Placed the flow switch before the drain & test so a flow test proves the alarm; the D&T later moved onto its own branch tee.","feat"],
 ["C-04","ARCH","Deck guards 914 mm and open over a 2.1 m drop","BCBC 9.8.8.3","1070 mm guard, balusters 92 mm clear","closed","Guard type 1774794","Closed a 1.3 m gap; later reopened it when the east stair turned up in the Stage 2 model (M-13)."],
 ["C-05","ARCH","Exterior stair 610 mm wide, 203 mm run, open risers","BCBC 9.8","12 × 178 / 11 × 255, 934 mm clear, closed risers","closed","Stair 1774935","Kept the stair where it was and moved the outdoor unit, its 8 risers and the disconnect 1.10 m instead."],
 ["C-06","ELEC","Bathroom switches inside the shower footprint","Switch clear of shower reach, 500 mm design (confirm rule in adopted CEC)","Light switches on the hall side; fan timer 0.91 m from the shower","closed","S4, S5, ST1","A split was more practical than moving everything out of the room."],
 ["M-01","PL","About 15 drains at 1 % and 4 at 0 %","BCPC 2.4.8.1","All drains ≤ 3\" at 2 %; condensate also at 2 %","closed","Kitchen, lav, shower, washer branches · IW1–IW4","Condensate to a receptor is indirect waste, so BCPC 2.4.8.1 applies: re-sloped to 2 % with five new corner drops."],
 ["M-02","PL","Shower had no supply; a tempering valve fed nothing","CSA B125.3 · 49 °C","Pressure-balancing shower valve at 1.15 m","placeholder","SV-01 1640402","A tempering valve is a plumber's setting, not the user's control, so it was removed."],
 ["M-03","HVAC","No range hood; HRV exhaust pickup over the range","BCBC 9.32 (~50 L/s)","150 cfm ducted hood; pickup moved 1.62 m away","placeholder","RH-01 1778062 · AT-11 1777790","No make-up air needed: the house is all-electric."],
-["M-04","HVAC","No dryer exhaust","BCBC 9.32","100 mm rigid duct, connected to the dryer, to a wall hood","closed","DV-01 1778250 · flex 1779659","Gave the dryer family a real exhaust connector so the duct connects to the appliance, as it would on site."],
+["M-04","HVAC","No dryer exhaust","BCBC 9.32.1.3","100 mm rigid duct, connected to the dryer, up to a roof cap (moved off the deck)","closed","DV-01 1798479 · flex 1779659","Gave the dryer family a real exhaust connector so the duct connects to the appliance, as it would on site."],
 ["M-05","HVAC","Bathroom exhaust only 40 cfm","BCBC 9.32 (25 L/s)","55 cfm through the HRV boost timer","closed","AT-09 1561511","Rebalanced the HRV instead of adding a fan."],
 ["M-06","FA","No smoke alarm outside Bedroom 3","BCBC 9.10.19","SD6 on the vaulted ceiling, 0.82 m from the peak","closed","SD6 1769474","Within 900 mm of the peak, as S553 requires on a slope."],
 ["M-07","FA","SD1 0.78 m from the AC-01 discharge","CAN/ULC-S553","Moved to 1.70 m from AC-01","closed","SD1 1749658","See R-01: the move put it near a supply diffuser."],
@@ -656,7 +646,7 @@ const LOG=[
 ["M-09","HVAC","No F280 calculation; living-room head undersized","CSA F280","FTX15 × 3 + FTX35 heat-pump heads (coursework deviation)","placeholder","AC-01–AC-04","Ran an F280-style estimate: 3.6 kW heat / 4.6 kW cool. Applied the heat-pump option knowing it departs from the coursework spec.","feat"],
 ["M-10","HVAC","R32 charge against the smallest room","CSA B52 / IEC 60335-2-40","2.5 kg charge ≤ 2.80 kg allowed","closed","CU-01 1527078","Traced 55.9 m of liquid line from the model to get the charge.","feat"],
 ["M-11","PL","Water heater missing T&P valve, expansion tank, straps","BCPC","T&P valve, ¾\" copper discharge, 2 gal tank; straps noted","closed","TPV-01 1782320 · ET-01 1780313","The T&P valve itself had never been modelled; added a tapping to the water heater family and the valve."],
-["M-12","PL","PVC pipe running through the water heater tank; no floor drain","BCPC traps","Floor drain with P-trap (95 mm seal); stack extended","closed","FD-01 1782449 · trap 1783819","Removed a PVC relief pipe through the tank wall; full-size copper T&P discharge to a new trapped floor drain that drains by gravity.","feat"],
+["M-12","PL","PVC pipe running through the water heater tank; no floor drain","BCPC traps","Floor drain with P-trap (95 mm seal) and trap primer; stack extended","closed","FD-01 1782449 · trap 1783819 · TP-01 1798494","Removed a PVC relief pipe through the tank wall; full-size copper T&P discharge to a new trapped floor drain that drains by gravity.","feat"],
 ["M-13","ARCH","East deck stair missing","BCBC 9.8","5 × 173 / 4 × 280, 1.30 m wide, guards both sides","closed","Stair 1783986","Found it in the Stage 2 reference model."],
 ["V-01","ARCH","Basement door 1930 mm high","BCBC Table 9.5.5.1","813 × 1981 door, 187 mm left for the header","closed","Door 1471875",""],
 ["V-02","PL","Water service only 0.26 m below grade","Burnaby bylaw 762 mm","Entry lowered to −1.50 m, about 1.0 m cover","closed","WS-01 1602887","Revised once the Stage 2 stair showed the real east grade."],
@@ -680,29 +670,29 @@ const LOG=[
 ["P-15","FP","Fire pipe type was the generic “Standard”","NFPA 13D (copper K)","Own Copper Type K fire-protection type","closed","49 FP pipes",""],
 ["P-16","FP","Fire pipes above ceilings may freeze","NFPA 13D","Warm-side installation notes","documented","FP mains","A reroute through interior walls is recorded as the stronger option."],
 ["P-17","FP","Light L1 50 mm from sprinkler SP-01","13D obstruction (24\")","Light moved 0.6 m; 0.65 m clear","closed","L1 1406301",""],
-["P-18","ELEC","Lights floating in vaulted rooms","Model accuracy","Pendant types with stem lengths","closed","L6–L10",""],
+["P-18","ELEC","Lights floating in vaulted rooms","Model accuracy","Pendant types with modelled stems measured to the sloped roof","closed","L6–L10",""],
 ["P-19","ELEC","Receptacle R25 60 mm from the wall end","100 mm from jamb or end","Moved with switch S9; 115 mm","closed","R25 1757412",""],
 ["P-20","ELEC","Switches hidden in the laundry alcove","Latch-side placement","Moved to the alcove wall; hinge side flagged","closed","S10b · S12",""],
-["P-21","ELEC","100 A service with little margin","CEC 8-200","200 A service; 62 % with a future EV","closed","P1 1785080","93 A on 100 A complies; I set an 80 % design target that includes a future EV charger.","feat"],
+["P-21","ELEC","100 A service with little margin","CEC 8-200","200 A service; 65 % with a future EV and basement heat","closed","P1 1785080","93 A on 100 A complies; I set an 80 % design target that includes a future EV charger.","feat"],
 ["P-22","ELEC","No AFCI, weather-resistant or battery-backup specs","CEC 26-658 · BCBC 9.10.19","Specs on every circuit and device type","closed","Circuits 1–28",""],
 ["P-23","BIM","Confusing level names; elements without a level","BIM standard","Levels renamed; 117 schedule levels set","closed","Levels",""],
 ["P-24","BIM","Metric family names in an imperial project","BIM standard","Renamed to imperial","closed","Families",""],
 ["P-25","BIM","Window type names didn't match sizes","BIM standard","Renamed to real sizes","closed","W8–W13",""],
 ["P-26","BIM","Architecture and MEP in one file, no links","BIM practice","Kept: coursework single file; split plan written","kept","Whole model","For a real project: ARCH, MECH, PLUMB-FP and ELEC linked on shared coordinates."],
-["R-01","FA","SD1 about 0.64 m from supply diffuser AT-06","CAN/ULC-S553 (~0.9 m)","Found on re-check; move to about (−3.3, 3.4)","open","SD1 1749658","Raised by my own second review after the log closed."]
+["R-01","FA","SD1 about 0.64 m from supply diffuser AT-06","CAN/ULC-S553 (~0.9 m)","Moved to (−4.40, 2.75): ≥ 1.8 m from AT-06, AT-02 and AC-01","closed","SD1 1749658","Raised by my own second review. My first proposed spot was only 0.57 m from the AC-01 head, so I grid-searched the room instead."]
 ];
 const STATUS={closed:"Closed",placeholder:"Closed · placeholder family",kept:"Kept by design",documented:"Documented",open:"Open"};
 const RFIS=[
-{id:"C-03",copy:"pink",disc:"Fire protection",ref:"FP-CV1 1774562 · FP-BFP1 1774565 · FP-PG1 1774568 · FP-FS1 1774574 · FP-DT1 1774571",
+{id:"C-03",copy:"pink",disc:"Fire protection",ref:"FP-CV1 1774562 · FP-BFP1 1774565 · FP-PG1 1774568 · FP-FS1 1774574 · FP-DT1 1795087",
  subject:"Fire sprinkler main fed straight off domestic water",
  q:"The 1¼\" sprinkler main teed off the domestic cold water through a transition fitting. No backflow preventer, control valve, gauge or drain & test.",
  opts:"1. Add the standard 13D riser components. 2. Treat it as a multipurpose system. Rejected: the sprinkler piping dead-ends, so water never circulates.",
  resp:"Five in-line placeholders on the fire main in the basement, with the drain & test discharging over the floor drain, in the order shown under After.",
  code:"NFPA 13D riser components and waterflow alarm · BC Plumbing Code backflow, CSA B64.10 (type set by the City).",
  call:"I placed the flow switch upstream of the drain & test valve. A flow test has to move water past the switch, or it can't prove the alarm works. Tracing where the test water goes showed the first order was wrong, so I swapped the two.",
- img:"assets/case-c03.png",w:1113,h:1095,alt:"3D close-up of the basement water heater and the fire service riser with its in-line valves.",
+ img:"assets/case-c03.png",w:1107,h:1095,alt:"3D close-up of the basement water heater, the fire service riser with its in-line valves and drain & test branch, and the trap primer line to the floor drain.",
  before:'<div class="chain"><span>DCW tee</span><i>→</i><span>fire main</span><i>→</i><span>sprinklers</span></div><p>No way to isolate, test, or stop stagnant sprinkler water flowing back into drinking water.</p><p>First build order: CV → BFP → PG → <b>D&amp;T → FS</b>. A flow test would never pass the switch.</p>',
- after:'<div class="chain"><span>DCW tee</span><i>→</i><span>CV</span><i>→</i><span>BFP</span><i>→</i><span>PG</span><i>→</i><span class="hot">FS</span><i>→</i><span class="hot">D&amp;T</span><i>→</i><span>up</span></div><p>Opening the drain &amp; test now sends water through the flow switch first, so the test proves the alarm.</p>'},
+ after:'<div class="chain"><span>DCW tee</span><i>→</i><span>CV</span><i>→</i><span>BFP</span><i>→</i><span>PG</span><i>→</i><span class="hot">FS</span><i>→</i><span>tee</span><i>→</i><span>up</span></div><p>The drain &amp; test sits on a 1" branch off a tee just past the flow switch. Opening it sends water through the switch first, so the test proves the alarm.</p>'},
 {id:"P-09",copy:"",disc:"HVAC",ref:"HRV-01 1547124 · AT-10 1567942 · AT-17 1785468 · REC-HRV 1785491 · CP-01 1788255",
  subject:"HRV exhaust discharging under the deck",
  q:"The HRV exhaust grille sat under the deck, 0.53 m from the outdoor heat pump's clearance zone.",
@@ -740,7 +730,8 @@ Water heater                    =  4 500 W
                                   22 250 W ÷ 240 V = <b>93 A on 100 A</b></pre>`,
  after:`<pre class="calc">22 250 W + EV 7 680 W = 29 930 W ÷ 240 V = 125 A
 Service now 200 A → <b>62 %</b> (target ≤ 80 %)
-Slots 30/32 reserved: 40 A 2-pole EV spare, no outlet yet</pre>`},
+Slots 30/32 reserved: 40 A 2-pole EV spare, no outlet yet
+Later: basement heater HTR-5 +1 500 W → 131 A, <b>65 %</b></pre>`},
 {id:"M-12",copy:"pink",disc:"Plumbing",ref:"FD-01 1782449 · trap 1783819 · tee 1782637 · TPV-01 1782320 · WH-01 1602886",
  subject:"A pipe through the water heater, and no floor drain",
  q:"A 1\" PVC pipe hung off the water heater's drain-valve connector with its centreline inside the tank wall. Its comment said it was the T&P discharge. The basement had no floor drain for it.",
@@ -750,7 +741,7 @@ Slots 30/32 reserved: 40 A 2-pole EV spare, no outlet yet</pre>`},
  call:"I removed a PVC relief pipe that ran through the tank wall and gave the T&P valve a full-size copper discharge to a new trapped floor drain. I extended the building drain stack so the drain works by gravity, without a sump pump.",
  img:"assets/case-m12.png",w:2109,h:2109,alt:"3D close-up of the basement floor drain, its P-trap and drain line to the building stack, beside the water heater.",
  before:'<p>1" <b>PVC</b> on the tank\'s <b>drain valve</b>, clipping the tank. PVC is not rated for 99 °C relief water.</p><p>No floor drain; building drain exit only 0.14 m below the floor.</p>',
- after:'<div class="chain"><span>WH-01</span><i>→</i><span class="hot">TPV-01</span><i>→</i><span>¾" Cu</span><i>→</i><span>air gap</span><i>→</i><span>FD-01</span><i>→</i><span class="hot">P-trap</span><i>→</i><span>stack</span></div><p>Trap seal about 95 mm; trap seal primer noted on FD-01.</p>'}
+ after:'<div class="chain"><span>WH-01</span><i>→</i><span class="hot">TPV-01</span><i>→</i><span>¾" Cu</span><i>→</i><span>air gap</span><i>→</i><span>FD-01</span><i>→</i><span class="hot">P-trap</span><i>→</i><span>stack</span></div><p>Trap seal about 95 mm, kept primed by trap primer TP-01 on the cold-water main.</p>'}
 ];
 const DRAW=[
 ["A","Power plan, Level 1","assets/plan-power.png","Receptacles, dedicated outlets and circuit tags. Counter receptacles on three 20 A circuits of two; every point within 900 mm."],

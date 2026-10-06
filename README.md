@@ -6,7 +6,7 @@ The portfolio is built as a **submittal package**:
 
 - a transmittal cover with the 3D MEP model
 - my qualifications
-- a design review summary: 51 issues raised against BC code across seven disciplines (39 closed, 6 closed with placeholder families, 3 kept with reasons, 2 documented, 1 open)
+- a design review summary: 51 issues raised against BC code across seven disciplines (40 closed, 6 closed with placeholder families, 3 kept with reasons, 2 documented, none open)
 - five case studies, each with the code basis, my decision and a before/after
 - the drawing set
 - Appendix A: the full design review log
@@ -42,7 +42,7 @@ Then open <http://localhost:8765>. Pass a port to use another one (for example `
 
 ## How the model review was done
 
-I ran the geometry and code checks through the Revit API (pyRevit), with Claude as a scripting assistant. I set the rules, made each decision and verified every change in the model. R-01 (smoke alarm SD1 too close to a supply diffuser) is open, and nine further model items are under re-check; both are listed on the last page of the portfolio.
+I ran the geometry and code checks through the Revit API (pyRevit), with Claude as a scripting assistant. I set the rules, made each decision and verified every change in the model. R-01 (smoke alarm SD1 too close to a supply diffuser), raised by my own second review, is closed, and a second-pass re-check of nine further model items is complete. Each is recorded in the tracker.
 
 ## Rights
 
